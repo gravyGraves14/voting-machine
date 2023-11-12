@@ -19,5 +19,37 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- I added this may delete if we don't want it -->
+    <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api -->
+    <dependency>
+      <groupId>org.apache.tinkerpop</groupId>
+      <artifactId>gremlin-core</artifactId>
+      <version>3.7.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.tinkerpop/tinkergraph-gremlin -->
+    <dependency>
+      <groupId>org.apache.tinkerpop</groupId>
+      <artifactId>tinkergraph-gremlin</artifactId>
+      <version>3.7.0</version>
+    </dependency>
+    <!-- where tinkerpop dependency ends -->
+
+    <!-- Some slf4j dependency stuff -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.20.0</version>
+    </dependency>
   </dependencies>
 </project>
