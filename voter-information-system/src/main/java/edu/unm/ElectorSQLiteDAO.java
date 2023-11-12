@@ -25,7 +25,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             = "CREATE TABLE IF NOT EXISTS electors (\n"
             + "       social_number TEXT PRIMARY KEY,\n"
             + "       name TEXT NOT NULL,\n"
-            + "       date_of_birth TEXT NOT NULL,\n"
+            + "       date_of_birth TEXT NOT NULL\n"
             + ");";
 
     /**
