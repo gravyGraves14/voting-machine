@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.dao;
 
 /**
  * Basic interface from which all other DAO interfaces are derived. Used as the

@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

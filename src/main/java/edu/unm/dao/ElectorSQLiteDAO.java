@@ -1,5 +1,7 @@
-package edu.unm;
+package edu.unm.dao;
 
+
+import edu.unm.entity.Elector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.gui;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;

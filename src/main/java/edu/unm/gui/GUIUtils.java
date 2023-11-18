@@ -1,5 +1,6 @@
-package edu.unm;
+package edu.unm.gui;
 
+import edu.unm.App;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

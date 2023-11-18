@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.service;
 
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;

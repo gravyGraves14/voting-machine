@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.entity;
 
 import java.sql.Date;
 /**

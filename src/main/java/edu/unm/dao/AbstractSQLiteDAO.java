@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package edu.unm;
+package edu.unm.votingdevice;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
