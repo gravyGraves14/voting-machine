@@ -8,7 +8,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
