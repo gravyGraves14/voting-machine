@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 
 public class GUIUtils {
 
-    String mainFontPath = App.class.getResource("/thempo.ttf").toExternalForm();
+    String mainFontPath = GUIUtils.class.getResource("thempo.ttf").toExternalForm();
 
     public GUIUtils() {}
 
