@@ -6,6 +6,7 @@ import edu.unm.entity.Elector;
 import edu.unm.gui.MainGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.sql.Date;
@@ -23,14 +24,13 @@ public class App extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-
         // Window Set-up
         primaryStage.setTitle("Ohio Voting System");
         primaryStage.setMaximized(true);
-        MainGUI mainGUI = new MainGUI();
-        Scene scene = new Scene(mainGUI.getRoot());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        GridPane root = new GridPane();
+        Scene scene = new Scene(root);
+        MainGUI mainGUI = new MainGUI(scene, primaryStage);
+        mainGUI.runStage();
     }
 
     public static void testSQL() {

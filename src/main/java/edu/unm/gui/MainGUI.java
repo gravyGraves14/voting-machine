@@ -1,18 +1,25 @@
 package edu.unm.gui;
 
+import edu.unm.votingdevice.GevGUI;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 public class MainGUI {
     private final GridPane root;
+    private final Stage primaryStage;
+    private final Scene scene;
 
-    public MainGUI() {
+    public MainGUI(Scene scene, Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.scene = scene;
         GUIUtils guiUtils = new GUIUtils();
 
         //Set up the Layout
@@ -60,14 +67,17 @@ public class MainGUI {
         guiUtils.createLabel(totVot, 150, 100, 20);
         root.add(totVot, 0, 0);
 
+        scene.setRoot(root);
+
         //Button Actions
         gevBtn.setOnAction(event -> {
-            //?????!!!?!?!!????!!???
+            GevGUI gevGUI = new GevGUI();
+            scene.setRoot(gevGUI.getRoot());
         });
     }
 
-    //This function returns the root of the class
-    public Pane getRoot() {
-        return root;
+    public void runStage() {
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
