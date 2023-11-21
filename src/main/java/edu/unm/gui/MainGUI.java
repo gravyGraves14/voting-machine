@@ -74,6 +74,11 @@ public class MainGUI {
             GevGUI gevGUI = new GevGUI();
             scene.setRoot(gevGUI.getRoot());
         });
+
+        staffBtn.setOnAction(event -> {
+            StaffGUI staffGUI = new StaffGUI();
+            scene.setRoot(staffGUI.getRoot());
+        });
     }
 
     public void runStage() {
