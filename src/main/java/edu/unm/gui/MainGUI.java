@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
@@ -76,7 +75,7 @@ public class MainGUI {
         });
 
         staffBtn.setOnAction(event -> {
-            StaffGUI staffGUI = new StaffGUI();
+            StaffGUI staffGUI = new StaffGUI(scene);
             scene.setRoot(staffGUI.getRoot());
         });
     }

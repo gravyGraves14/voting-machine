@@ -1,6 +1,5 @@
 package edu.unm.gui;
 
-import edu.unm.votingdevice.GevGUI;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -8,12 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.Stage;
 
 public class StaffGUI {
 
     private final GridPane root;
-    public StaffGUI() {
+
+    public StaffGUI(Scene scene) {
         root = new GridPane();
         root.setStyle("-fx-background-color: rgb(195, 247, 200)");
         GUIUtils guiUtils = new GUIUtils();
@@ -52,6 +51,11 @@ public class StaffGUI {
         root.add(createStaff, 1, 1);
         root.add(openBallot, 1, 2);
         root.add(closeBallot, 1, 3);
+
+        createStaff.setOnAction(event -> {
+            CreateUserGUI createUserGUI = new CreateUserGUI(0);
+            scene.setRoot(createUserGUI.getRoot());
+        });
 
     }
 
