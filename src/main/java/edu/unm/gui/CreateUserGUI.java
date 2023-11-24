@@ -15,29 +15,8 @@ public class CreateUserGUI {
 
     // TODO: 11/21/2023 add confirm password label & passwordfields to
     public CreateUserGUI(int userType) {
-        root = new GridPane();
-        root.setStyle("-fx-background-color: rgb(195, 247, 200)");
         GUIUtils guiUtils = new GUIUtils();
-
-        int numRows = 5 ;
-        int numCols = 3;
-
-        for (int i = 0 ; i < numRows ; i++) {
-            RowConstraints rc = new RowConstraints();
-            rc.setPercentHeight(100.0 / numRows);
-            rc.setValignment(VPos.BOTTOM);
-            root.getRowConstraints().add(rc);
-        }
-
-        for (int i = 0 ; i < numCols ; i++) {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / numCols);
-            cc.setHalignment(HPos.CENTER);
-            root.getColumnConstraints().add(cc);
-        }
-
-        root.setHgap(5);
-        root.setVgap(10);
+        root = guiUtils.createRoot(5, 3);
 
         // Labels & Text fields
         Label firstName = new Label("First Name: ");

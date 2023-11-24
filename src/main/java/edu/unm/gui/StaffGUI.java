@@ -13,29 +13,8 @@ public class StaffGUI {
     private final GridPane root;
 
     public StaffGUI(Scene scene) {
-        root = new GridPane();
-        root.setStyle("-fx-background-color: rgb(195, 247, 200)");
         GUIUtils guiUtils = new GUIUtils();
-
-        int numRows = 5 ;
-        int numCols = 3;
-
-        for (int i = 0 ; i < numRows ; i++) {
-            RowConstraints rc = new RowConstraints();
-            rc.setPercentHeight(100.0 / numRows);
-            rc.setValignment(VPos.BOTTOM);
-            root.getRowConstraints().add(rc);
-        }
-
-        for (int i = 0 ; i < numCols ; i++) {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / numCols);
-            cc.setHalignment(HPos.CENTER);
-            root.getColumnConstraints().add(cc);
-        }
-
-        root.setHgap(10);
-        root.setVgap(10);
+        root = guiUtils.createRoot(5, 3);
 
         //Buttons
         Button createStaff = new Button("Create Staff");
@@ -54,6 +33,7 @@ public class StaffGUI {
 
         createStaff.setOnAction(event -> {
             CreateUserGUI createUserGUI = new CreateUserGUI(0);
+            guiUtils.addBackBtn(createUserGUI.getRoot(), root, 0 ,0, scene, 0);
             scene.setRoot(createUserGUI.getRoot());
         });
 
