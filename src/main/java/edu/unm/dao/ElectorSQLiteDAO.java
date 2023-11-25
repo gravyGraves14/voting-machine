@@ -141,7 +141,9 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             PreparedStatement ps = conn.prepareStatement(NEW_ELECTOR_QUERY);
             ps.setString(1, elector.getSocialNumber());
             ps.setString(2, elector.getName());
-            ps.setDate(3, elector.getDob());
+            String formattedDate = elector.getDob().toString();
+            //ps.setDate(3, elector.getDob());
+            ps.setString(3, formattedDate);
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
