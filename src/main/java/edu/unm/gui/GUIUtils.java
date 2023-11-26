@@ -24,14 +24,14 @@ public class GUIUtils {
     public void createBtn(Button btn, int width, int height, int fontSize) {
         btn.setPrefSize(width, height);
         btn.setStyle("-fx-background-color: rgb(248, 208, 216);" + "-fx-border-color: black;");
-   //     btn.setFont(Font.loadFont(mainFontPath, fontSize));
+        btn.setFont(Font.loadFont(mainFontPath, fontSize));
         btn.setTextFill(Color.BLACK);
     }
 
     public void createLabel(Label label, int width, int height, int fontSize) {
         label.setPrefSize(width, height);
         label.setStyle("-fx-background-color: rgb(248, 208, 216)");
-        //label.setFont(Font.loadFont(mainFontPath, fontSize));
+        label.setFont(Font.loadFont(mainFontPath, fontSize));
         label.setTextFill(Color.BLACK);
         label.setAlignment(Pos.CENTER);
     }
