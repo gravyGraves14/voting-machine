@@ -54,7 +54,14 @@ public class MainGUI {
             guiUtils.addBackBtn(staffGUI.getRoot(), root, 0 ,0, scene, 0);
             scene.setRoot(staffGUI.getRoot());
         });
+
+        votBtn.setOnAction(event -> {
+            voterReg voterReg = new voterReg(scene);
+            guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
+            scene.setRoot(voterReg.getRoot());
+        });
     }
+
 
     public void runStage() {
         primaryStage.setScene(scene);
