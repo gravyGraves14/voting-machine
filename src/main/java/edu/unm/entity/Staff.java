@@ -1,6 +1,6 @@
 package edu.unm.entity;
 
-public class Staff {
+public class Staff implements User{
     String firstName;
     String lastName;
     boolean isAdmin;

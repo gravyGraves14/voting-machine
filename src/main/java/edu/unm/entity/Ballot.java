@@ -2,11 +2,13 @@ package edu.unm.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * created by:
  * author: MichaelMillar
  */
+@XmlRootElement
 public class Ballot {
     private String ballotId;
     private final List<BallotQuestion> questions;

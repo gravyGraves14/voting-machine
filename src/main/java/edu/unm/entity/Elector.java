@@ -1,6 +1,8 @@
 package edu.unm.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 /**
  * Data Transfer Object containing user data from the {@code users} table.
  */
@@ -27,6 +29,20 @@ public class Elector implements User{
 
     public Date getDob(){
         return dob;
+    }
+
+    public boolean isQualifiedToVote(){
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = dob.toLocalDate();
+        Period age = Period.between(birthDate, today);
+        return age.getYears() >= 18;
+    }
+
+    public boolean isQualifiedToRegister(){
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = dob.toLocalDate();
+        Period age = Period.between(birthDate, today);
+        return age.getYears() >= 17;
     }
 
     @Override

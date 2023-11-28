@@ -31,9 +31,13 @@ public class UserApp {
 
             Elector newElector = new Elector(firstName, lastName, socialNumber, dob);
 
-
+            if (newElector.isQualifiedToVote()){
+                System.out.println("Eligible to Vote");
+            }else{
+                System.out.println("Not Qualified to Vote");
+            }
             // Add the elector
-            if (electorDAO.addElector(newElector)) {
+            if (newElector.isQualifiedToVote() && electorDAO.addElector(newElector)) {
                 System.out.println("Elector added successfully.");
             } else {
                 System.out.println("Failed to add elector.");
