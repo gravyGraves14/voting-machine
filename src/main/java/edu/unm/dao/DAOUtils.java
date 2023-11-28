@@ -14,7 +14,7 @@ import static java.util.logging.Level.WARNING;
  */
 public interface DAOUtils {
 
-    String JDBC_CONNECTION_STRING = "jdbc:sqlite:voters.db";
+    String JDBC_CONNECTION_STRING = "jdbc:sqlite:users.db";
 
 
     static Logger getLogger() {

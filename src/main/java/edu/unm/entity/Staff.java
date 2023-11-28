@@ -11,7 +11,7 @@ public class Staff {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
+        this.isAdmin = false;
     }
 
     public String getFirstName(){

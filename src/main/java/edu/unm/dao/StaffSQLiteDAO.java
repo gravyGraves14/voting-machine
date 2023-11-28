@@ -17,7 +17,7 @@ import static java.util.logging.Level.WARNING;
 public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
 
     /**
-     * SQL query to create the elector database table if it does not yet exist.
+     * SQL query to create the staff database table if it does not yet exist.
      */
     private static final String CREATE_STAFF_TABLE
             = "CREATE TABLE IF NOT EXISTS staff (\n"
@@ -112,7 +112,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
 
             rs = conn.getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
             if (rs.next()) {
-                getLogger().log(INFO, "[SQLStats] Electors table successfully created.");
+                getLogger().log(INFO, "[SQLStats] Staff table successfully created.");
 
                 PreparedStatement ps = conn.prepareStatement(STAFF_COUNT_QUERY);
                 rs = ps.executeQuery();
@@ -220,7 +220,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             return result;
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] ALL_ELECTORS failed({0}) in {1} ms.",
+            getLogger().log(WARNING, "[SQLStats] ALL_STAFF failed({0}) in {1} ms.",
                     new Object[]{e.getMessage().trim(), dur});
             throw e;
         }
