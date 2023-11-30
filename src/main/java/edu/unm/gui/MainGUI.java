@@ -1,10 +1,12 @@
 package edu.unm.gui;
 
+import edu.unm.entity.PaperBallot;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class MainGUI {
     private final GridPane root;
@@ -15,6 +17,17 @@ public class MainGUI {
         this.primaryStage = primaryStage;
         this.scene = scene;
         GUIUtils guiUtils = new GUIUtils();
+
+        //Paper Ballot setup
+        /**
+         * We might want to put the paper ballot
+         * setup somewhere else, just putting it here for now.
+         */
+        try {
+            PaperBallot paperBallot = new PaperBallot();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //Set up the Layout
         root = guiUtils.createRoot(6, 3);

@@ -91,10 +91,6 @@ public class GevGUI {
     }
 
     private void createQstnGUIs() {
-        //For testing
-        //String[] questions = {"Vote for the queen of CS", "Vote for the worst CS professor", "Vote for best Tech Titans Team Member"};
-        //String[][] qstnChcs = {{"Ester", "Emely"}, {"Darko", "Stefanovic"}, {"Ester", "Emely", "Manjil", "Mike", "Jacob", "Raju"}};
-
         Questions questions = new Questions();
 
         //Create question roots

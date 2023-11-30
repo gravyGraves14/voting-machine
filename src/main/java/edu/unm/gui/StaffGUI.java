@@ -1,5 +1,6 @@
 package edu.unm.gui;
 
+import edu.unm.entity.PaperBallot;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -7,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+
+import java.io.IOException;
 
 public class StaffGUI {
 
@@ -37,6 +40,9 @@ public class StaffGUI {
             scene.setRoot(createUserGUI.getRoot());
         });
 
+        openBallot.setOnAction(event -> {
+
+        });
     }
 
     public GridPane getRoot() { return root; }

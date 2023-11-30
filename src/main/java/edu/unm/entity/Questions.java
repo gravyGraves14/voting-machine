@@ -6,9 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+TODO: These questions need to go into a database somewhere
+This needs a function called readQuestionsAndChoicesFromFile() that
+has what is currently in the constructor. That function will populate the database.
+This function will be called from the open ballot button in StaffGUI.
+This way we don't need to re-read the questions file when we want access
+to the questions from different classes.
+ */
 public class Questions {
-    private List<String> questions;
-    private List<String[]> questionChoices;
+    private final List<String> questions;
+    private final List<String[]> questionChoices;
 
     public Questions() {
         String filePath = "src/main/resources/papers/questions.txt";
