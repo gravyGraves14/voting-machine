@@ -14,10 +14,12 @@ import static java.util.logging.Level.WARNING;
  */
 public interface DAOUtils {
 
-    String JDBC_CONNECTION_STRING = "jdbc:sqlite:voters.db";
+    String JDBC_CONNECTION_STRING = "jdbc:sqlite:users.db";
+
 
     static Logger getLogger() {
-        return Logger.getLogger(DAOUtils.class.getName());
+        String x = DAOUtils.class.getName();
+        return Logger.getLogger(x);
     }
 
     /**
@@ -43,6 +45,9 @@ public interface DAOUtils {
 
         return conn;
     }
+
+
+
 
     /**
      * Null-safe way to convert a {@link LocalDateTime} value to a {@link Timestamp}

@@ -42,14 +42,17 @@ public class App extends Application{
             System.out.println("Enter social number:");
             String socialNumber = scanner.nextLine();
 
-            System.out.println("Enter name:");
-            String name = scanner.nextLine();
+            System.out.println("Enter First Name:");
+            String firstName = scanner.nextLine();
+
+            System.out.println("Enter Last Name:");
+            String lastName = scanner.nextLine();
 
             System.out.println("Enter date of birth (YYYY-MM-DD):");
             String dobString = scanner.nextLine();
             Date dob = Date.valueOf(dobString);
 
-            Elector newElector = new Elector(name, socialNumber, dob);
+            Elector newElector = new Elector(firstName, lastName, socialNumber, dob);
 
             // Add the elector
             if (electorDAO.addElector(newElector)) {

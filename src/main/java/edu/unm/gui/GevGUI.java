@@ -5,7 +5,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class GevGUI {
 
@@ -14,6 +20,11 @@ public class GevGUI {
     private final Scene scene;
     private int evType = 0;
     private String voter;
+    private List<String> questions;
+    private List<String[]> questionChoices;
+    private final String myFilePath = "src/main/java/edu/unm/gui/questions.txt";
+
+
 
     public GevGUI(Scene scene) {
         this.scene = scene;
@@ -85,24 +96,79 @@ public class GevGUI {
         return choiceRoot;
     }
 
+    /**
+     * Class I'm adding to see if we can read
+     * a text file of questions. Still not sure
+     * if this is the best place to put this method.
+     * - Jacob
+     */
+        public void readQuestionsAndChoicesFromFile(String filePath) {
+
+            questions = new ArrayList<>();
+            questionChoices = new ArrayList<>();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                StringBuilder currentQuestion = new StringBuilder();
+                List<String> currentChoices = new ArrayList<>();
+                while ((line = reader.readLine()) != null) {
+                    // If the line starts with a number, it is the beginning of a new question
+                    if (line.matches("\\d+\\..*")) {
+                        if (currentQuestion.length() > 0) {
+                            // Save the previous question and choices
+                            questions.add(currentQuestion.toString());
+                            questionChoices.add(currentChoices.toArray(new String[currentChoices.size()]));
+                            // Reset for the new Question
+                            currentQuestion = new StringBuilder();
+                            currentChoices.clear();
+                        }
+
+                        // Add the new question
+                        currentQuestion.append(line.substring(line.indexOf('.') + 1).trim());
+                    } else if (line.startsWith("-")) {
+                        // If the line starts with a dash, it is a choice
+                        currentChoices.add(line.substring(1).trim());
+                    }
+                }
+                // Add the last question and choices after reaching the end of the file
+                if (currentQuestion.length() > 0) {
+                    questions.add(currentQuestion.toString());
+                    questionChoices.add(currentChoices.toArray(new String[0]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    /**
+     * The class I added above communicates
+     * with createQstnGUIs. I took a picture just
+     * in case this decides to act stupid.
+     * - Jacob
+     */
+
     private void createQstnGUIs() {
         //For testing
-        String[] questions = {"Vote for the queen of CS", "Vote for the worst CS professor", "Vote for best Tech Titans Team Member"};
-        String[][] qstnChcs = {{"Ester", "Emely"}, {"Darko", "Stefanovic"}, {"Ester", "Emely", "Manjil", "Mike", "Jacob", "Raju"}};
+        //String[] questions = {"Vote for the queen of CS", "Vote for the worst CS professor", "Vote for best Tech Titans Team Member"};
+        //String[][] qstnChcs = {{"Ester", "Emely"}, {"Darko", "Stefanovic"}, {"Ester", "Emely", "Manjil", "Mike", "Jacob", "Raju"}};
+
+        readQuestionsAndChoicesFromFile(myFilePath);
 
         //Create question roots
-        QuestionGUI[] questionGUIS = new QuestionGUI[questions.length];
-        for (int i = 0; i < questions.length; i++) {
-            questionGUIS[i] = new QuestionGUI(i + 1, questions[i], qstnChcs[i].length, qstnChcs[i]);
+        QuestionGUI[] questionGUIS = new QuestionGUI[questions.size()];
+        for (int i = 0; i < questions.size(); i++) {
+            String question = questions.get(i);
+            String[] choices = questionChoices.get(i);
+            questionGUIS[i] = new QuestionGUI(i + 1, question, choices.length, choices);
         }
 
         //Back and forward arrows
-        for (int i = 0; i < questions.length; i++) {
+        for (int i = 0; i < questions.size(); i++) {
             if (i == 0) {
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), createChoiceRoot(), 0, 0, scene, 0);
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), questionGUIS[i + 1].getRoot(), 0, 2, scene, 1);
             }
-            else if (i == questions.length - 1) {
+            else if (i == questions.size() - 1) {
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), questionGUIS[i - 1].getRoot(), 0, 0, scene, 0);
 
                 GridPane submitRoot = createSubmitRoot(questionGUIS);

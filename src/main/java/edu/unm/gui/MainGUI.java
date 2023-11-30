@@ -49,6 +49,12 @@ public class MainGUI {
             scene.setRoot(gevGUI.getRoot());
         });
 
+        tabBtn.setOnAction(event -> {
+            TabulationGUI tabulationGUI = new TabulationGUI(scene);
+            guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+            scene.setRoot(tabulationGUI.getRoot());
+        });
+
         staffBtn.setOnAction(event -> {
             StaffGUI staffGUI = new StaffGUI(scene);
             guiUtils.addBackBtn(staffGUI.getRoot(), root, 0 ,0, scene, 0);

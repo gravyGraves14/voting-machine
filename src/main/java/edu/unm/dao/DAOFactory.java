@@ -74,7 +74,7 @@ public abstract class DAOFactory {
 
     /**
      * Given a class token for a DAO interface class, returns a class object for
-     * the respective implementation class, for example, {@link ElectorSQLiteDAO}.
+     * the respective implementation class, for example, {@link ElectorSQLiteDAO} {@link StaffSQLiteDAO}.
      * This simply injects an {@code "SQLite"} in front of the DAO suffix that
      * all DAO interfaces should have, and finds the corresponding class on the
      * classpath using reflection.

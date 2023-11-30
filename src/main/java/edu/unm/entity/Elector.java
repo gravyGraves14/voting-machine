@@ -1,35 +1,54 @@
 package edu.unm.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 /**
  * Data Transfer Object containing user data from the {@code users} table.
  */
-public class Elector {
-    private final String name;
-    private final String socialNumber;
+public class Elector implements User{
+    private final String firstName;
+    private final String lastName;
+    private final String id;
     private final Date dob;
 
-    public Elector(String name, String username, Date dob) {
-        this.name = name;
-        this.socialNumber = username;
+    public Elector(String firstName, String lastName, String id, Date dob) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
         this.dob = dob;
     }
 
+    public String getFirstName(){return firstName;}
 
-    public String getName(){return name;}
+    public String getLastName(){return lastName;}
 
-    public String getSocialNumber() {
-        return socialNumber;
+    public String getId() {
+        return id;
     }
 
     public Date getDob(){
         return dob;
     }
 
+    public boolean isQualifiedToVote(){
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = dob.toLocalDate();
+        Period age = Period.between(birthDate, today);
+        return age.getYears() >= 18;
+    }
+
+    public boolean isQualifiedToRegister(){
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = dob.toLocalDate();
+        Period age = Period.between(birthDate, today);
+        return age.getYears() >= 17;
+    }
+
     @Override
     public String toString() {
         return "Elector{" +
-                "Elector Social Number ='" + socialNumber + '\'' +
+                "Elector ID ='" + id + '\'' +
                 ",Date of Birth='" + dob + '\'' +
                 '}';
     }

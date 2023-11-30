@@ -1,150 +1,125 @@
 package edu.unm.dao;
 
 
-import edu.unm.entity.Elector;
+import edu.unm.entity.Staff;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-import java.text.ParseException;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
 
 /**
- * Standard SQLite implementation of {@link ElectorDAO}
+ * Standard SQLite implementation of {@link StaffDAO}
  */
-public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
+public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
 
     /**
-     * SQL query to create the elector database table if it does not yet exist.
+     * SQL query to create the staff database table if it does not yet exist.
      */
-    private static final String CREATE_ELECTOR_TABLE
-            = "CREATE TABLE IF NOT EXISTS electors (\n"
+    private static final String CREATE_STAFF_TABLE
+            = "CREATE TABLE IF NOT EXISTS staff (\n"
             + "       ID TEXT PRIMARY KEY,\n"
             + "       FirstName TEXT NOT NULL,\n"
-            + "       LastName TEXT NOT NULL,\n"
-            + "       date_of_birth TEXT NOT NULL\n"
+            + "       LastName TEXT NOT NULL\n"
             + ");";
 
     /**
      * SQL query to obtain all users from the {@code users} table.
      */
-    private static final String ALL_ELECTORS_QUERY
-            = "select /* ALL_ELECTORS_QUERY */\n"
+    private static final String ALL_STAFF_QUERY
+            = "select /* ALL_STAFF_QUERY */\n"
             + "          ID,\n"
             + "          firstName,\n"
-            + "          lastName,\n"
-            + "          date_of_birth\n"
-            + "from      electors;";
+            + "          lastName\n"
+            + "from      staff;";
 
-    private static final String FIND_ELECTOR_BY_SOCIAL_QUERY
-            = "select /* ELECTOR_BY_SOCIAL */\n"
+    private static final String FIND_STAFF_BY_ID_QUERY
+            = "select /* STAFF_BY_ID */\n"
             + "          ID,\n"
             + "          firstName,\n"
             + "          lastName,\n"
-            + "          date_of_birth\n"
-            + "from      electors\n"
+            + "from      staff\n"
             + "where     ID = ?";
 
     /**
      * SQL query to insert a new user into the {@code users} table
      */
-    private static final String NEW_ELECTOR_QUERY
-            = "insert into electors( /* NEW_ELECTOR */\n"
+    private static final String NEW_STAFF_QUERY
+            = "insert into staff( /* NEW_STAFF */\n"
             + "            ID,\n"
             + "            firstName,\n"
-            + "            lastName,\n"
-            + "            date_of_birth)\n"
-            + "values (?, ?, ?, ?);";
+            + "            lastName)\n"
+            + "values (?, ?, ?);";
 
     /**
      * SQL query to update a user from the {@code users} table
      */
-    private static final String UPDATE_ELECTOR_QUERY
-            = "update electors SET /* UPDATE_ELECTOR */\n"
+    private static final String UPDATE_STAFF_QUERY
+            = "update staff SET /* UPDATE_STAFF */\n"
             + "             ID = ?,\n"
             + "            firstName,\n"
-            + "            lastName,\n"
-            + "             date_of_birth = ?\n"
+            + "            lastName)\n"
             + "where        ID = ?;";
 
     /**
      * SQL query to remove a user from the {@code users} table
      */
-    private static final String REMOVE_ELECTOR_QUERY
-            = "delete from electors /* REMOVE_ELECTOR */\n"
+    private static final String REMOVE_STAFF_QUERY
+            = "delete from staff /* REMOVE_STAFF */\n"
             + "where       ID = ?;";
 
-    private static final String ELECTOR_COUNT_QUERY
-            = "select count(*) as total from electors;";
+    private static final String STAFF_COUNT_QUERY
+            = "select count(*) as total from staff;";
 
-    public ElectorSQLiteDAO(Connection conn) {
+    public StaffSQLiteDAO(Connection conn) {
         super(conn);
         initialSetup();
     }
 
     private static Logger getLogger() {
-        return Logger.getLogger(ElectorSQLiteDAO.class.getName());
+        return Logger.getLogger(StaffSQLiteDAO.class.getName());
     }
 
     /**
-     * Mapper method that maps a row of the ResultSet into a {@link Elector} object.
+     * Mapper method that maps a row of the ResultSet into a {@link Staff} object.
      *
      * @param rs query result row
-     * @return the mapped {@link Elector} object
+     * @return the mapped {@link Staff} object
      * @throws SQLException if obtaining data from ResultSet fails
      */
-    private static Elector mapElector(ResultSet rs) throws SQLException {
-        String id = rs.getString(1);
-        String firstName = rs.getString(2);
-        String lastName = rs.getString(3);
-        String date = rs.getString(4);
+    private static Staff mapStaff(ResultSet rs) throws SQLException {
+        String firstName = rs.getString(1);
+        String lastName = rs.getString(2);
+        String id = rs.getString(3);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date dob = null;
+        Staff staff = new Staff(firstName, lastName, id);
 
-        try {
-            java.util.Date parsedDate = dateFormat.parse(date);
-            dob = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            // Handle parsing exception, e.g., log an error
-            e.printStackTrace();
-        }
-
-
-        Elector elector = new Elector(firstName, lastName, id, dob);
-        //user.setHashedPIN(hashedPIN);
-        //user.setAdmin(admin);
-
-        return elector;
+        return staff;
     }
 
     @Override
     public void initialSetup() {
         int userCount = 0;
         try (Connection conn = DAOUtils.getConnection()) {
-            ResultSet rs = conn.getMetaData().getTables(null, null, "electors", new String[] {"TABLE"});
+            ResultSet rs = conn.getMetaData().getTables(null, null, "staff", new String[] {"TABLE"});
             if (!rs.next()) { // table does not exist
-                PreparedStatement ps = conn.prepareStatement(CREATE_ELECTOR_TABLE);
+                PreparedStatement ps = conn.prepareStatement(CREATE_STAFF_TABLE);
                 ps.execute();
             }
 
             rs = conn.getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
             if (rs.next()) {
-                getLogger().log(INFO, "[SQLStats] Electors table successfully created.");
+                getLogger().log(INFO, "[SQLStats] Staff table successfully created.");
 
-                PreparedStatement ps = conn.prepareStatement(ELECTOR_COUNT_QUERY);
+                PreparedStatement ps = conn.prepareStatement(STAFF_COUNT_QUERY);
                 rs = ps.executeQuery();
                 userCount = rs.getInt("total");
 
             }
+
         } catch (SQLException e) {
             getLogger().log(WARNING, "[SQLStats] User table failed to be created. {0}",
                     e.getMessage().trim());
@@ -153,17 +128,14 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
     }
 
     @Override
-    public boolean addElector(Elector elector) throws SQLException {
+    public boolean addStaff(Staff staff) throws SQLException {
         long start = System.currentTimeMillis();
 
         try (Connection conn = DAOUtils.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(NEW_ELECTOR_QUERY);
-            ps.setString(1, elector.getId());
-            ps.setString(2, elector.getFirstName());
-            ps.setString(3, elector.getLastName());
-            String formattedDate = elector.getDob().toString();
-            //ps.setDate(3, elector.getDob());
-            ps.setString(4, formattedDate);
+            PreparedStatement ps = conn.prepareStatement(NEW_STAFF_QUERY);
+            ps.setString(1, staff.getId());
+            ps.setString(2, staff.getFirstName());
+            ps.setString(3, staff.getLastName());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -182,15 +154,14 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
     }
 
     @Override
-    public boolean updateElector(Elector elector) throws SQLException {
+    public boolean updateStaff(Staff staff) throws SQLException {
         long start = System.currentTimeMillis();
 
         try (Connection conn = DAOUtils.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(UPDATE_ELECTOR_QUERY);
-            ps.setString(1, elector.getId());
-            ps.setString(2, elector.getFirstName());
-            ps.setString(3, elector.getLastName());
-            ps.setDate(4, elector.getDob());
+            PreparedStatement ps = conn.prepareStatement(UPDATE_STAFF_QUERY);
+            ps.setString(1, staff.getId());
+            ps.setString(2, staff.getFirstName());
+            ps.setString(3, staff.getLastName());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -209,12 +180,12 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
     }
 
     @Override
-    public boolean removeElector(Elector elector) throws SQLException {
+    public boolean removeStaff(Staff staff) throws SQLException {
         long start = System.currentTimeMillis();
 
         try (Connection conn = DAOUtils.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(REMOVE_ELECTOR_QUERY);
-            ps.setString(1, elector.getId());
+            PreparedStatement ps = conn.prepareStatement(REMOVE_STAFF_QUERY);
+            ps.setString(1, staff.getId());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -233,14 +204,14 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
     }
 
     @Override
-    public List<Elector> listAllElectors() throws SQLException {
+    public List<Staff> listAllStaff() throws SQLException {
         long start = System.currentTimeMillis();
 
         try (Connection conn = DAOUtils.getConnection()) {
-            List<Elector> result = DAOUtils.queryForList(conn,
-                    ALL_ELECTORS_QUERY,
+            List<Staff> result = DAOUtils.queryForList(conn,
+                    ALL_STAFF_QUERY,
                     null,
-                    ElectorSQLiteDAO::mapElector);
+                    StaffSQLiteDAO::mapStaff);
 
             long dur = System.currentTimeMillis() - start;
             getLogger().log(INFO, "[SQLStats] ALL_USERS {0} row(s) in {1} ms.",
@@ -249,44 +220,29 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             return result;
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] ALL_ELECTORS failed({0}) in {1} ms.",
+            getLogger().log(WARNING, "[SQLStats] ALL_STAFF failed({0}) in {1} ms.",
                     new Object[]{e.getMessage().trim(), dur});
             throw e;
         }
     }
 
     @Override
-    public Optional<Elector> getElectorBySocial(String id) throws SQLException {
+    public Optional<Staff> getStaffById(String id) throws SQLException {
         long start = System.currentTimeMillis();
 
         try (Connection conn = DAOUtils.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(FIND_ELECTOR_BY_SOCIAL_QUERY);
+            PreparedStatement ps = conn.prepareStatement(FIND_STAFF_BY_ID_QUERY);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Optional.of(mapElector(rs));
+                return Optional.of(mapStaff(rs));
             }
             return Optional.empty();
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] ELECTOR_BY_SOCIAL failed({0}) in {1} ms.",
+            getLogger().log(WARNING, "[SQLStats] STAFF_BY_ID failed({0}) in {1} ms.",
                     new Object[]{e.getMessage().trim(), dur});
             throw e;
         }
-    }
-
-    public boolean isAlreadyRegistered(Elector elector) throws SQLException {
-        List<Elector> allRegisteredVoters = listAllElectors();
-
-        for (int i = 0; i < allRegisteredVoters.size(); i++){
-            Elector ele = allRegisteredVoters.get(i);
-            if (isSame(elector, ele)) return true;
-        }
-        return false;
-    }
-
-    private boolean isSame(Elector elector1, Elector elector2){
-        if (elector1.getId().equals(elector2.getId())) return true;
-        return false;
     }
 }
