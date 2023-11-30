@@ -55,6 +55,7 @@ public class voterReg {
         guiUtils.createTextField(lastNameField, 250, 100, 25);
         guiUtils.createTextField(dobField,250,100,25);
         guiUtils.createTextField(socialField,250,100,25);
+        guiUtils.createBtn(registerButton,250,100,25);
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,7 +121,7 @@ public class voterReg {
         root.add(dobField, 1, 3);
         root.add(social, 0, 4);
         root.add(socialField, 1, 4);
-        root.add(registerButton, 0, 5, 2, 1);
+        root.add(registerButton, 2, 5);
     }
 
     private void showPopup(String title, String content) {
