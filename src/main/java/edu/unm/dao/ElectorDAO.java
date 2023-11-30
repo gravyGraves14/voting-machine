@@ -61,4 +61,6 @@ public interface ElectorDAO extends BaseDAO {
      * @throws SQLException if database query could not be executed
      */
     Optional<Elector> getElectorBySocial(String name) throws SQLException;
+
+    boolean isAlreadyRegistered(Elector elector) throws SQLException;
 }

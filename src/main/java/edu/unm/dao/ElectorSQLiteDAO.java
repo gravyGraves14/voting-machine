@@ -8,9 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.text.ParseException;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
@@ -100,11 +102,21 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
      * @throws SQLException if obtaining data from ResultSet fails
      */
     private static Elector mapElector(ResultSet rs) throws SQLException {
-        String firstName = rs.getString(1);
-        String lastName = rs.getString(2);
-        String id = rs.getString(3);
-       // String dob = rs.getString(4);
-        Date dob = rs.getDate(4);
+        String id = rs.getString(1);
+        String firstName = rs.getString(2);
+        String lastName = rs.getString(3);
+        String date = rs.getString(4);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dob = null;
+
+        try {
+            java.util.Date parsedDate = dateFormat.parse(date);
+            dob = new java.sql.Date(parsedDate.getTime());
+        } catch (ParseException e) {
+            // Handle parsing exception, e.g., log an error
+            e.printStackTrace();
+        }
 
 
         Elector elector = new Elector(firstName, lastName, id, dob);
@@ -261,5 +273,20 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
                     new Object[]{e.getMessage().trim(), dur});
             throw e;
         }
+    }
+
+    public boolean isAlreadyRegistered(Elector elector) throws SQLException {
+        List<Elector> allRegisteredVoters = listAllElectors();
+
+        for (int i = 0; i < allRegisteredVoters.size(); i++){
+            Elector ele = allRegisteredVoters.get(i);
+            if (isSame(elector, ele)) return true;
+        }
+        return false;
+    }
+
+    private boolean isSame(Elector elector1, Elector elector2){
+        if (elector1.getId().equals(elector2.getId())) return true;
+        return false;
     }
 }
