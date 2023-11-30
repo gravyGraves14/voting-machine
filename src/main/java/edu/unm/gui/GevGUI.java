@@ -22,7 +22,7 @@ public class GevGUI {
         root = guiUtils.createRoot(4, 3);
 
         //Create gui items
-        Label idLabel = new Label("Voter ID:");
+        Label idLabel = new Label("SSN:");
         TextField idField = new TextField();
         Button enterBtn = new Button("Enter");
 
