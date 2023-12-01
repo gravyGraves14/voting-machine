@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.sql.ResultSet;
 
 
 /**
@@ -90,14 +92,25 @@ public class voterReg {
 
 
             Elector elector = new Elector(first, last, id, dob);
+            Optional<Elector> electors;
             try {
-                if (electorDAO.isAlreadyRegistered(elector)){
-                    showPopup("Already Registered", "You have already registered.");
-                    return;
-                }
+                 electors = electorDAO.getElectorBySocial(elector.getId());
             } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            if (electors.isPresent()){
+                showPopup("Already Registered", "You have already registered.");
                 return;
             }
+//            try {
+//                if (electorDAO.isAlreadyRegistered(elector.getId())){
+//                    showPopup("Already Registered", "You have already registered.");
+//                    return;
+//                }
+//            } catch (SQLException ex) {
+//                return;
+//            }
 
             if (!elector.isQualifiedToRegister()){
                 showPopup("Ineligible Registration", "You must be at least 17 years old to register.");

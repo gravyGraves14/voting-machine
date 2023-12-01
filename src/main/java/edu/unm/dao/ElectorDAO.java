@@ -62,5 +62,5 @@ public interface ElectorDAO extends BaseDAO {
      */
     Optional<Elector> getElectorBySocial(String name) throws SQLException;
 
-    boolean isAlreadyRegistered(Elector elector) throws SQLException;
+    boolean isAlreadyRegistered(String id) throws SQLException;
 }

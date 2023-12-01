@@ -1,16 +1,23 @@
 package edu.unm.gui;
 
+import edu.unm.dao.DAOFactory;
+import edu.unm.dao.DAOUtils;
+import edu.unm.dao.ElectorDAO;
+import edu.unm.entity.Elector;
 import edu.unm.entity.Questions;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Optional;
 
 public class GevGUI {
 
@@ -18,7 +25,7 @@ public class GevGUI {
     private final GUIUtils guiUtils = new GUIUtils();
     private final Scene scene;
     private int evType = 0;
-    private String voter;
+    private String voterId;
 
     public GevGUI(Scene scene) {
         this.scene = scene;
@@ -41,18 +48,31 @@ public class GevGUI {
 
         //Button actions
         enterBtn.setOnAction(event -> {
-            /*needs backend:
-            authentication
-            set voter as voted
-             */
-//            if (!Objects.equals(idField.getText(), "111111")) {
-//                guiUtils.createPopUp("Invalid Voter ID");
-//            }
-//            else {
-                voter = idField.getText();
-                idField.setText("");
-                scene.setRoot(createChoiceRoot());
-//            }
+            voterId = idField.getText();
+            ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
+            List<Elector> allElectorList = new ArrayList<>();
+            try {
+                allElectorList = electorDAO.listAllElectors();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            Elector elector = getElector(voterId, allElectorList);
+
+            if (elector == null){
+                showPopup("Not Registered", "You have not registered to vote.");
+                return;
+            }
+
+            if (!elector.isQualifiedToVote()){
+                showPopup("Ineligible Voter", "You must be at least 18 years to vote.");
+                return;
+            }
+
+            //Remove this pop up and call function that displays the questions and allows elector to vote
+            showPopup("Eligible", "Your are eligible to vote");
+
+
         });
     }
 
@@ -156,6 +176,20 @@ public class GevGUI {
         guiUtils.addBackBtn(submitRoot, root, 0, 0, scene, 0);
 
         return submitRoot;
+    }
+
+    public static Elector getElector(String id, List<Elector> allElectors){
+        for (Elector elector : allElectors) {
+            if (elector.getId().equals(id)) return elector;
+        }
+        return null;
+    }
+
+    private void showPopup(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public GridPane getRoot() {

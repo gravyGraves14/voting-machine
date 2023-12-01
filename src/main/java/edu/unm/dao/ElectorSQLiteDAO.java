@@ -275,18 +275,15 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
         }
     }
 
-    public boolean isAlreadyRegistered(Elector elector) throws SQLException {
+    public boolean isAlreadyRegistered(String id) throws SQLException {
         List<Elector> allRegisteredVoters = listAllElectors();
 
         for (int i = 0; i < allRegisteredVoters.size(); i++){
             Elector ele = allRegisteredVoters.get(i);
-            if (isSame(elector, ele)) return true;
+            if (ele.getId().equals(id)) return true;
         }
         return false;
     }
 
-    private boolean isSame(Elector elector1, Elector elector2){
-        if (elector1.getId().equals(elector2.getId())) return true;
-        return false;
-    }
+
 }
