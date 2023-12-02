@@ -23,7 +23,9 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             = "CREATE TABLE IF NOT EXISTS staff (\n"
             + "       ID TEXT PRIMARY KEY,\n"
             + "       FirstName TEXT NOT NULL,\n"
-            + "       LastName TEXT NOT NULL\n"
+            + "       LastName TEXT NOT NULL,\n"
+            + "       isAdmin INTEGER NOT NULL,\n"
+            + "       Password TEXT NOT NULL\n"
             + ");";
 
     /**
@@ -33,7 +35,9 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             = "select /* ALL_STAFF_QUERY */\n"
             + "          ID,\n"
             + "          firstName,\n"
-            + "          lastName\n"
+            + "          lastName,\n"
+            + "          isAdmin,\n"
+            + "          password\n"
             + "from      staff;";
 
     private static final String FIND_STAFF_BY_ID_QUERY
@@ -41,6 +45,8 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + "          ID,\n"
             + "          firstName,\n"
             + "          lastName,\n"
+            + "          isAdmin,\n"
+            + "          password\n"
             + "from      staff\n"
             + "where     ID = ?";
 
@@ -51,8 +57,10 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             = "insert into staff( /* NEW_STAFF */\n"
             + "            ID,\n"
             + "            firstName,\n"
-            + "            lastName)\n"
-            + "values (?, ?, ?);";
+            + "            lastName,\n"
+            + "            isAdmin,\n"
+            + "            password)\n"
+            + "values (?, ?, ?, ?, ?);";
 
     /**
      * SQL query to update a user from the {@code users} table
@@ -61,7 +69,9 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             = "update staff SET /* UPDATE_STAFF */\n"
             + "             ID = ?,\n"
             + "            firstName,\n"
-            + "            lastName)\n"
+            + "            lastName,\n"
+            + "            isAdmin,\n"
+            + "            password)\n"
             + "where        ID = ?;";
 
     /**
@@ -94,8 +104,10 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
         String firstName = rs.getString(1);
         String lastName = rs.getString(2);
         String id = rs.getString(3);
-
-        Staff staff = new Staff(firstName, lastName, id);
+        int isAdmin = rs.getInt(4);
+        String password = rs.getString(5);
+        boolean admin = isAdmin != 0;
+        Staff staff = new Staff(firstName, lastName, id, admin, password);
 
         return staff;
     }
@@ -136,6 +148,8 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             ps.setString(1, staff.getId());
             ps.setString(2, staff.getFirstName());
             ps.setString(3, staff.getLastName());
+            ps.setInt(4, staff.isAdmin() ? 1 : 0);
+            ps.setString(5, staff.getPassword());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -162,6 +176,8 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             ps.setString(1, staff.getId());
             ps.setString(2, staff.getFirstName());
             ps.setString(3, staff.getLastName());
+            ps.setInt(4, staff.isAdmin() ? 1 : 0);
+            ps.setString(5, staff.getPassword());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;

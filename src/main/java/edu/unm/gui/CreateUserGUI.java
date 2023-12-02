@@ -17,6 +17,7 @@ import java.util.Random;
 public class CreateUserGUI {
     private final GridPane root;
 
+
     // TODO: 11/21/2023 add confirm password label & passwordfields to
     public CreateUserGUI(int userType) {
         StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
@@ -34,6 +35,7 @@ public class CreateUserGUI {
         Label passWord = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
 
+        CheckBox adminCheckBox = new CheckBox("Admin");
 
         guiUtils.createLabel(firstName,250,100,25);
         guiUtils.createLabel(lastName,250,100,25);
@@ -41,19 +43,24 @@ public class CreateUserGUI {
         guiUtils.createTextField(lastNameField,250,100,25);
         guiUtils.createLabel(passWord,250,100,25);
         guiUtils.createPasswordField(passwordField,250,100,25);
+        guiUtils.createCheckBox(adminCheckBox, 25);
 
         // Buttons
         Button enterBtn = new Button("Submit");
         guiUtils.createBtn(enterBtn,250,100,25);
 
+
+
         enterBtn.setOnAction(event -> {
             String first = firstNameField.getText();
             String last = lastNameField.getText();
             String password = passwordField.getText();
-            String id = generateRandomString(9);
-            System.out.println(password);
+            String id = createId(first, last);      //generateRandomString(9);
+            boolean isAdmin = adminCheckBox.isSelected();
 
-            Staff staff = new Staff(id, first, last);
+            System.out.println(isAdmin);
+
+            Staff staff = new Staff(id, first, last, isAdmin, password);
 
             try {
                 staffDAO.addStaff(staff);
@@ -72,6 +79,7 @@ public class CreateUserGUI {
         root.add(lastNameField,1,2);
         root.add(passWord,0,3);
         root.add(passwordField,1,3);
+        root.add(adminCheckBox, 0, 4);
         root.add(enterBtn,2,4);
 
 
@@ -92,6 +100,19 @@ public class CreateUserGUI {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private static String createId(String firstName, String lastName) {
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            return "Invalid ID";
+        }
+        char firstLetterOfFirstName = firstName.charAt(0);
+
+        char firstLetterLowercase = Character.toLowerCase(firstLetterOfFirstName);
+
+        String id = firstLetterLowercase + lastName.toLowerCase();
+
+        return id;
     }
 
     public GridPane getRoot() { return root; }

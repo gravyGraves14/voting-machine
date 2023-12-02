@@ -60,7 +60,15 @@ public class UserApp {
             System.out.println("Enter Last Name:");
             String lastName = scanner.nextLine();
 
-            Staff staff = new Staff(id, firstName, lastName);
+            System.out.println("Enter Password:");
+            String password = scanner.nextLine();
+
+            System.out.println("Are you admin(true or false only):");
+            String admin = scanner.nextLine();
+
+            boolean isAdmin = Boolean.parseBoolean(admin);
+
+            Staff staff = new Staff(id, firstName, lastName, isAdmin, password);
             staff.setAdmin(true);
             staff.setPassword("abcdef");
 
