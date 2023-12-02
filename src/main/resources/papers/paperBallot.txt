@@ -1,0 +1,37 @@
+*****************************************************************
+
+BALLOT
+Please vote for at most one option in each category.
+Place an 'x' in the brackets next to the option you select.
+
+*****************************************************************
+
+Social Security Number:
+
+*****************************************************************
+
+Question #1
+Vote for King of CS
+[ ] Jacob
+[ ] Manjil
+[ ] Raju
+[ ] Mike
+
+*****************************************************************
+
+Question #2
+Vote for the worst CS professor
+[ ] Darko
+[ ] Stefanovic
+
+*****************************************************************
+
+Question #3
+Best Fruit
+[ ] Mango
+[ ] Apple
+[ ] Pear
+[ ] Orange
+
+*****************************************************************
+
