@@ -24,7 +24,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + "       ID TEXT PRIMARY KEY,\n"
             + "       FirstName TEXT NOT NULL,\n"
             + "       LastName TEXT NOT NULL,\n"
-            + "       IsAdmin INTEGER NOT NULL,\n"
+            + "       isAdmin INTEGER NOT NULL,\n"
             + "       Password TEXT NOT NULL\n"
             + ");";
 
@@ -57,7 +57,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             = "insert into staff( /* NEW_STAFF */\n"
             + "            ID,\n"
             + "            firstName,\n"
-            + "            lastName\n"
+            + "            lastName,\n"
             + "            isAdmin,\n"
             + "            password)\n"
             + "values (?, ?, ?, ?, ?);";
