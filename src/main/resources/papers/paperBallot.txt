@@ -32,7 +32,7 @@ Question #3
 Best Cats
 [ ] Black
 [ ] Grey
-[ ] Simease
+[ ] Siamese
 [ ] Orange
 [ ] Other: 
 

@@ -85,7 +85,6 @@ public class MainGUI {
         });
     }
 
-
     public void runStage() {
         primaryStage.setScene(scene);
         primaryStage.show();

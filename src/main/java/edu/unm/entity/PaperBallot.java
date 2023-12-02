@@ -72,7 +72,7 @@ public class PaperBallot {
                 currentChunk.append(line).append("\n");
             }
         }
-        if (!currentChunk.toString().matches("Social Security Number: \\\\d{9}")) {
+        if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n")) {
             return false;
         }
 
