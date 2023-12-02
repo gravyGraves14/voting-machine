@@ -6,7 +6,6 @@ import edu.unm.entity.Elector;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Alert;
@@ -15,10 +14,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.sql.ResultSet;
 
 
 /**
@@ -27,10 +23,10 @@ import java.sql.ResultSet;
  * to talk to front end to see how this should communicate
  * with backend
  */
-public class voterReg {
+public class VoterReg {
     private final GridPane root;
     private final GUIUtils guiUtils = new GUIUtils();
-    public voterReg(Scene scene) {
+    public VoterReg(Scene scene) {
         ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
         root = guiUtils.createRoot(6, 3);
 

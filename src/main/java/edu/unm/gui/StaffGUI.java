@@ -4,6 +4,7 @@ import edu.unm.entity.PaperBallot;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -41,12 +42,18 @@ public class StaffGUI {
         });
 
         openBallot.setOnAction(event -> {
-
             // 1. Authenticate user - they MUST be an admin-level user
+
             // 2. Before ballot is open, users cannot use the following buttons:
             //    -> Electronic Voting
             //    -> Tabulator
             // 3. While ballot is open, users can use ALL buttons
+            Configuration.setGevEnabled(true);
+            Configuration.setTabEnabled(true);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("FEATURE ENABLED");
+            alert.setContentText("Ballot is now open, voting can begin.");
+            alert.showAndWait();
         });
 
         closeBallot.setOnAction(event -> {
@@ -54,6 +61,12 @@ public class StaffGUI {
             // 2. After ballot is closed, users cannot use the following buttons:
             //    -> Electronic Voting
             //    -> Tabulator
+            Configuration.setGevEnabled(false);
+            Configuration.setTabEnabled(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("FEATURE DISABLED");
+            alert.setContentText("Ballot is now closed, voting has ended.");
+            alert.showAndWait();
         });
     }
 

@@ -58,9 +58,7 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
-            System.out.println(Configuration.isGevEnabled());
             if(Configuration.isGevEnabled()){
-                System.out.println(Configuration.isGevEnabled());
                 GevGUI gevGUI = new GevGUI(scene);
                 guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
                 scene.setRoot(gevGUI.getRoot());
@@ -71,13 +69,21 @@ public class MainGUI {
                 alert.setContentText("Voting is currently closed.");
                 alert.showAndWait();
             }
-
         });
 
         tabBtn.setOnAction(event -> {
-            TabulationGUI tabulationGUI = new TabulationGUI(scene);
-            guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
-            scene.setRoot(tabulationGUI.getRoot());
+            if(Configuration.isTabEnabled()){
+                TabulationGUI tabulationGUI = new TabulationGUI(scene);
+                guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+                scene.setRoot(tabulationGUI.getRoot());
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting is currently closed.");
+                alert.showAndWait();
+            }
+
         });
 
         staffBtn.setOnAction(event -> {
@@ -87,7 +93,7 @@ public class MainGUI {
         });
 
         votBtn.setOnAction(event -> {
-            voterReg voterReg = new voterReg(scene);
+            VoterReg voterReg = new VoterReg(scene);
             guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
             scene.setRoot(voterReg.getRoot());
         });
