@@ -12,58 +12,48 @@ public class ballotTest {
         BallotQuestion question1 = new BallotQuestion(
                 "POTUS",
                 "Who should be the President of the United States?",
-                QuestionType.CANDIDATE,
-                1,
-                1
+                QuestionType.CANDIDATE
         );
-        question1.addOption(new QuestionOption("Candidate A"));
-        question1.addOption(new QuestionOption("Candidate B"));
-        question1.addOption(new QuestionOption("Candidate C"));
+        question1.addOption(new QuestionOption("Candidate A", "republican"));
+        question1.addOption(new QuestionOption("Candidate B", "republican"));
+        question1.addOption(new QuestionOption("Candidate C", "republican"));
 
         // Create Question 2
         BallotQuestion question2 = new BallotQuestion(
                 "Governor",
                 "Who should be the Governor?",
-                QuestionType.CANDIDATE,
-                1,
-                1
+                QuestionType.CANDIDATE
         );
-        question2.addOption(new QuestionOption("Candidate X"));
-        question2.addOption(new QuestionOption("Candidate Y"));
-        question2.addOption(new QuestionOption("Candidate Z"));
+        question2.addOption(new QuestionOption("Candidate X", "republican"));
+        question2.addOption(new QuestionOption("Candidate Y", "republican"));
+        question2.addOption(new QuestionOption("Candidate Z", "republican"));
 
         // Create Question 3
         BallotQuestion question3 = new BallotQuestion(
                 "Referendum",
                 "Should the referendum be passed?",
-                QuestionType.QUESTION,
-                1,
-                1
+                QuestionType.QUESTION
         );
 
         // Create Question 4
         BallotQuestion question4 = new BallotQuestion(
                 "CityMayor",
                 "Who should be the Mayor of the City?",
-                QuestionType.CANDIDATE,
-                1,
-                1
+                QuestionType.CANDIDATE
         );
-        question4.addOption(new QuestionOption("Candidate M"));
-        question4.addOption(new QuestionOption("Candidate N"));
-        question4.addOption(new QuestionOption("Candidate O"));
+        question4.addOption(new QuestionOption("Candidate M", "republican"));
+        question4.addOption(new QuestionOption("Candidate N", "republican"));
+        question4.addOption(new QuestionOption("Candidate O", "republican"));
 
         // Create Question 5
         BallotQuestion question5 = new BallotQuestion(
                 "Senator",
                 "Who should be the Senator?",
-                QuestionType.CANDIDATE,
-                1,
-                1
+                QuestionType.CANDIDATE
         );
-        question5.addOption(new QuestionOption("Candidate P"));
-        question5.addOption(new QuestionOption("Candidate Q"));
-        question5.addOption(new QuestionOption("Candidate R"));
+        question5.addOption(new QuestionOption("Candidate P", "republican"));
+        question5.addOption(new QuestionOption("Candidate Q", "republican"));
+        question5.addOption(new QuestionOption("Candidate R", "republican"));
 
         // You now have 5 voting questions ready for use
         Ballot ballot = new Ballot(allBallotQuestions);
