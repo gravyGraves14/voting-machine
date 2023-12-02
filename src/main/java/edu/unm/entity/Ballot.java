@@ -2,6 +2,7 @@ package edu.unm.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -10,23 +11,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Ballot {
-    private String ballotId;
+    private final String ballotId;
+    private final String ballotSchemaName;
     private final List<BallotQuestion> questions;
 
-    public Ballot(List<BallotQuestion> questions) {
+    public Ballot(String schemaName, List<BallotQuestion> questions) {
+        this.ballotId = UUID.randomUUID().toString();
+        this.ballotSchemaName = schemaName;
         this.questions = questions;
     }
 
-    public Ballot() {
-        this(new ArrayList<>());
+    public Ballot(String schemaName) {
+        this(schemaName, new ArrayList<>());
     }
 
     public String getBallotId() {
         return ballotId;
     }
 
-    public void setBallotId(String ballotId) {
-        this.ballotId = ballotId;
+    public String getSchemaName() {
+        return ballotSchemaName;
     }
 
     public List<BallotQuestion> getQuestions() {

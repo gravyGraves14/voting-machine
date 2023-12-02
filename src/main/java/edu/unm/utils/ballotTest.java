@@ -56,8 +56,7 @@ public class ballotTest {
         question5.addOption(new QuestionOption("Candidate R", "republican"));
 
         // You now have 5 voting questions ready for use
-        Ballot ballot = new Ballot(allBallotQuestions);
-        ballot.setBallotId("1");
+        Ballot ballot = new Ballot("blah", allBallotQuestions);
 //        BallotBuilder.buildBallotXML(ballot, "ballot");
 
     }

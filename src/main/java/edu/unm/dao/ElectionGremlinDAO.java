@@ -25,7 +25,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
         try {
             Ballot ballot = scanner.parseSchema();
             ElectionGremlinDAO dao = new ElectionGremlinDAO();
-            dao.loadBallotSchema("test-schema", ballot);
+            dao.loadBallotSchema(ballot.getSchemaName(), ballot);
 
             List<Edge> edges = dao.findAllEdges().get();
             System.out.println(edges.size());
@@ -69,6 +69,10 @@ public class ElectionGremlinDAO implements ElectionDAO {
             }
         }
         close();
+    }
+
+    private void saveBallotVotes(Ballot ballot) {
+
     }
 
     private void connect() {

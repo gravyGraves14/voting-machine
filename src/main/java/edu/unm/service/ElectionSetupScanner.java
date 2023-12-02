@@ -69,9 +69,11 @@ public class ElectionSetupScanner {
         Document doc = db.parse(inputFile);
         doc.getDocumentElement().normalize();
 
+        String schemaName = doc.getElementsByTagName("schemaName").item(0).getTextContent();
+
         // Build ballot
         List<BallotQuestion> questions = new ArrayList<>();
-        Ballot schemaBallot = new Ballot(questions);
+        Ballot schemaBallot = new Ballot(schemaName, questions);
 
         // get all question elements
         NodeList questionNodes = doc.getElementsByTagName("question");
