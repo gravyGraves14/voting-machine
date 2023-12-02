@@ -17,12 +17,11 @@ public class LoginStaffGUI {
     private final GridPane root;
 
     public LoginStaffGUI() {
-        StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
         // Labels & Text fields for First Name, Last Name, and Password
-        Label staffIdlabel = new Label("Staff ID: ");
+        Label staffIdlabel = new Label("Staff Id: ");
         TextField staffIdField = new TextField();
 
         Label passwordLabel = new Label("Password: ");
@@ -41,12 +40,15 @@ public class LoginStaffGUI {
             String staffID = staffIdField.getText();
             String password = passwordField.getText();
 
+            if (staffID.isEmpty() || password.isEmpty()) {
+                showErrorPopUp("","Either Staff ID or Password is missing!");
+            }
             //TODO: call login authenticator
             if(staffID.equals("12345") && password.equals("123456")) {
-                showSuccessPopUp("PopUp","Successful");
+                showSuccessPopUp("","Successful");
             }
             else {
-                showErrorPopUp("PopUp", "Login Failed!");
+                showErrorPopUp("", "Login Failed! Please try again!");
             }
         });
 
