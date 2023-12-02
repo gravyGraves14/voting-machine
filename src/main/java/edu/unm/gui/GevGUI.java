@@ -49,6 +49,8 @@ public class GevGUI {
         //Button actions
         enterBtn.setOnAction(event -> {
             voterId = idField.getText();
+            idField.setText("");
+
             ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
             List<Elector> allElectorList = new ArrayList<>();
             try {
@@ -69,10 +71,7 @@ public class GevGUI {
                 return;
             }
 
-            //Remove this pop up and call function that displays the questions and allows elector to vote
-            showPopup("Eligible", "Your are eligible to vote");
-
-
+            scene.setRoot(createChoiceRoot());
         });
     }
 

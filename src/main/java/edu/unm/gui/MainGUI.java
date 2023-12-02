@@ -19,12 +19,9 @@ public class MainGUI {
         GUIUtils guiUtils = new GUIUtils();
 
         //Paper Ballot setup
-        /**
-         * We might want to put the paper ballot
-         * setup somewhere else, just putting it here for now.
-         */
+        PaperBallot paperBallot = new PaperBallot();
         try {
-            PaperBallot paperBallot = new PaperBallot();
+            paperBallot.createPaperBallot();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,6 +54,13 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
+
+            try {
+                System.out.println(paperBallot.checkBallot());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             GevGUI gevGUI = new GevGUI(scene);
             guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
             scene.setRoot(gevGUI.getRoot());
