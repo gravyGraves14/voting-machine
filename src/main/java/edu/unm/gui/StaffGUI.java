@@ -57,12 +57,16 @@ public class StaffGUI {
         });
 
         closeBallot.setOnAction(event -> {
+
+            // TODO: fix & further testing on this feature
+
             // 1. Authenticate user - they MUST be an admin-level user
             // 2. After ballot is closed, users cannot use the following buttons:
             //    -> Electronic Voting
-            //    -> Tabulator
+            //    -> Voter Reg
+            //    -> Staff Creation (not possible without disabling everything in Staff)
             Configuration.setGevEnabled(false);
-            Configuration.setTabEnabled(false);
+            Configuration.setVoterRegEnabled(false);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("FEATURE DISABLED");
             alert.setContentText("Ballot is now closed, voting has ended.");

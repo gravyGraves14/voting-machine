@@ -2,7 +2,6 @@ package edu.unm.gui;
 
 import edu.unm.entity.PaperBallot;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -20,12 +19,9 @@ public class MainGUI {
         GUIUtils guiUtils = new GUIUtils();
 
         //Paper Ballot setup
-        /**
-         * We might want to put the paper ballot
-         * setup somewhere else, just putting it here for now.
-         */
+        PaperBallot paperBallot = new PaperBallot();
         try {
-            PaperBallot paperBallot = new PaperBallot();
+            paperBallot.createPaperBallot();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,32 +54,22 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
-            if(Configuration.isGevEnabled()){
-                GevGUI gevGUI = new GevGUI(scene);
-                guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
-                scene.setRoot(gevGUI.getRoot());
+
+            try {
+                System.out.println(paperBallot.checkBallot());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("FEATURE DISABLED");
-                alert.setContentText("Voting is currently closed.");
-                alert.showAndWait();
-            }
+
+            GevGUI gevGUI = new GevGUI(scene);
+            guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
+            scene.setRoot(gevGUI.getRoot());
         });
 
         tabBtn.setOnAction(event -> {
-            if(Configuration.isTabEnabled()){
-                TabulationGUI tabulationGUI = new TabulationGUI(scene);
-                guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
-                scene.setRoot(tabulationGUI.getRoot());
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("FEATURE DISABLED");
-                alert.setContentText("Voting is currently closed.");
-                alert.showAndWait();
-            }
-
+            TabulationGUI tabulationGUI = new TabulationGUI(scene);
+            guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+            scene.setRoot(tabulationGUI.getRoot());
         });
 
         staffBtn.setOnAction(event -> {
