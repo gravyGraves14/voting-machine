@@ -24,6 +24,15 @@ import java.util.List;
  */
 public class ElectionSetupScanner {
 
+    public static void main(String[] args) {
+        ElectionSetupScanner scanner = new ElectionSetupScanner("test-schema.xml");
+        try {
+            scanner.parseSchema();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static final IOException INVALID_PARSE_EXCEPTION =
             new IOException("Unable to parse question node, invalid node type");
 
@@ -75,51 +84,28 @@ public class ElectionSetupScanner {
                 Element qElement = (Element) node;
 
                 // build question data
-                int minSelections = Integer.parseInt(qElement.getAttribute("minSelections"));
-                int maxSelections = Integer.parseInt(qElement.getAttribute("maxSelections"));
                 QuestionType type = QuestionType.of(qElement.getAttribute("type"));
-                String summary = "";
-                String question = "";
+                String summary = qElement.getElementsByTagName("summary").item(0).getTextContent();
+                String question = qElement.getElementsByTagName("question_text").item(0).getTextContent();
                 List<QuestionOption> options = new ArrayList<>();
 
-                // iterate through all sub attributes
-                NodeList qChildrenList = qElement.getChildNodes();
-                for (int j = 0; j < qChildrenList.getLength(); j++) {
-                    Node subNode = qChildrenList.item(j);
+                NodeList optionNodeList = qElement.getElementsByTagName("option");
+                for (int j = 0; j < optionNodeList.getLength(); j++) {
+                    Node oNode = optionNodeList.item(j);
 
-                    if (subNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element cElement = (Element) subNode;
-                        String cName = cElement.getNodeName();
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element oElement = (Element) oNode;
 
-                        switch (cName) {
-                            case "summary" -> summary = cElement.getTextContent();
-                            case "text" -> question = cElement.getTextContent();
-                            case "options" -> {
-                                NodeList oChildrenList = cElement.getChildNodes();
-                                for (int k = 0; k < oChildrenList.getLength(); k++) {
-                                    Node oNode = oChildrenList.item(k);
+                        String oText = oElement.getElementsByTagName("option_text").item(0).getTextContent();
+                        String affilText = oElement.getElementsByTagName("affiliation").item(0).getTextContent();
 
-                                    if (oNode.getNodeType() == Node.ELEMENT_NODE) {
-                                        Element oElement = (Element) oNode;
-                                        options.add(new QuestionOption(oElement.getTextContent()));
-                                    } else {
-                                        throw INVALID_PARSE_EXCEPTION;
-                                    }
-                                }
-                            }
-
-                        }
+                        options.add(new QuestionOption(oText, affilText));
                     } else {
                         throw INVALID_PARSE_EXCEPTION;
                     }
                 }
 
-                if (summary.isEmpty() || question.isEmpty() || options.size() == 0) {
-                    throw new IOException("Invalid question parse, missing data.");
-                }
-
-                BallotQuestion ballotQuestion = new BallotQuestion(summary, question,
-                        type, minSelections, maxSelections, options);
+                BallotQuestion ballotQuestion = new BallotQuestion(summary, question, type, options);
                 questions.add(ballotQuestion);
             } else {
                 throw INVALID_PARSE_EXCEPTION;

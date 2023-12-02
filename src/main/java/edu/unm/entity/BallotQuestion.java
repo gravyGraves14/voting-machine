@@ -15,25 +15,18 @@ public class BallotQuestion {
     private final String questionShort;
     private final String question;
     private final QuestionType type;
-    private final int minSelections;
-    private final int maxSelections;
     private final List<QuestionOption> options;
 
     public BallotQuestion(String questionShort, String question,
-                          QuestionType type, int minSelections,
-                          int maxSelections, List<QuestionOption> options) {
+                          QuestionType type, List<QuestionOption> options) {
         this.questionShort = questionShort;
         this.question = question;
         this.type = type;
-        this.minSelections = minSelections;
-        this.maxSelections = maxSelections;
         this.options = options;
     }
 
-    public BallotQuestion(String questionShort, String question,
-                          QuestionType type, int minSelections, int maxSelections) {
-        this(questionShort, question, type, minSelections,
-                maxSelections, new ArrayList<>());
+    public BallotQuestion(String questionShort, String question, QuestionType type) {
+        this(questionShort, question, type, new ArrayList<>());
     }
 
     public String getQuestionShort() {
@@ -46,14 +39,6 @@ public class BallotQuestion {
 
     public QuestionType getType() {
         return type;
-    }
-
-    public int getMinSelections() {
-        return minSelections;
-    }
-
-    public int getMaxSelections() {
-        return maxSelections;
     }
 
     public List<QuestionOption> getOptions() {
