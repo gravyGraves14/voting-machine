@@ -1,0 +1,16 @@
+<ballotSchema>
+    <question minSelections="1" maxSelections="1" type="candidate">
+        <summary>President</summary>
+        <question_text>President of the United States of America</question_text>
+        <options>
+            <option>
+                <option_text>George Lucas</option_text>
+                <affiliation>Lucas Arts</affiliation>
+            </option>
+            <option>
+                <option_text>Wiley Coyote</option_text>
+                <affiliation>Acme Corp</affiliation>
+            </option>
+        </options>
+    </question>
+</ballotSchema>
