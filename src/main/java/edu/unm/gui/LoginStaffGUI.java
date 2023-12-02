@@ -31,7 +31,7 @@ public class LoginStaffGUI {
         guiUtils.createLabel(staffIdlabel, 250, 100, 25);
         guiUtils.createLabel(passwordLabel, 250, 100, 25);
         guiUtils.createTextField(staffIdField, 250, 100, 25);
-        guiUtils.createPasswordField(passwordField, 250, 100, 25);
+        guiUtils.createPasswordField(passwordField, 250, 100);
 
         // Login Button
         Button loginBtn = new Button("Login");
