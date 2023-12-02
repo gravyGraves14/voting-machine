@@ -79,7 +79,7 @@ public class MainGUI {
         });
 
         votBtn.setOnAction(event -> {
-            voterReg voterReg = new voterReg(scene);
+            VoterReg voterReg = new VoterReg(scene);
             guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
             scene.setRoot(voterReg.getRoot());
         });

@@ -6,7 +6,7 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-Social Security Number:
+Social Security Number: 
 
 *****************************************************************
 
@@ -16,6 +16,7 @@ Vote for King of CS
 [ ] Manjil
 [ ] Raju
 [ ] Mike
+[ ] Other: 
 
 *****************************************************************
 
@@ -23,6 +24,7 @@ Question #2
 Vote for the worst CS professor
 [ ] Darko
 [ ] Stefanovic
+[ ] Other: 
 
 *****************************************************************
 
@@ -32,6 +34,7 @@ Best Cats
 [ ] Grey
 [ ] Simease
 [ ] Orange
+[ ] Other: 
 
 *****************************************************************
 
