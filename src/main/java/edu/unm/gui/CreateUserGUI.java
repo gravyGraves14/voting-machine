@@ -34,6 +34,7 @@ public class CreateUserGUI {
         Label passWord = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
 
+        CheckBox adminCheckBox = new CheckBox("Admin");
 
         guiUtils.createLabel(firstName,250,100,25);
         guiUtils.createLabel(lastName,250,100,25);
@@ -41,6 +42,7 @@ public class CreateUserGUI {
         guiUtils.createTextField(lastNameField,250,100,25);
         guiUtils.createLabel(passWord,250,100,25);
         guiUtils.createPasswordField(passwordField,250,100,25);
+        guiUtils.createCheckBox(adminCheckBox, 25);
 
         // Buttons
         Button enterBtn = new Button("Submit");
@@ -51,9 +53,11 @@ public class CreateUserGUI {
             String last = lastNameField.getText();
             String password = passwordField.getText();
             String id = generateRandomString(9);
-            System.out.println(password);
+            boolean isAdmin = adminCheckBox.isSelected();
 
-            Staff staff = new Staff(id, first, last);
+            System.out.println(isAdmin);
+
+            Staff staff = new Staff(id, first, last, isAdmin, password);
 
             try {
                 staffDAO.addStaff(staff);
@@ -72,6 +76,7 @@ public class CreateUserGUI {
         root.add(lastNameField,1,2);
         root.add(passWord,0,3);
         root.add(passwordField,1,3);
+        root.add(adminCheckBox, 0, 4);
         root.add(enterBtn,2,4);
 
 

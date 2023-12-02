@@ -55,6 +55,11 @@ public class GUIUtils {
         radioButton.setToggleGroup(toggleGroup);
     }
 
+    public void createCheckBox(CheckBox checkBox, int fontSize) {
+        //checkBox.setFont(Font.loadFont(mainFontPath, fontSize));
+        checkBox.setStyle("-fx-background-color: rgb(248, 208, 216)");
+    }
+
     public void addBackBtn(GridPane oldRoot, GridPane newRoot, int row, int col, Scene scene, int direction){
         Button backBtn = new Button();
         createBtn(backBtn, 125, 50, 25);
