@@ -6,11 +6,7 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-<<<<<<< HEAD
-Social Security Number:
-=======
 Social Security Number: 
->>>>>>> origin/master
 
 *****************************************************************
 
@@ -20,10 +16,7 @@ Vote for King of CS
 [ ] Manjil
 [ ] Raju
 [ ] Mike
-<<<<<<< HEAD
-=======
 [ ] Other: 
->>>>>>> origin/master
 
 *****************************************************************
 
@@ -31,28 +24,17 @@ Question #2
 Vote for the worst CS professor
 [ ] Darko
 [ ] Stefanovic
-<<<<<<< HEAD
-=======
 [ ] Other: 
->>>>>>> origin/master
 
 *****************************************************************
 
 Question #3
-<<<<<<< HEAD
-Best Fruit
-[ ] Mango
-[ ] Apple
-[ ] Pear
-[ ] Orange
-=======
 Best Cats
 [ ] Black
 [ ] Grey
 [ ] Simease
 [ ] Orange
 [ ] Other: 
->>>>>>> origin/master
 
 *****************************************************************
 

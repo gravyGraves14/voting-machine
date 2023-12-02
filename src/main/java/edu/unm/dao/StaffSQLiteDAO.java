@@ -7,6 +7,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
@@ -149,7 +151,9 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             ps.setString(2, staff.getFirstName());
             ps.setString(3, staff.getLastName());
             ps.setInt(4, staff.isAdmin() ? 1 : 0);
-            ps.setString(5, staff.getPassword());
+            String hashedPassword = hashPassword(staff.getPassword());
+            ps.setString(5, hashedPassword);
+
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -259,6 +263,28 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             getLogger().log(WARNING, "[SQLStats] STAFF_BY_ID failed({0}) in {1} ms.",
                     new Object[]{e.getMessage().trim(), dur});
             throw e;
+        }
+    }
+
+
+    // Method to hash the password using SHA-256
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = digest.digest(password.getBytes());
+
+            // Convert the byte array to a hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // Handle exception (e.g., log it or throw a runtime exception)
+            throw new RuntimeException("Error hashing password", e);
         }
     }
 }

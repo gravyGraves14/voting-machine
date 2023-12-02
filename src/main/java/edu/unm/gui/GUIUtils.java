@@ -24,14 +24,14 @@ public class GUIUtils {
     public void createBtn(Button btn, int width, int height, int fontSize) {
         btn.setPrefSize(width, height);
         btn.setStyle("-fx-background-color: rgb(248, 208, 216);" + "-fx-border-color: black;");
-        btn.setFont(Font.loadFont(mainFontPath, fontSize));
+       // btn.setFont(Font.loadFont(mainFontPath, fontSize));
         btn.setTextFill(Color.BLACK);
     }
 
     public void createLabel(Label label, int width, int height, int fontSize) {
         label.setPrefSize(width, height);
         label.setStyle("-fx-background-color: rgb(248, 208, 216)");
-        label.setFont(Font.loadFont(mainFontPath, fontSize));
+        //label.setFont(Font.loadFont(mainFontPath, fontSize));
         label.setTextFill(Color.BLACK);
         label.setAlignment(Pos.CENTER);
     }
@@ -39,19 +39,19 @@ public class GUIUtils {
     public void createTextField(TextField textField, int width, int height, int fontSize){
         textField.setPrefSize(width, height);
         textField.setStyle("-fx-background-color: rgb(248, 208, 216)");
-        textField.setFont(Font.loadFont(mainFontPath, fontSize));
+       // textField.setFont(Font.loadFont(mainFontPath, fontSize));
         textField.setAlignment(Pos.CENTER);
     }
 
     public void createPasswordField(PasswordField passwordFieldField, int width, int height, int fontSize){
         passwordFieldField.setPrefSize(width, height);
         passwordFieldField.setStyle("-fx-background-color: rgb(248, 208, 216)");
-        passwordFieldField.setFont(Font.loadFont(mainFontPath, fontSize));
+        //passwordFieldField.setFont(Font.loadFont(mainFontPath, fontSize));
         passwordFieldField.setAlignment(Pos.CENTER);
     }
 
     public void createRadio(RadioButton radioButton, int fontSize, ToggleGroup toggleGroup) {
-        radioButton.setFont(Font.loadFont(mainFontPath, fontSize));
+        //radioButton.setFont(Font.loadFont(mainFontPath, fontSize));
         radioButton.setToggleGroup(toggleGroup);
     }
 

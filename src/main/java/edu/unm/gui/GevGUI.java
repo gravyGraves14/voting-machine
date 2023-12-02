@@ -71,6 +71,9 @@ public class GevGUI {
                 return;
             }
 
+            if (elector == null){
+                showPopup("Not Registered", "You have not yet registered.");
+            }
             scene.setRoot(createChoiceRoot());
         });
     }
