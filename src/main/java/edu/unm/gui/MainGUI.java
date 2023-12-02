@@ -2,6 +2,7 @@ package edu.unm.gui;
 
 import edu.unm.entity.PaperBallot;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -57,9 +58,20 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
-            GevGUI gevGUI = new GevGUI(scene);
-            guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
-            scene.setRoot(gevGUI.getRoot());
+            System.out.println(Configuration.isGevEnabled());
+            if(Configuration.isGevEnabled()){
+                System.out.println(Configuration.isGevEnabled());
+                GevGUI gevGUI = new GevGUI(scene);
+                guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
+                scene.setRoot(gevGUI.getRoot());
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting is currently closed.");
+                alert.showAndWait();
+            }
+
         });
 
         tabBtn.setOnAction(event -> {

@@ -42,6 +42,18 @@ public class StaffGUI {
 
         openBallot.setOnAction(event -> {
 
+            // 1. Authenticate user - they MUST be an admin-level user
+            // 2. Before ballot is open, users cannot use the following buttons:
+            //    -> Electronic Voting
+            //    -> Tabulator
+            // 3. While ballot is open, users can use ALL buttons
+        });
+
+        closeBallot.setOnAction(event -> {
+            // 1. Authenticate user - they MUST be an admin-level user
+            // 2. After ballot is closed, users cannot use the following buttons:
+            //    -> Electronic Voting
+            //    -> Tabulator
         });
     }
 

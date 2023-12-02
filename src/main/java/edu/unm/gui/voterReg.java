@@ -28,7 +28,6 @@ import java.sql.ResultSet;
  * with backend
  */
 public class voterReg {
-
     private final GridPane root;
     private final GUIUtils guiUtils = new GUIUtils();
     public voterReg(Scene scene) {
@@ -41,7 +40,7 @@ public class voterReg {
         Label lastName = new Label("Last Name: ");
         TextField lastNameField = new TextField();
 
-        Label DOB = new Label("Date of birth mm/dd/yyyy: ");
+        Label DOB = new Label("DOB mm/dd/yyyy: ");
         TextField dobField = new TextField();
 
         Label social = new Label("Social Security #: ");
@@ -150,7 +149,6 @@ public class voterReg {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
 
     public GridPane getRoot() {return root;}
 }
