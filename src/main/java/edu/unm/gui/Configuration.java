@@ -1,9 +1,13 @@
 package edu.unm.gui;
 
 public class Configuration {
-    public static boolean gevEnabled = false;
+
+    // Everything is turned "ON" to make testing easier, however, booleans
+    // need to be set back to their original values when running the program
+    // as it's meant to be run
+    public static boolean gevEnabled = true; // false
     public static boolean voterRegEnabled = true;
-    public static boolean tabEnabled = false;
+    public static boolean tabEnabled = true; // false
     public static boolean staffEnabled = true;
 
     public static boolean isGevEnabled() {

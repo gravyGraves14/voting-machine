@@ -60,7 +60,11 @@ public class TabulationGUI {
         // Calculate Overall Result Button
         Button calculateResultButton = new Button("Tabulate Result");
         guiUtils.createBtn(calculateResultButton, 250, 100, 25);
-        calculateResultButton.setOnAction(e -> calculateFinalResult());
+        calculateResultButton.setOnAction(e -> {
+            LoginStaffGUI loginStaffGUI = new LoginStaffGUI();
+            guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
+            scene.setRoot(loginStaffGUI.getRoot());
+        });
         root.add(calculateResultButton, 1, 2);
     }
 
