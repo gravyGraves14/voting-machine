@@ -56,7 +56,7 @@ public class MainGUI {
         gevBtn.setOnAction(event -> {
 
             try {
-                System.out.println(paperBallot.checkBallot());
+                System.out.println(paperBallot.processBallot());
             } catch (IOException e) {
                 e.printStackTrace();
             }

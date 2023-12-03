@@ -1,20 +1,15 @@
 package edu.unm.gui;
 
 import edu.unm.dao.DAOFactory;
-import edu.unm.dao.DAOUtils;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.Elector;
 import edu.unm.entity.Questions;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Optional;
 
 public class GevGUI {
 
