@@ -11,30 +11,18 @@ Social Security Number: 111111111
 *****************************************************************
 
 Question #1
-Vote for King of CS
-[x] Jacob
-[ ] Manjil
-[ ] Raju
-[ ] Mike
-[ ] Other: 
+President of the United States of America
+[ ] George Lucas
+[ ] Wiley Coyote
+[x] Other: yomama
 
 *****************************************************************
 
 Question #2
-Vote for the worst CS professor
-[ ] Darko
-[x] Stefanovic
+What is your favorite fruit?
+[ ] Strawberry
+[ ] Pear
 [ ] Other: 
-
-*****************************************************************
-
-Question #3
-Best Cats
-[ ] Black
-[ ] Grey
-[ ] Siamese
-[ ] Orange
-[x] Other: cat
 
 *****************************************************************
 

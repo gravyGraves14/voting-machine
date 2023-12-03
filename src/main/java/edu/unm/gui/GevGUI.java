@@ -129,16 +129,11 @@ public class GevGUI {
         ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
         try {
             ballot = electionSetupScanner.parseSchema();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (ParserConfigurationException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
 
         //Create question roots
-        String[] a = new String[0];
         QuestionGUI[] questionGUIS = new QuestionGUI[ballot.getQuestions().size()];
         for (int i = 0; i < ballot.getQuestions().size(); i++) {
             questionGUIS[i] = new QuestionGUI(i + 1, ballot.getQuestionByIndex(i).getQuestion(), ballot.getQuestions().size(),

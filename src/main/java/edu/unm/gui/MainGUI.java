@@ -50,12 +50,6 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
-
-            try {
-                System.out.println(paperBallot.processBallot());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             if(Configuration.isGevEnabled()){
                 GevGUI gevGUI = new GevGUI(scene);
                 guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);

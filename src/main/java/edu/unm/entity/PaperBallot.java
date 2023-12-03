@@ -2,6 +2,10 @@ package edu.unm.entity;
 
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
+import edu.unm.service.ElectionSetupScanner;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,7 +13,7 @@ import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
 
 public class PaperBallot {
-    private final Questions questions = new Questions();
+    private Ballot ballot;
     private final String stars = "*****************************************************************";
     private final String intro = """
 
@@ -22,18 +26,28 @@ public class PaperBallot {
     private final StringBuilder currentChunk = new StringBuilder();
     private String line;
 
+    public PaperBallot() {
+        ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
+
+        try {
+            ballot = electionSetupScanner.parseSchema();
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void createPaperBallot() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
 
         String ssn = "\n\nSocial Security Number: \n\n";
         writer.write(stars + intro + stars + ssn + stars + "\n\n");
 
-        for (int i = 0; i < questions.getNumQuestions(); i++) {
+        for (int i = 0; i < ballot.getQuestions().size(); i++) {
             writer.write("Question #" + (i + 1) + "\n" +
-                    questions.getQuestion(i) + "\n");
+                    ballot.getQuestionByIndex(i).getQuestion() + "\n");
 
-            for (int j = 0; j < questions.getNumChoices(i); j++) {
-                writer.write("[ ] " + questions.getQuestionChoices(i)[j] + "\n");
+            for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
+                writer.write("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption() + "\n");
             }
 
             writer.write("[ ] Other: " + "\n");
@@ -77,14 +91,14 @@ public class PaperBallot {
         }
 
         //check the questions
-        for (int i = 0; i < questions.getNumQuestions(); i++) {
+        for (int i = 0; i < ballot.getQuestions().size(); i++) {
             StringBuilder correctQuestion = new StringBuilder();
             correctQuestion.append("\n\n");
             currentChunk.setLength(0);
             currentChunk.append("\n");
 
             //check the first part of the question
-            correctQuestion.append("Question #").append(i + 1).append("\n").append(questions.getQuestion(i)).append("\n");
+            correctQuestion.append("Question #").append(i + 1).append("\n").append(ballot.getQuestionByIndex(i).getQuestion()).append("\n");
 
             while (!Objects.equals(line = reader.readLine(), null) && !line.matches("\\[.*")){
                 if(line.equals("")){
@@ -102,15 +116,15 @@ public class PaperBallot {
             //Check the main options of the question
             int choiceCount = 0;
             String choice = "none";
-            for (int j = 0; j < questions.getNumChoices(i); j++) {
-                if (line.equals("[x] " + questions.getQuestionChoices(i)[j])) {
+            for (int j = 0; j < ballot.getQuestions().size(); j++) {
+                if (line.equals("[x] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
                     if (choiceCount > 0){
                         return false;
                     }
                     choiceCount++;
-                    choice = questions.getQuestionChoices(i)[j];
+                    choice = ballot.getQuestionByIndex(i).getOptions().get(j).getOption();
                 }
-                else if (!line.equals("[ ] " + questions.getQuestionChoices(i)[j])) {
+                else if (!line.equals("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
                     return false;
                 }
 
