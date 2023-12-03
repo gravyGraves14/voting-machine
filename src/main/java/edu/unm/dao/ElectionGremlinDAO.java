@@ -24,7 +24,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
             ElectionGremlinDAO dao = new ElectionGremlinDAO();
             dao.loadBallotSchema(ballot.getSchemaName(), ballot);
 
-            ballot.getQuestions().forEach(q -> q.getOptions().get(0).setSelected(true));
+            ballot.getQuestions().forEach(q -> q.getOptions().get(1).setSelected(true));
             dao.saveBallotVotes(ballot);
 
             Ballot results = dao.getTabulation(ballot.getSchemaName());
@@ -112,7 +112,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
         close();
     }
 
-    private void saveBallotVotes(Ballot ballot) {
+    public void saveBallotVotes(Ballot ballot) {
         connect();
         String schema = ballot.getSchemaName();
 

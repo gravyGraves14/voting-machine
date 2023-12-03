@@ -1,17 +1,22 @@
 package edu.unm.gui;
 
 import edu.unm.dao.DAOFactory;
+import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.dao.ElectorDAO;
-import edu.unm.entity.Elector;
-import edu.unm.entity.Questions;
-import edu.unm.entity.User;
+import edu.unm.entity.*;
+import edu.unm.service.ElectionSetupScanner;
 import edu.unm.service.UserService;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GevGUI {
 
@@ -20,6 +25,13 @@ public class GevGUI {
     private final Scene scene;
     private int evType = 0;
     private String voterId;
+
+    private String questionShort;
+    private String question;
+    private QuestionType type;
+
+    private String schemaName = "test-schema.xml";
+    private Ballot ballot = null;
 
     private Elector elector;
     public GevGUI(Scene scene) {
@@ -98,6 +110,7 @@ public class GevGUI {
             set something internally to know if user chose md or ev
              */
             evType = 1;
+
             createQstnGUIs();
         });
 
@@ -107,27 +120,38 @@ public class GevGUI {
         });
 
         guiUtils.addBackBtn(choiceRoot, root, 0, 0, scene, 0);
-
         return choiceRoot;
     }
 
     private void createQstnGUIs() {
-        Questions questions = new Questions();
+      //  Questions questions = new Questions();
+        BallotQuestion myQuestions = new BallotQuestion(questionShort, question, type);
+        ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
+        try {
+            ballot = electionSetupScanner.parseSchema();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
 
         //Create question roots
-        QuestionGUI[] questionGUIS = new QuestionGUI[questions.getNumQuestions()];
-        for (int i = 0; i < questions.getNumQuestions(); i++) {
-            questionGUIS[i] = new QuestionGUI(i + 1, questions.getQuestion(i), questions.getNumChoices(i),
-                    questions.getQuestionChoices(i));
+        String[] a = new String[0];
+        QuestionGUI[] questionGUIS = new QuestionGUI[ballot.getQuestions().size()];
+        for (int i = 0; i < ballot.getQuestions().size(); i++) {
+            questionGUIS[i] = new QuestionGUI(i + 1, ballot.getQuestionByIndex(i).getQuestion(), ballot.getQuestions().size(),
+                    ballot.getQuestionByIndex(i).getOptions());
         }
 
         //Back and forward arrows
-        for (int i = 0; i < questions.getNumQuestions(); i++) {
+        for (int i = 0; i < ballot.getQuestions().size(); i++) {
             if (i == 0) {
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), createChoiceRoot(), 0, 0, scene, 0);
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), questionGUIS[i + 1].getRoot(), 0, 2, scene, 1);
             }
-            else if (i == questions.getNumQuestions() - 1) {
+            else if (i == ballot.getQuestions().size() - 1) {
                 guiUtils.addBackBtn(questionGUIS[i].getRoot(), questionGUIS[i - 1].getRoot(), 0, 0, scene, 0);
 
                 GridPane submitRoot = createSubmitRoot(questionGUIS);
@@ -173,9 +197,20 @@ public class GevGUI {
             save results
              */
             //Get results
-            for (QuestionGUI questionGUI : questionGUIS) {
-                System.out.println(questionGUI.getSelected() + "\n");
+
+
+            for (int i = 0; i < ballot.getQuestions().size(); i++) {
+                for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
+                    if(Objects.equals(questionGUIS[i].getSelected(), ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
+                        ballot.getQuestionByIndex(i).getOptions().get(j).setSelected(true);
+                    }
+                }
             }
+
+            ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
+            electionGremlinDAO.saveBallotVotes(ballot);
+
+
             scene.setRoot(root);
         });
 

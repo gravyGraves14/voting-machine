@@ -1,9 +1,12 @@
 package edu.unm.gui;
 
+import edu.unm.entity.QuestionOption;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+
+import java.util.List;
 
 public class QuestionGUI {
     private final GridPane root;
@@ -12,7 +15,7 @@ public class QuestionGUI {
     private final RadioButton other = new RadioButton("Other:");
     private final TextField otherTxt = new TextField();
 
-    public QuestionGUI(int qstnNum, String qstn, int numChoices, String[] choices) {
+    public QuestionGUI(int qstnNum, String qstn, int numChoices, List<QuestionOption> choices) {
         this.numChoices = numChoices;
 
         //Set up root
@@ -40,7 +43,7 @@ public class QuestionGUI {
 
         choice = new RadioButton[numChoices];
         for (int i = 0; i < numChoices; i++) {
-            choice[i] = new RadioButton(choices[i]);
+            choice[i] = new RadioButton(choices.get(i).getOption());
             guiUtils.createRadio(choice[i], 25, radios);
             chcs.getChildren().add(choice[i]);
         }
