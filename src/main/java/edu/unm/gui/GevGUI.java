@@ -78,10 +78,6 @@ public class GevGUI {
                 return;
             }
 
-            if (elector == null){
-                showPopup("Not Registered", "You have not yet registered.");
-            }
-
             if (elector.getVoted() == 1){
                 showPopup("Already Voted", "You have already voted.");
             }
@@ -186,13 +182,6 @@ public class GevGUI {
             else {
                 guiUtils.createPopUp("Ballot Printed and Logged Successfully");
             }
-
-            /*
-            Needs backend
-            save results
-             */
-            //Get results
-
 
             for (int i = 0; i < ballot.getQuestions().size(); i++) {
                 for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {

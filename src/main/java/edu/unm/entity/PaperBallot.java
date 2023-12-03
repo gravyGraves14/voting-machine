@@ -86,7 +86,8 @@ public class PaperBallot {
         String ssn = currentChunk.toString().replaceAll("\\D", "");
         Elector elector = getElector(ssn, allElectorList);
 
-        if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null) {
+        if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null
+        || !elector.isQualifiedToVote() || elector.getVoted() == 1) {
             return false;
         }
 
