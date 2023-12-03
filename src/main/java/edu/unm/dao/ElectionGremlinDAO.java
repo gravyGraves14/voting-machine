@@ -1,15 +1,12 @@
 package edu.unm.dao;
 
-import edu.unm.entity.Ballot;
-import edu.unm.entity.BallotQuestion;
-import edu.unm.entity.QuestionOption;
+import edu.unm.entity.*;
 import edu.unm.service.ElectionSetupScanner;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.*;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 
 import java.util.*;
@@ -27,8 +24,17 @@ public class ElectionGremlinDAO implements ElectionDAO {
             ElectionGremlinDAO dao = new ElectionGremlinDAO();
             dao.loadBallotSchema(ballot.getSchemaName(), ballot);
 
-            List<Edge> edges = dao.findAllEdges().get();
-            System.out.println(edges.size());
+            ballot.getQuestions().forEach(q -> q.getOptions().get(0).setSelected(true));
+            dao.saveBallotVotes(ballot);
+
+            Ballot results = dao.getTabulation(ballot.getSchemaName());
+            System.out.println("Results for schema: " + ballot.getSchemaName());
+            for (BallotQuestion question : results.getQuestions()) {
+                System.out.println("Question: " + question.getQuestion());
+                for (QuestionOption option : question.getOptions()) {
+                    System.out.println("\t" + option.getTotalVotes() + " - " + option.getOption());
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,6 +45,41 @@ public class ElectionGremlinDAO implements ElectionDAO {
     private Configuration config;
     private Graph graph;
     private GraphTraversalSource source;
+
+    private BallotQuestion mapQuestion(Vertex vertex) {
+        String summaryText = "";
+        String fullText = "";
+        QuestionType qType = null;
+        Iterator<VertexProperty<Object>> props = vertex.properties(
+                "summary", "full", "type");
+        while (props.hasNext()) {
+            VertexProperty<Object> p = props.next();
+            String key = p.key();
+            switch (key) {
+                case "summary" -> summaryText = (String) p.value();
+                case "full" -> fullText = (String) p.value();
+                case "type" -> qType = QuestionType.of((String) p.value());
+            }
+        }
+        return new BallotQuestion(summaryText, fullText, qType);
+    }
+
+    private QuestionOption mapOption(Vertex vertex) {
+        String optionText = "";
+        String affilText = "";
+
+        Iterator<VertexProperty<Object>> props = vertex.properties("text", "affiliation");
+        while(props.hasNext()) {
+            VertexProperty<Object> p = props.next();
+            String key = p.key();
+            switch (key) {
+                case "text" -> optionText = (String) p.value();
+                case "affiliation" -> affilText = (String) p.value();
+            }
+        }
+
+        return new QuestionOption(optionText, affilText);
+    }
 
     public void loadBallotSchema(String schemaName, Ballot ballot) {
         connect();
@@ -72,7 +113,127 @@ public class ElectionGremlinDAO implements ElectionDAO {
     }
 
     private void saveBallotVotes(Ballot ballot) {
+        connect();
+        String schema = ballot.getSchemaName();
 
+        Map<Object, Object> props = new HashMap<>();
+        props.put("ballotId", ballot.getBallotId());
+        Vertex ballotVertex = saveVertex("ballot", props);
+
+        for (BallotQuestion question : ballot.getQuestions()) {
+            Optional<QuestionOption> oSelected = question.getSelectedOption();
+            // nothing selected, continue
+            if (oSelected.isEmpty()) {
+                continue;
+            }
+            QuestionOption selected = oSelected.get();
+
+            Optional<Vertex> ov = findQuestionVertexInSchema(schema, question.getQuestionShort());
+
+            if (ov.isEmpty()) {
+                LOGGER.severe("Unable to find matching ballot question. Canceling save.");
+                return;
+            }
+
+            Vertex qv = ov.get();
+            List<Vertex> optionVertices = findAllVerticesFromWithEdgeLabel("has_option", qv);
+            Optional<Vertex> oVertex = optionVertices.stream()
+                    .filter(v -> v.property("text")
+                            .value().equals(selected.getOption()))
+                    .findFirst();
+
+            Vertex optionVertex;
+            if (oVertex.isEmpty()) {
+                Map<Object, Object> oProps = new HashMap<>();
+                oProps.put("text", selected.getOption());
+                optionVertex = saveVertex("option", oProps);
+            } else {
+                optionVertex = oVertex.get();
+            }
+
+            saveEdge("voted_for", optionVertex, ballotVertex, new HashMap<>());
+
+
+        }
+
+
+        close();
+    }
+
+    public Ballot getTabulation(String schema) {
+        try {
+            connect();
+
+            List<BallotQuestion> questions = new ArrayList<>();
+            Ballot ballot = new Ballot(schema, questions);
+
+            GraphTraversal<Vertex, Vertex> traversal = source.V().hasLabel("schema").has("name", schema)
+                    .out("has_question");
+            while (traversal.hasNext()) {
+                Vertex q = traversal.next();
+                BallotQuestion question = mapQuestion(q);
+                questions.add(question);
+
+                GraphTraversal<Vertex, Vertex> oTraversal = source.V(q.id()).out("has_option");
+                while (oTraversal.hasNext()) {
+                    Vertex o = oTraversal.next();
+                    QuestionOption option = mapOption(o);
+                    question.addOption(option);
+
+                    long votes = source.V(o.id()).outE("voted_for").count().next();
+                    option.setTotalVotes(votes);
+                }
+            }
+
+            return ballot;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            close();
+        }
+
+    }
+
+    public Ballot getBallotFromSchema(String schema) {
+        try {
+            connect();
+
+            List<BallotQuestion> questions = new ArrayList<>();
+            Ballot ballot = new Ballot(schema, questions);
+
+            GraphTraversal<Vertex, Vertex> traversal = source.V().hasLabel("schema").has("name", schema)
+                    .out("has_question");
+            while (traversal.hasNext()) {
+                Vertex q = traversal.next();
+                BallotQuestion question = mapQuestion(q);
+                questions.add(question);
+
+                GraphTraversal<Vertex, Vertex> oTraversal = source.V(q.id()).out("has_option");
+                while (oTraversal.hasNext()) {
+                    Vertex o = oTraversal.next();
+                    QuestionOption option = mapOption(o);
+                    question.addOption(option);
+                }
+            }
+
+            return ballot;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            close();
+        }
+    }
+
+    public Optional<Vertex> findQuestionVertexInSchema(String schema, String summary) {
+        try {
+            return Optional.of(source.V().hasLabel("schema").has("name", schema)
+                    .out("has_question").hasLabel("question")
+                    .has("summary", summary).next());
+        } catch (NoSuchElementException e) {
+            return Optional.empty();
+        }
     }
 
     private void connect() {
@@ -132,6 +293,14 @@ public class ElectionGremlinDAO implements ElectionDAO {
         }
     }
 
+    public Optional<Vertex> findVertexByLabelWithProperty(String label, String key, Object value) {
+        try {
+            return Optional.of(source.V().hasLabel(label).has(key, value).next());
+        } catch (NoSuchElementException e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<List<Vertex>> findAllVerticesByProperty(String key, Object value) {
         try {
             List<Vertex> vertices = source.V().has(key, value).toList();
@@ -142,12 +311,27 @@ public class ElectionGremlinDAO implements ElectionDAO {
         }
     }
 
-    public Optional<List<Vertex>> findAllVerticesByLabel(String label) {
+    public List<Vertex> findAllVerticesByLabel(String label) {
         try {
-            return Optional.of(source.V().hasLabel(label).toList());
+            return source.V().hasLabel(label).toList();
         } catch (NoSuchElementException e) {
             LOGGER.log(Level.WARNING, "Failed to find vertices with label: " + label);
-            return Optional.empty();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Vertex> findAllVerticesFromWithEdgeLabel(String edgeLabel, Vertex from) {
+        try {
+            List<Vertex> vertices = new ArrayList<>();
+            Iterator<Edge> edges = from.edges(Direction.from, edgeLabel);
+            while (edges.hasNext()) {
+                Edge e = edges.next();
+                Vertex v = e.inVertex();
+                vertices.add(v);
+            }
+            return vertices;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
     }
 
