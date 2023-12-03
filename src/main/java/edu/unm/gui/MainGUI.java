@@ -55,13 +55,12 @@ public class MainGUI {
 
         //Button Actions
         gevBtn.setOnAction(event -> {
-<<<<<<< HEAD
 
             try {
                 System.out.println(paperBallot.processBallot());
             } catch (IOException e) {
                 e.printStackTrace();
-=======
+            }
             if(Configuration.isGevEnabled()){
                 GevGUI gevGUI = new GevGUI(scene);
                 guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
@@ -72,7 +71,6 @@ public class MainGUI {
                 alert.setTitle("FEATURE DISABLED");
                 alert.setContentText("Voting is currently closed.");
                 alert.showAndWait();
->>>>>>> 2f11dafee80a79122253e8f3a39f635285075db0
             }
         });
 
