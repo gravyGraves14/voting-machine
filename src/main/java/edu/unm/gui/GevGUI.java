@@ -6,10 +6,7 @@ import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.Elector;
 import edu.unm.entity.Questions;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import java.io.*;
 import java.sql.SQLException;
@@ -35,11 +32,11 @@ public class GevGUI {
 
         //Create gui items
         Label idLabel = new Label("SSN:");
-        TextField idField = new TextField();
+        PasswordField idField = new PasswordField();
         Button enterBtn = new Button("Enter");
 
         guiUtils.createLabel(idLabel, 250, 100, 25);
-        guiUtils.createTextField(idField, 250, 100, 25);
+        guiUtils.createPasswordField(idField, 250, 100);
         guiUtils.createBtn(enterBtn, 250, 100, 25);
 
         root.add(idLabel, 1, 1);

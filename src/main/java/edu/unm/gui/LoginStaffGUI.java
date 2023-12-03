@@ -4,6 +4,7 @@
 
 package edu.unm.gui;
 
+import com.sun.xml.bind.v2.TODO;
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.StaffDAO;
 import edu.unm.entity.Staff;
@@ -16,43 +17,46 @@ public class LoginStaffGUI {
     private final GridPane root;
 
     public LoginStaffGUI() {
-        StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
         // Labels & Text fields for First Name, Last Name, and Password
-        Label firstNameLabel = new Label("First Name: ");
-        TextField firstNameField = new TextField();
-
-        Label lastNameLabel = new Label("Last Name: ");
-        TextField lastNameField = new TextField();
+        Label staffIdlabel = new Label("Staff Id: ");
+        TextField staffIdField = new TextField();
 
         Label passwordLabel = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
 
-        guiUtils.createLabel(firstNameLabel, 250, 100, 25);
-        guiUtils.createLabel(lastNameLabel, 250, 100, 25);
+        guiUtils.createLabel(staffIdlabel, 250, 100, 25);
         guiUtils.createLabel(passwordLabel, 250, 100, 25);
-        guiUtils.createTextField(firstNameField, 250, 100, 25);
-        guiUtils.createTextField(lastNameField, 250, 100, 25);
-        guiUtils.createPasswordField(passwordField, 250, 100, 25);
+        guiUtils.createTextField(staffIdField, 250, 100, 25);
+        guiUtils.createPasswordField(passwordField, 250, 100);
 
         // Login Button
         Button loginBtn = new Button("Login");
         guiUtils.createBtn(loginBtn, 250, 100, 25);
 
         loginBtn.setOnAction(event -> {
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
-            String password = passwordField.getText();});
+            String staffID = staffIdField.getText();
+            String password = passwordField.getText();
+
+            if (staffID.isEmpty() || password.isEmpty()) {
+                showErrorPopUp("","Either Staff ID or Password is missing!");
+            }
+            //TODO: call login authenticator
+            if(staffID.equals("12345") && password.equals("123456")) {
+                showSuccessPopUp("","Successful");
+            }
+            else {
+                showErrorPopUp("", "Login Failed! Please try again!");
+            }
+        });
 
         // Add components to the root
-        root.add(firstNameLabel, 0, 1);
-        root.add(firstNameField, 1, 1);
-        root.add(lastNameLabel, 0, 2);
-        root.add(lastNameField, 1, 2);
-        root.add(passwordLabel, 0, 3);
-        root.add(passwordField, 1, 3);
+        root.add(staffIdlabel, 0, 1);
+        root.add(staffIdField, 1, 1);
+        root.add(passwordLabel, 0, 2);
+        root.add(passwordField, 1, 2);
         root.add(loginBtn, 2, 4);
     }
 

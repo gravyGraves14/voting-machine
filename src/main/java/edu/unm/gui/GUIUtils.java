@@ -43,7 +43,7 @@ public class GUIUtils {
         textField.setAlignment(Pos.CENTER);
     }
 
-    public void createPasswordField(PasswordField passwordFieldField, int width, int height, int fontSize){
+    public void createPasswordField(PasswordField passwordFieldField, int width, int height){
         passwordFieldField.setPrefSize(width, height);
         passwordFieldField.setStyle("-fx-background-color: rgb(248, 208, 216)");
         passwordFieldField.setAlignment(Pos.CENTER);
@@ -56,7 +56,6 @@ public class GUIUtils {
 
     public void createCheckBox(CheckBox checkBox, int fontSize) {
         checkBox.setFont(Font.loadFont(mainFontPath, fontSize));
-        checkBox.setStyle("-fx-background-color: rgb(248, 208, 216)");
     }
 
     public void addBackBtn(GridPane oldRoot, GridPane newRoot, int row, int col, Scene scene, int direction){

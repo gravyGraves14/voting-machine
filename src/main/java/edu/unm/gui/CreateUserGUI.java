@@ -35,21 +35,19 @@ public class CreateUserGUI {
         Label passWord = new Label("Password: ");
         PasswordField passwordField = new PasswordField();
 
-        CheckBox adminCheckBox = new CheckBox("Admin");
+        CheckBox adminCheckBox = new CheckBox("Admin?");
 
         guiUtils.createLabel(firstName,250,100,25);
         guiUtils.createLabel(lastName,250,100,25);
         guiUtils.createTextField(firstNameField,250,100,25);
         guiUtils.createTextField(lastNameField,250,100,25);
         guiUtils.createLabel(passWord,250,100,25);
-        guiUtils.createPasswordField(passwordField,250,100,25);
+        guiUtils.createPasswordField(passwordField,250,100);
         guiUtils.createCheckBox(adminCheckBox, 25);
 
         // Buttons
         Button enterBtn = new Button("Submit");
         guiUtils.createBtn(enterBtn,250,100,25);
-
-
 
         enterBtn.setOnAction(event -> {
             String first = firstNameField.getText();
@@ -81,7 +79,7 @@ public class CreateUserGUI {
         root.add(lastNameField,1,2);
         root.add(passWord,0,3);
         root.add(passwordField,1,3);
-        root.add(adminCheckBox, 0, 4);
+        root.add(adminCheckBox, 2, 1);
         root.add(enterBtn,2,4);
 
 

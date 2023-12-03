@@ -4,11 +4,8 @@ import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.Elector;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -40,7 +37,7 @@ public class VoterReg {
         TextField dobField = new TextField();
 
         Label social = new Label("Social Security #: ");
-        TextField socialField = new TextField();
+        PasswordField socialField = new PasswordField();
 
         Button registerButton = new Button("Submit");
 
@@ -51,7 +48,7 @@ public class VoterReg {
         guiUtils.createTextField(firstNameField, 250, 100, 25);
         guiUtils.createTextField(lastNameField, 250, 100, 25);
         guiUtils.createTextField(dobField,250,100,25);
-        guiUtils.createTextField(socialField,250,100,25);
+        guiUtils.createPasswordField(socialField,250,100);
         guiUtils.createBtn(registerButton,250,100,25);
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -83,8 +80,6 @@ public class VoterReg {
 //            System.out.println("Last Name: " + last);
 //            System.out.println("DOB: " + dob);
 //            System.out.println("Social: " + id);
-
-
 
             Elector elector = new Elector(first, last, id, dob);
             Optional<Elector> electors;
