@@ -37,6 +37,7 @@ public class QuestionGUI {
         ToggleGroup radios = new ToggleGroup();
 
         //Create choice radio buttons
+
         choice = new RadioButton[numChoices];
         for (int i = 0; i < numChoices; i++) {
             choice[i] = new RadioButton(choices[i]);
@@ -45,6 +46,7 @@ public class QuestionGUI {
         }
 
         HBox otherBox = new HBox(60);
+
 
         guiUtils.createRadio(other, 25, radios);
         otherBox.getChildren().add(other);
