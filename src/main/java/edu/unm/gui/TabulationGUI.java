@@ -3,6 +3,7 @@
  */
 
 package edu.unm.gui;
+import edu.unm.entity.PaperBallot;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.paint.Color;
@@ -21,11 +24,11 @@ import javafx.util.Duration;
 
 public class TabulationGUI {
     private int totalVotes = 0;
-    private Label voteCountLabel;
-    private Label timeLabel;
-    private GUIUtils guiUtils = new GUIUtils();
-    private GridPane root;
-    private Scene scene;
+    private final Label voteCountLabel;
+    private final Label timeLabel;
+    private final GUIUtils guiUtils = new GUIUtils();
+    private final GridPane root;
+    private final Scene scene;
     private Stage dialog;
     private Label scanningLabel;
     private StackPane scanningPane;
@@ -140,7 +143,13 @@ public class TabulationGUI {
 
         dialog.close();
 
-        boolean isValid = Math.random() < 0.8;
+        PaperBallot paperBallot = new PaperBallot();
+        boolean isValid = false;
+        try {
+            isValid = paperBallot.processBallot();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {

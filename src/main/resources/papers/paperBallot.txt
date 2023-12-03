@@ -6,13 +6,13 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-Social Security Number: 
+Social Security Number: 111111111
 
 *****************************************************************
 
 Question #1
 Vote for King of CS
-[ ] Jacob
+[x] Jacob
 [ ] Manjil
 [ ] Raju
 [ ] Mike
@@ -23,7 +23,7 @@ Vote for King of CS
 Question #2
 Vote for the worst CS professor
 [ ] Darko
-[ ] Stefanovic
+[x] Stefanovic
 [ ] Other: 
 
 *****************************************************************
@@ -34,7 +34,7 @@ Best Cats
 [ ] Grey
 [ ] Siamese
 [ ] Orange
-[ ] Other: 
+[x] Other: cat
 
 *****************************************************************
 
