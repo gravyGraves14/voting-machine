@@ -13,11 +13,6 @@ import java.util.List;
 
 public class UserService {
 
-    public static Elector verityElector(String id) {
-        // TODO
-        return null;
-    }
-
     public static Staff verifyStaff(String id, String password) throws SQLException {
         StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
         List<Staff> allStaff = staffDAO.listAllStaff();
@@ -36,10 +31,6 @@ public class UserService {
         electorDAO.updateElector(elector);
     }
 
-    public static boolean registerElector(Elector elector) {
-        // TODO
-        return false;
-    }
 
     public static String hashPassword(String password) {
         try {

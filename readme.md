@@ -11,4 +11,4 @@ Using the maven modules system is new to me, but this allows us to build all com
 
 Known bugs:
 - If you load a schema more than once, it creates duplicates of all schema nodes. To avoid, only load a schema once or delete the "election-gdb" file and reload the schema.
-- 
+- Nonsense
