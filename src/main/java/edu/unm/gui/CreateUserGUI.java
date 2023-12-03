@@ -60,6 +60,8 @@ public class CreateUserGUI {
 
             System.out.println(isAdmin);
 
+
+
             Staff staff = new Staff(id, first, last, isAdmin, password);
 
             try {
