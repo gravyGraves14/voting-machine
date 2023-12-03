@@ -54,7 +54,19 @@ public class TabulationGUI {
         // Scan Paper Ballot Button
         Button scanBallotButton = new Button("Scan Paper Ballot");
         guiUtils.createBtn(scanBallotButton, 250, 100, 25);
-        scanBallotButton.setOnAction(e -> startScanAnimation());
+        scanBallotButton.setOnAction(e -> {
+            if(Configuration.isGevEnabled()){
+                startScanAnimation();
+            }
+            else{
+                // If voting is disabled, then we know voting has either ended or not begun
+                // so optical scanning should not be permitted
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting is currently closed.");
+                alert.showAndWait();
+            }
+        });
         root.add(scanBallotButton, 1, 1);
 
         // Calculate Overall Result Button
