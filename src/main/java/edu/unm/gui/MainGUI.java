@@ -46,11 +46,6 @@ public class MainGUI {
         root.add(votBtn, 1, 3);
         root.add(staffBtn, 1, 4);
 
-        //Vote count
-        Label totVot = new Label("Total Votes:\n100");
-        guiUtils.createLabel(totVot, 150, 100, 20);
-        root.add(totVot, 2, 0);
-
         scene.setRoot(root);
 
         //Button Actions
