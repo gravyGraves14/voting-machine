@@ -8,6 +8,8 @@ import com.sun.xml.bind.v2.TODO;
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.StaffDAO;
 import edu.unm.entity.Staff;
+import edu.unm.service.UserService;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -15,8 +17,10 @@ import java.sql.SQLException;
 
 public class LoginStaffGUI {
     private final GridPane root;
+    private final Scene scene;
 
-    public LoginStaffGUI() {
+    public LoginStaffGUI(Scene scene) {
+        this.scene = scene;
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
@@ -44,11 +48,16 @@ public class LoginStaffGUI {
                 showErrorPopUp("","Either Staff ID or Password is missing!");
             }
             //TODO: call login authenticator
-            if(staffID.equals("12345") && password.equals("123456")) {
-                showSuccessPopUp("","Successful");
-            }
-            else {
-                showErrorPopUp("", "Login Failed! Please try again!");
+
+            try {
+                if((UserService.verifyStaff(staffID,password)) != null){
+                    ResultGUI resultGUI = new ResultGUI(scene);
+                    guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
+                    scene.setRoot(resultGUI.getRoot());
+                }
+                else showErrorPopUp("", "Login Failed! Please try again!");
+            } catch (SQLException e) {
+                return;
             }
         });
 
