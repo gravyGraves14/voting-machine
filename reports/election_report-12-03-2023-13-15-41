@@ -1,0 +1,10 @@
+Report: Election Report
+
+Election Report 'test-schema'
+Total votes: 4
+Question: What is your favorite fruit?
+	0 - Strawberry
+	4 - Pear
+Question: President of the United States of America
+	0 - George Lucas
+	4 - Wiley Coyote

@@ -2,6 +2,7 @@ package edu.unm.dao;
 
 import edu.unm.entity.*;
 import edu.unm.service.ElectionSetupScanner;
+import edu.unm.service.ReportPrinter;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -35,6 +36,9 @@ public class ElectionGremlinDAO implements ElectionDAO {
                     System.out.println("\t" + option.getTotalVotes() + " - " + option.getOption());
                 }
             }
+
+            ElectionReport eReport = new ElectionReport("test-schema");
+            ReportPrinter.print(eReport);
         } catch (Exception e) {
             e.printStackTrace();
         }

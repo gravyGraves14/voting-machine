@@ -18,8 +18,7 @@ public class ElectionReport extends Report {
     public ElectionReport(String schemaName) throws IllegalArgumentException {
         super("Election Report" ,
                 "election_report-"
-                        + DateUtils
-                        .formatLocalDateTime(LocalDateTime.now()));
+                        + DateUtils.formatLocalDateTime(LocalDateTime.now()));
         this.schemaName = schemaName;
         populateData();
         buildReport();
