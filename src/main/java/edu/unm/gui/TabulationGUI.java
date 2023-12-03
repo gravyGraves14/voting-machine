@@ -3,6 +3,7 @@
  */
 
 package edu.unm.gui;
+import edu.unm.entity.Ballot;
 import edu.unm.entity.PaperBallot;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
@@ -150,6 +151,8 @@ public class TabulationGUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Ballot ballot = paperBallot.getBallot();
 
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {

@@ -180,4 +180,8 @@ public class PaperBallot {
             }
         }
     }
+
+    public Ballot getBallot() {
+        return ballot;
+    }
 }
