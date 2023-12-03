@@ -6,7 +6,7 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-Social Security Number: 
+Social Security Number: 111111111
 
 *****************************************************************
 
@@ -24,17 +24,5 @@ Question #2
 Vote for the worst CS professor
 [ ] Darko
 [ ] Stefanovic
-[ ] Other: 
-
-*****************************************************************
-
-Question #3
-Best Cats
-[ ] Black
-[ ] Grey
-[ ] Siamese
-[ ] Orange
-[ ] Other: 
-
-*****************************************************************
+[ ] Other:
 

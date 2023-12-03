@@ -72,36 +72,12 @@ public class PaperBallot {
         String ssn = currentChunk.toString().replaceAll("\\D", "");
         Elector elector = getElector(ssn, allElectorList);
 
-//        if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null) {
-//            return false;
-//        }
+        if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null) {
+            return false;
+        }
 
         //check the questions
         for (int i = 0; i < questions.getNumQuestions(); i++) {
-            /**
-             * read until line that starts with '['
-             * check that chunk
-             *
-             * int choiceCount = 0
-             * String choice = none
-             * for all the options
-             *    if "[x] <what its supposed to be>"
-             *        if choiceCount >= 0
-             *            return false
-             *        choiceCount++
-             *        choice = <their choice>
-             *    else if !"[ ] <what its supposed to be>"
-             *        return false
-             *
-             * read line
-             * if "[x] Other: <any number of any characters>"
-             *    if choiceCount >= 0
-             *        return false
-             *    choiceCount++
-             *    choice = <their choice>
-             * else if (!"[ ] Other: ")
-             *     return false
-             */
             StringBuilder correctQuestion = new StringBuilder();
             correctQuestion.append("\n\n");
             currentChunk.setLength(0);
@@ -165,18 +141,13 @@ public class PaperBallot {
                 if (choiceCount > 0){
                     return false;
                 }
-               // choice = questions.getQuestionChoices(i)[j];
+                String[] parts = otherLine.split(": ");
+                choice = parts[1];
             }
             else if (!currentChunk.toString().equals(other)) {
                 return false;
             }
-
-            line = reader.readLine();
-
-//            correctQuestion.append("""
-//                    [ ] Other:\s
-//
-//                    """);
+            System.out.println(choice);
         }
 
         //last stars
