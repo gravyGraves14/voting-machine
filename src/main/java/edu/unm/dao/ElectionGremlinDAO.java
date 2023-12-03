@@ -83,6 +83,14 @@ public class ElectionGremlinDAO implements ElectionDAO {
 
     public void loadBallotSchema(String schemaName, Ballot ballot) {
         connect();
+
+        // Check to see if schema has already been loaded
+        Optional<Vertex> ov = findVertexByLabelWithProperty("schema", "name", schemaName);
+        if (ov.isPresent()) {
+            LOGGER.log(Level.INFO, "Schema '{0}' already exists in database", schemaName);
+            return;
+        }
+
         // Create schema vertex
         Map<Object, Object> props = new HashMap<>();
         props.put("name", schemaName);
