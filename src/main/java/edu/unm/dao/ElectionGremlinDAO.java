@@ -126,6 +126,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
 
         Map<Object, Object> props = new HashMap<>();
         props.put("ballotId", ballot.getBallotId());
+        props.put("schemaName", schema);
         Vertex ballotVertex = saveVertex("ballot", props);
 
         for (BallotQuestion question : ballot.getQuestions()) {
@@ -324,6 +325,14 @@ public class ElectionGremlinDAO implements ElectionDAO {
             return source.V().hasLabel(label).toList();
         } catch (NoSuchElementException e) {
             LOGGER.log(Level.WARNING, "Failed to find vertices with label: " + label);
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Vertex> findAllVerticesByLabelWithProperty(String label, String key, Object value) {
+        try {
+            return source.V().hasLabel(label).has(key, value).toList();
+        } catch (NoSuchElementException e) {
             return new ArrayList<>();
         }
     }
