@@ -2,6 +2,7 @@ package edu.unm.gui;
 
 import edu.unm.entity.PaperBallot;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -55,22 +56,44 @@ public class MainGUI {
         //Button Actions
         gevBtn.setOnAction(event -> {
 
-            try {
-                System.out.println(paperBallot.checkBallot());
-            } catch (IOException e) {
-                e.printStackTrace();
+//            try {
+//                System.out.println(paperBallot.checkBallot());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            if(Configuration.isGevEnabled()){
+                GevGUI gevGUI = new GevGUI(scene);
+                guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
+                scene.setRoot(gevGUI.getRoot());
             }
-
-            GevGUI gevGUI = new GevGUI(scene);
-            guiUtils.addBackBtn(gevGUI.getRoot(), root, 0 ,0, scene, 0);
-            scene.setRoot(gevGUI.getRoot());
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting is currently closed.");
+                alert.showAndWait();
+            }
         });
 
         tabBtn.setOnAction(event -> {
-            TabulationGUI tabulationGUI = new TabulationGUI(scene);
-            guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
-            scene.setRoot(tabulationGUI.getRoot());
+            if(Configuration.isTabEnabled()){
+                TabulationGUI tabulationGUI = new TabulationGUI(scene);
+                guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+                scene.setRoot(tabulationGUI.getRoot());
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting is currently closed.");
+                alert.showAndWait();
+            }
         });
+
+//        tabBtn.setOnAction(event -> {
+//            TabulationGUI tabulationGUI = new TabulationGUI(scene);
+//            guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+//            scene.setRoot(tabulationGUI.getRoot());
+//        });
+
 
         staffBtn.setOnAction(event -> {
             StaffGUI staffGUI = new StaffGUI(scene);
@@ -79,9 +102,17 @@ public class MainGUI {
         });
 
         votBtn.setOnAction(event -> {
-            VoterReg voterReg = new VoterReg(scene);
-            guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
-            scene.setRoot(voterReg.getRoot());
+            if(Configuration.isVoterRegEnabled()){
+                VoterReg voterReg = new VoterReg(scene);
+                guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
+                scene.setRoot(voterReg.getRoot());
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Voting has ended, registration is now closed.");
+                alert.showAndWait();
+            }
         });
     }
 
