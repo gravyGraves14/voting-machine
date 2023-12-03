@@ -176,12 +176,6 @@ public class GevGUI {
             } catch (SQLException e) {
                 return;
             }
-            if(evType == 1) {
-                guiUtils.createPopUp("Ballot Printed Successfully");
-            }
-            else {
-                guiUtils.createPopUp("Ballot Printed and Logged Successfully");
-            }
 
             for (int i = 0; i < ballot.getQuestions().size(); i++) {
                 for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
@@ -191,9 +185,21 @@ public class GevGUI {
                 }
             }
 
-            ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
-            electionGremlinDAO.saveBallotVotes(ballot);
+            PaperBallot paperBallot = new PaperBallot();
+            try {
+                paperBallot.writeBallot(ballot);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            if(evType == 1) {
+                guiUtils.createPopUp("Ballot Printed Successfully");
+            }
+            else {
+                guiUtils.createPopUp("Ballot Printed and Logged Successfully");
+                ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
+                electionGremlinDAO.saveBallotVotes(ballot);
+            }
 
             scene.setRoot(root);
         });
