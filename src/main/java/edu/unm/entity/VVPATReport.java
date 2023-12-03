@@ -34,8 +34,9 @@ public class VVPATReport extends Report {
         StringBuilder sb = new StringBuilder(500);
         sb.append(question.getQuestionShort())
                 .append(" : ");
-        question.getSelectedOptions()
-                .forEach(o -> sb.append(o.getOption()).append("\n"));
+        if (question.getSelectedOption().isPresent()) {
+            sb.append(question.getSelectedOption().get().getOption()).append("\n");
+        }
         return sb.toString();
     }
 
