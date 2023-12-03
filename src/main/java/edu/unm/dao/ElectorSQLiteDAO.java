@@ -31,7 +31,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "       FirstName TEXT NOT NULL,\n"
             + "       LastName TEXT NOT NULL,\n"
             + "       date_of_birth TEXT NOT NULL,\n"
-            + "       VOTED TEXT NOT NULL\n"
+            + "       VOTED INTEGER NOT NULL\n"
             + ");";
 
     /**
@@ -66,7 +66,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "            lastName,\n"
             + "            date_of_birth,\n"
             + "            voted)\n"
-            + "values (?, ?, ?, ?);";
+            + "values (?, ?, ?, ?, ?);";
 
     /**
      * SQL query to update a user from the {@code users} table
@@ -74,9 +74,14 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
     private static final String UPDATE_ELECTOR_QUERY
             = "update electors SET /* UPDATE_ELECTOR */\n"
             + "             ID = ?,\n"
-            + "            firstName,\n"
-            + "            lastName,\n"
-            + "             date_of_birth, \n"
+            + "            firstName = ?,\n"
+            + "            lastName = ?,\n"
+            + "             date_of_birth=?,\n"
+            + "             voted = ?\n"
+            + "where        ID = ?;";
+
+    private static final String UPDATE_VOTED_QUERY
+            = "update electors SET /* UPDATE_ELECTOR */\n"
             + "             voted = ?\n"
             + "where        ID = ?;";
 
@@ -111,8 +116,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
         String firstName = rs.getString(2);
         String lastName = rs.getString(3);
         String date = rs.getString(4);
-        String voted = rs.getString(5);
-
+        int voted = rs.getInt(5);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date dob = null;
 
@@ -126,6 +130,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
 
         Elector elector = new Elector(firstName, lastName, id, dob);
+        if (voted == 1) elector.setVoted();
         //user.setHashedPIN(hashedPIN);
         //user.setAdmin(admin);
 
@@ -170,6 +175,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             String formattedDate = elector.getDob().toString();
             //ps.setDate(3, elector.getDob());
             ps.setString(4, formattedDate);
+            ps.setInt(5, elector.getVoted());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -196,7 +202,10 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             ps.setString(1, elector.getId());
             ps.setString(2, elector.getFirstName());
             ps.setString(3, elector.getLastName());
-            ps.setDate(4, elector.getDob());
+            String formattedDate = elector.getDob().toString();
+            ps.setString(4, formattedDate);
+            ps.setInt(5, elector.getVoted());
+            ps.setString(6, elector.getId());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -213,6 +222,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
         }
         return false;
     }
+
+
 
     @Override
     public boolean removeElector(Elector elector) throws SQLException {

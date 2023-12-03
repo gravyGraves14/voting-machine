@@ -1,6 +1,7 @@
 package edu.unm.service;
 
 import edu.unm.dao.DAOFactory;
+import edu.unm.dao.ElectorDAO;
 import edu.unm.dao.StaffDAO;
 import edu.unm.entity.Elector;
 import edu.unm.entity.Staff;
@@ -27,6 +28,12 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public static void setVoted(Elector elector) throws SQLException {
+        ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
+        elector.setVoted();
+        electorDAO.updateElector(elector);
     }
 
     public static boolean registerElector(Elector elector) {

@@ -11,7 +11,7 @@ public class Elector implements User{
     private final String lastName;
     private final String id;
     private final Date dob;
-    private final int voted;
+    private int voted;
 
     public Elector(String firstName, String lastName, String id, Date dob) {
         this.firstName = firstName;
@@ -33,6 +33,10 @@ public class Elector implements User{
         return dob;
     }
     public int getVoted(){return voted;}
+
+    public void setVoted(){
+        voted = 1;
+    }
 
     public boolean isQualifiedToVote(){
         LocalDate today = LocalDate.now();
