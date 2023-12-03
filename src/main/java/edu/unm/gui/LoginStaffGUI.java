@@ -4,10 +4,6 @@
 
 package edu.unm.gui;
 
-import com.sun.xml.bind.v2.TODO;
-import edu.unm.dao.DAOFactory;
-import edu.unm.dao.StaffDAO;
-import edu.unm.entity.Staff;
 import edu.unm.service.UserService;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -44,14 +40,12 @@ public class LoginStaffGUI {
             String staffID = staffIdField.getText();
             String password = passwordField.getText();
 
-            if (staffID.isEmpty() || password.isEmpty()) {
-                showErrorPopUp("","Either Staff ID or Password is missing!");
-            }
-            //TODO: call login authenticator
-
             try {
-                if((UserService.verifyStaff(staffID,password)) != null){
-                    ResultGUI resultGUI = new ResultGUI(scene);
+                if (staffID.isEmpty() || password.isEmpty()) {
+                    showErrorPopUp("","Either Staff ID or Password is missing!");
+                }
+                else if((UserService.verifyStaff(staffID,password)) != null){
+                    ResultGUI resultGUI = new ResultGUI(this.scene);
                     guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
                     scene.setRoot(resultGUI.getRoot());
                 }
@@ -67,13 +61,6 @@ public class LoginStaffGUI {
         root.add(passwordLabel, 0, 2);
         root.add(passwordField, 1, 2);
         root.add(loginBtn, 2, 4);
-    }
-
-    private void showSuccessPopUp(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     private void showErrorPopUp(String title, String content) {

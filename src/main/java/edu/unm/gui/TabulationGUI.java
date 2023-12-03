@@ -42,7 +42,7 @@ public class TabulationGUI {
         initializeScanningDialog();
 
         // Creating and styling the vote count label
-        voteCountLabel = new Label("Total Votes: \n" + totalVotes);
+        voteCountLabel = new Label("Total Paper Votes: \n" + totalVotes);
         guiUtils.createLabel(voteCountLabel, 250, 100, 25);
         root.add(voteCountLabel, 2, 0);
 
@@ -63,13 +63,13 @@ public class TabulationGUI {
                 // so optical scanning should not be permitted
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("FEATURE DISABLED");
-                alert.setContentText("Voting is currently closed.");
+                alert.setContentText("Voting has been over.");
                 alert.showAndWait();
             }
         });
         root.add(scanBallotButton, 1, 1);
 
-        // Calculate Overall Result Button
+        // Tabulate Button
         Button calculateResultButton = new Button("Tabulate Result");
         guiUtils.createBtn(calculateResultButton, 250, 100, 25);
         calculateResultButton.setOnAction(e -> {
@@ -148,9 +148,7 @@ public class TabulationGUI {
             totalVotes++;
         } else {
             alert.setContentText("Invalid ballot paper, please resubmit after making correction.");
-
         }
-        // Update the GUI with the new vote count and time
         updateGUI();
         alert.show();
     }
