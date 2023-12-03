@@ -30,7 +30,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "       ID TEXT PRIMARY KEY,\n"
             + "       FirstName TEXT NOT NULL,\n"
             + "       LastName TEXT NOT NULL,\n"
-            + "       date_of_birth TEXT NOT NULL\n"
+            + "       date_of_birth TEXT NOT NULL,\n"
+            + "       VOTED TEXT NOT NULL\n"
             + ");";
 
     /**
@@ -41,7 +42,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "          ID,\n"
             + "          firstName,\n"
             + "          lastName,\n"
-            + "          date_of_birth\n"
+            + "          date_of_birth,\n"
+            + "          voted\n"
             + "from      electors;";
 
     private static final String FIND_ELECTOR_BY_SOCIAL_QUERY
@@ -49,7 +51,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "          ID,\n"
             + "          firstName,\n"
             + "          lastName,\n"
-            + "          date_of_birth\n"
+            + "          date_of_birth,\n"
+            + "          voted\n"
             + "from      electors\n"
             + "where     ID = ?";
 
@@ -61,7 +64,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "            ID,\n"
             + "            firstName,\n"
             + "            lastName,\n"
-            + "            date_of_birth)\n"
+            + "            date_of_birth,\n"
+            + "            voted)\n"
             + "values (?, ?, ?, ?);";
 
     /**
@@ -72,7 +76,8 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "             ID = ?,\n"
             + "            firstName,\n"
             + "            lastName,\n"
-            + "             date_of_birth = ?\n"
+            + "             date_of_birth, \n"
+            + "             voted = ?\n"
             + "where        ID = ?;";
 
     /**
@@ -106,6 +111,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
         String firstName = rs.getString(2);
         String lastName = rs.getString(3);
         String date = rs.getString(4);
+        String voted = rs.getString(5);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date dob = null;

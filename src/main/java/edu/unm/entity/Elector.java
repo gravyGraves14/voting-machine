@@ -11,12 +11,14 @@ public class Elector implements User{
     private final String lastName;
     private final String id;
     private final Date dob;
+    private final int voted;
 
     public Elector(String firstName, String lastName, String id, Date dob) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
         this.dob = dob;
+        this.voted = 0;
     }
 
     public String getFirstName(){return firstName;}
@@ -30,6 +32,7 @@ public class Elector implements User{
     public Date getDob(){
         return dob;
     }
+    public int getVoted(){return voted;}
 
     public boolean isQualifiedToVote(){
         LocalDate today = LocalDate.now();
