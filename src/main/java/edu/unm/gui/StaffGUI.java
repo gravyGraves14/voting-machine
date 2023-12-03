@@ -36,39 +36,18 @@ public class StaffGUI {
         });
 
         openBallot.setOnAction(event -> {
-            // 1. Authenticate user - they MUST be an admin-level user
+            // ...
             LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 2);
             guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
             scene.setRoot(loginStaffGUI.getRoot());
 
-
-            // 2. Before ballot is open, users cannot use the following buttons:
-            //    -> Electronic Voting
-            //    -> Tabulator
-            // 3. While ballot is open, users can use ALL buttons
-            Configuration.setGevEnabled(true);
-            Configuration.setTabEnabled(true);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("FEATURE ENABLED");
-            alert.setContentText("Ballot is now open, voting can begin.");
-            alert.showAndWait();
         });
 
         closeBallot.setOnAction(event -> {
-
-            // TODO: fix & further testing on this feature
-
-            // 1. Authenticate user - they MUST be an admin-level user
-            // 2. After ballot is closed, users cannot use the following buttons:
-            //    -> Electronic Voting
-            //    -> Voter Reg
-            //    -> Staff Creation (not possible without disabling everything in Staff)
-            Configuration.setGevEnabled(false);
-            Configuration.setVoterRegEnabled(false);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("FEATURE DISABLED");
-            alert.setContentText("Ballot is now closed, voting has ended.");
-            alert.showAndWait();
+            // ...
+            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 3);
+            guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
+            scene.setRoot(loginStaffGUI.getRoot());
         });
     }
 
