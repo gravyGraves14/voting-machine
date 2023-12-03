@@ -16,8 +16,13 @@ public class LoginStaffGUI {
     private final GridPane root;
     private final Scene scene;
 
-    public LoginStaffGUI(Scene scene) {
+    // 1 is for Tabulation
+    // 2 is for Opening/Closing Ballot
+    private final int Mode;
+
+    public LoginStaffGUI(Scene scene, int mode) {
         this.scene = scene;
+        Mode = mode;
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
@@ -46,9 +51,14 @@ public class LoginStaffGUI {
                     showErrorPopUp("","Either Staff ID or Password is missing!");
                 }
                 else if((UserService.verifyStaff(staffID,password)) != null){
-                    ResultGUI resultGUI = new ResultGUI(this.scene);
-                    guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
-                    scene.setRoot(resultGUI.getRoot());
+                    if(mode == 1){
+                        ResultGUI resultGUI = new ResultGUI(this.scene);
+                        guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
+                        scene.setRoot(resultGUI.getRoot());
+                    }else{
+                        System.out.println("Getting worked on");
+                    }
+
                 }
                 else showErrorPopUp("", "Login Failed! Please try again!");
             } catch (SQLException e) {

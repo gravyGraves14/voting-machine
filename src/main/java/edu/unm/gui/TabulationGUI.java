@@ -73,7 +73,7 @@ public class TabulationGUI {
         Button calculateResultButton = new Button("Tabulate Result");
         guiUtils.createBtn(calculateResultButton, 250, 100, 25);
         calculateResultButton.setOnAction(e -> {
-            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene);
+            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 1);
             guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
             scene.setRoot(loginStaffGUI.getRoot());
         });
