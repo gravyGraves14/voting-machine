@@ -25,6 +25,18 @@ public class UserService {
         return null;
     }
 
+    public static boolean verifyStaffAdmin(String id, String password) throws SQLException {
+        StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
+        List<Staff> allStaff = staffDAO.listAllStaff();
+        String hashed = hashPassword(password);
+        for (Staff staff1 : allStaff){
+            if (staff1.getId().equals(id)){
+                if (staff1.isAdmin()) return true;
+            }
+        }
+        return false;
+    }
+
     public static void setVoted(Elector elector) throws SQLException {
         ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
         elector.setVoted();

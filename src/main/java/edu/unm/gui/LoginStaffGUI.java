@@ -50,12 +50,13 @@ public class LoginStaffGUI {
                 if (staffID.isEmpty() || password.isEmpty()) {
                     showErrorPopUp("","Either Staff ID or Password is missing!");
                 }
-                else if((UserService.verifyStaff(staffID,password)) != null){
+                else if((UserService.verifyStaff(staffID,password) != null)){
                     if(mode == 1){
                         ResultGUI resultGUI = new ResultGUI(this.scene);
                         guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
                         scene.setRoot(resultGUI.getRoot());
                     }else{
+                        // && UserService.verifyStaffAdmin(staffID, password)
                         System.out.println("Getting worked on");
                     }
 
