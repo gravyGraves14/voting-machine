@@ -55,9 +55,34 @@ public class LoginStaffGUI {
                         ResultGUI resultGUI = new ResultGUI(this.scene);
                         guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
                         scene.setRoot(resultGUI.getRoot());
+                    }else if(mode == 2){
+                        // OPENING BALLOT
+                        if(UserService.verifyStaffAdmin(staffID, password)){
+                            Configuration.setGevEnabled(true);
+                            Configuration.setTabEnabled(true);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("FEATURE ENABLED");
+                            alert.setContentText("Ballot is now open, voting can begin.");
+                            alert.showAndWait();
+                        }else{
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setContentText("Staff must be ADMIN to open ballot");
+                            alert.showAndWait();
+                        }
                     }else{
-                        // && UserService.verifyStaffAdmin(staffID, password)
-                        System.out.println("Getting worked on");
+                        // CLOSING BALLOT
+                        if(UserService.verifyStaffAdmin(staffID, password)){
+                            Configuration.setGevEnabled(false);
+                            Configuration.setTabEnabled(false);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("FEATURE DISABLED");
+                            alert.setContentText("Ballot is now closed, voting has ended.");
+                            alert.showAndWait();
+                        }else{
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setContentText("Staff must be ADMIN to close ballot");
+                            alert.showAndWait();
+                        }
                     }
 
                 }
