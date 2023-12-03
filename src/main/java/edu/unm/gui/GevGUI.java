@@ -4,6 +4,8 @@ import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.Elector;
 import edu.unm.entity.Questions;
+import edu.unm.entity.User;
+import edu.unm.service.UserService;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -19,6 +21,7 @@ public class GevGUI {
     private int evType = 0;
     private String voterId;
 
+    private Elector elector;
     public GevGUI(Scene scene) {
         this.scene = scene;
 
@@ -51,7 +54,7 @@ public class GevGUI {
                 throw new RuntimeException(e);
             }
 
-            Elector elector = getElector(voterId, allElectorList);
+            elector = getElector(voterId, allElectorList);
 
             if (elector == null){
                 showPopup("Not Registered", "You have not registered to vote.");
@@ -65,6 +68,10 @@ public class GevGUI {
 
             if (elector == null){
                 showPopup("Not Registered", "You have not yet registered.");
+            }
+
+            if (elector.getVoted() == 1){
+                showPopup("Already Voted", "You have already voted.");
             }
             scene.setRoot(createChoiceRoot());
         });
@@ -149,6 +156,11 @@ public class GevGUI {
         //Button action
         submitBtn.setOnAction(event -> {
             //Popup
+            try {
+                UserService.setVoted(elector);
+            } catch (SQLException e) {
+                return;
+            }
             if(evType == 1) {
                 guiUtils.createPopUp("Ballot Printed Successfully");
             }

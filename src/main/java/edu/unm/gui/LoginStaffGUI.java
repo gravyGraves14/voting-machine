@@ -4,25 +4,30 @@
 
 package edu.unm.gui;
 
-import com.sun.xml.bind.v2.TODO;
-import edu.unm.dao.DAOFactory;
-import edu.unm.dao.StaffDAO;
-import edu.unm.entity.Staff;
+import edu.unm.service.UserService;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class LoginStaffGUI {
     private final GridPane root;
+    private final Scene scene;
 
-    public LoginStaffGUI() {
-        StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
+    // 1 is for Tabulation
+    // 2 is for Opening/Closing Ballot
+    private final int Mode;
+
+    public LoginStaffGUI(Scene scene, int mode) {
+        this.scene = scene;
+        Mode = mode;
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
         // Labels & Text fields for First Name, Last Name, and Password
-        Label staffIdlabel = new Label("Staff ID: ");
+        Label staffIdlabel = new Label("Staff Id: ");
         TextField staffIdField = new TextField();
 
         Label passwordLabel = new Label("Password: ");
@@ -41,12 +46,23 @@ public class LoginStaffGUI {
             String staffID = staffIdField.getText();
             String password = passwordField.getText();
 
-            //TODO: call login authenticator
-            if(staffID.equals("12345") && password.equals("123456")) {
-                showSuccessPopUp("PopUp","Successful");
-            }
-            else {
-                showErrorPopUp("PopUp", "Login Failed!");
+            try {
+                if (staffID.isEmpty() || password.isEmpty()) {
+                    showErrorPopUp("","Either Staff ID or Password is missing!");
+                }
+                else if((UserService.verifyStaff(staffID,password)) != null){
+                    if(mode == 1){
+                        ResultGUI resultGUI = new ResultGUI(this.scene);
+                        guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
+                        scene.setRoot(resultGUI.getRoot());
+                    }else{
+                        System.out.println("Getting worked on");
+                    }
+
+                }
+                else showErrorPopUp("", "Login Failed! Please try again!");
+            } catch (SQLException e) {
+                return;
             }
         });
 
@@ -56,13 +72,6 @@ public class LoginStaffGUI {
         root.add(passwordLabel, 0, 2);
         root.add(passwordField, 1, 2);
         root.add(loginBtn, 2, 4);
-    }
-
-    private void showSuccessPopUp(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     private void showErrorPopUp(String title, String content) {

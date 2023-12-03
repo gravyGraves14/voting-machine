@@ -1,22 +1,16 @@
 package edu.unm.gui;
 
-import edu.unm.entity.PaperBallot;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-
-import java.io.IOException;
 
 public class StaffGUI {
 
     private final GridPane root;
 
     public StaffGUI(Scene scene) {
+
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
@@ -43,6 +37,10 @@ public class StaffGUI {
 
         openBallot.setOnAction(event -> {
             // 1. Authenticate user - they MUST be an admin-level user
+            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 2);
+            guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
+            scene.setRoot(loginStaffGUI.getRoot());
+
 
             // 2. Before ballot is open, users cannot use the following buttons:
             //    -> Electronic Voting

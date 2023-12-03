@@ -2,6 +2,7 @@ package edu.unm.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -45,10 +46,9 @@ public class BallotQuestion {
         return options;
     }
 
-    public List<QuestionOption> getSelectedOptions() {
+    public Optional<QuestionOption> getSelectedOption() {
         return options.stream()
-                .filter(QuestionOption::isSelected)
-                .collect(Collectors.toList());
+                .filter(QuestionOption::isSelected).findFirst();
     }
 
     public void addOption(QuestionOption option) {

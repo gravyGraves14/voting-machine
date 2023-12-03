@@ -6,3 +6,9 @@ Quick info for team:
 - simulation: this will be where the simulation starts from and we can start up other modules as needed
 
 Using the maven modules system is new to me, but this allows us to build all components in a single root project and have them depend on one-another. I'm still learning this, so I won't have all the answers to the problems we might encounter.
+
+
+
+Known bugs:
+- If you load a schema more than once, it creates duplicates of all schema nodes. To avoid, only load a schema once or delete the "election-gdb" file and reload the schema.
+- 

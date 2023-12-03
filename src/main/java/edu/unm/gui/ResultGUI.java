@@ -3,6 +3,7 @@
  */
 
 package edu.unm.gui;
+
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -19,7 +18,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TabulationGUI {
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class ResultGUI {
     private int totalVotes = 0;
     private Label voteCountLabel;
     private Label timeLabel;
@@ -32,7 +34,7 @@ public class TabulationGUI {
     private Circle scanningCircle;
     private Line scanningLine;
 
-    public TabulationGUI(Scene scene) {
+    public ResultGUI(Scene scene) {
         this.scene = scene;
 
         // Set up the layout
@@ -41,43 +43,27 @@ public class TabulationGUI {
         // Initialize scanning dialog
         initializeScanningDialog();
 
-        // Creating and styling the vote count label
-        voteCountLabel = new Label("Total Paper Votes: \n" + totalVotes);
+        voteCountLabel = new Label("Total Votes: \n" + totalVotes);
         guiUtils.createLabel(voteCountLabel, 250, 100, 25);
         root.add(voteCountLabel, 2, 0);
 
-        // Creating and styling the time label
         timeLabel = new Label("Time: " + getCurrentTime());
         guiUtils.createLabel(timeLabel, 250, 50, 25);
         root.add(timeLabel, 2, 1);
 
-        // Scan Paper Ballot Button
-        Button scanBallotButton = new Button("Scan Paper Ballot");
-        guiUtils.createBtn(scanBallotButton, 250, 100, 25);
-        scanBallotButton.setOnAction(e -> {
-            if(Configuration.isGevEnabled()){
-                startScanAnimation();
-            }
-            else{
-                // If voting is disabled, then we know voting has either ended or not begun
-                // so optical scanning should not be permitted
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("FEATURE DISABLED");
-                alert.setContentText("Voting has been over.");
-                alert.showAndWait();
-            }
-        });
-        root.add(scanBallotButton, 1, 1);
+        // Tabulate Final Result Button
+        Button finalResultButton = new Button("Tabulate Final Result");
+        guiUtils.createBtn(finalResultButton, 300, 100, 25);
+        finalResultButton.setOnAction(e -> startScanAnimation());
+        root.add(finalResultButton, 1, 1);
 
-        // Tabulate Button
-        Button calculateResultButton = new Button("Tabulate Result");
-        guiUtils.createBtn(calculateResultButton, 250, 100, 25);
-        calculateResultButton.setOnAction(e -> {
-            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 1);
-            guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
-            scene.setRoot(loginStaffGUI.getRoot());
+        // Calculate Overall Result Button
+        Button printResultButton = new Button("Print Result");
+        guiUtils.createBtn(printResultButton, 300, 100, 25);
+        printResultButton.setOnAction(e -> {
+            showSuccessPopUp("", "Printing Successful!");
         });
-        root.add(calculateResultButton, 1, 2);
+        root.add(printResultButton, 1, 2);
     }
 
     public GridPane getRoot() {
@@ -117,7 +103,7 @@ public class TabulationGUI {
         scanningPane.getChildren().addAll(scanningCircle, scanningLine);
 
         // Label that stays at the center of the radar
-        scanningLabel = new Label("Scanning...");
+        scanningLabel = new Label("Tabulating...");
         guiUtils.createLabel(scanningLabel, 150, 50, 25);
 
         scanningPane.getChildren().add(scanningLabel);
@@ -144,12 +130,27 @@ public class TabulationGUI {
 
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {
-            alert.setContentText("Valid ballot. Vote has been counted.");
+            alert.setContentText("All Vote has been counted.");
             totalVotes++;
         } else {
-            alert.setContentText("Invalid ballot paper, please resubmit after making correction.");
+            alert.setContentText("Tabulation Failed");
         }
+        // Update the GUI with the new vote count and time
         updateGUI();
         alert.show();
+    }
+
+    private void showSuccessPopUp(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showErrorPopUp(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
