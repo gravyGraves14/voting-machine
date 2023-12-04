@@ -31,7 +31,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + ");";
 
     /**
-     * SQL query to obtain all users from the {@code users} table.
+     * SQL query to obtain all staffs from the {@code users} table.
      */
     private static final String ALL_STAFF_QUERY
             = "select /* ALL_STAFF_QUERY */\n"
@@ -53,7 +53,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + "where     ID = ?";
 
     /**
-     * SQL query to insert a new user into the {@code users} table
+     * SQL query to insert a new user into the {@code staffs} table
      */
     private static final String NEW_STAFF_QUERY
             = "insert into staff( /* NEW_STAFF */\n"
@@ -65,7 +65,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + "values (?, ?, ?, ?, ?);";
 
     /**
-     * SQL query to update a user from the {@code users} table
+     * SQL query to update a staff from the {@code users} table
      */
     private static final String UPDATE_STAFF_QUERY
             = "update staff SET /* UPDATE_STAFF */\n"
@@ -77,7 +77,7 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
             + "where        ID = ?;";
 
     /**
-     * SQL query to remove a user from the {@code users} table
+     * SQL query to remove a staff from the {@code staffs} table
      */
     private static final String REMOVE_STAFF_QUERY
             = "delete from staff /* REMOVE_STAFF */\n"
@@ -158,13 +158,13 @@ public class StaffSQLiteDAO extends AbstractSQLiteDAO implements StaffDAO {
 
             long dur = System.currentTimeMillis() - start;
             if (result == 1) {
-                getLogger().log(INFO, "[SQLStats] Successfully added user to table in {0} ms.", dur);
+                getLogger().log(INFO, "[SQLStats] Successfully added staff to table in {0} ms.", dur);
                 return true;
             }
-            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms.", dur);
+            getLogger().log(WARNING, "[SQLStats] Failed to add staff to table in {0} ms.", dur);
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms. {1}",
+            getLogger().log(WARNING, "[SQLStats] Failed to add staff to table in {0} ms. {1}",
                     new Object[]{dur, e.getMessage().trim()});
             throw e;
         }

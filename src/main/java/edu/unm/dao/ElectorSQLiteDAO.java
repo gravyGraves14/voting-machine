@@ -35,7 +35,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + ");";
 
     /**
-     * SQL query to obtain all users from the {@code users} table.
+     * SQL query to obtain all electors from the {@code users} table.
      */
     private static final String ALL_ELECTORS_QUERY
             = "select /* ALL_ELECTORS_QUERY */\n"
@@ -57,7 +57,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "where     ID = ?";
 
     /**
-     * SQL query to insert a new user into the {@code users} table
+     * SQL query to insert a new elector into the {@code users} table
      */
     private static final String NEW_ELECTOR_QUERY
             = "insert into electors( /* NEW_ELECTOR */\n"
@@ -69,7 +69,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "values (?, ?, ?, ?, ?);";
 
     /**
-     * SQL query to update a user from the {@code users} table
+     * SQL query to update a elector from the {@code users} table
      */
     private static final String UPDATE_ELECTOR_QUERY
             = "update electors SET /* UPDATE_ELECTOR */\n"
@@ -86,7 +86,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
             + "where        ID = ?;";
 
     /**
-     * SQL query to remove a user from the {@code users} table
+     * SQL query to remove a elector from the {@code users} table
      */
     private static final String REMOVE_ELECTOR_QUERY
             = "delete from electors /* REMOVE_ELECTOR */\n"
@@ -131,8 +131,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
         Elector elector = new Elector(firstName, lastName, id, dob);
         if (voted == 1) elector.setVoted();
-        //user.setHashedPIN(hashedPIN);
-        //user.setAdmin(admin);
+
 
         return elector;
     }
@@ -157,7 +156,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
             }
         } catch (SQLException e) {
-            getLogger().log(WARNING, "[SQLStats] User table failed to be created. {0}",
+            getLogger().log(WARNING, "[SQLStats] elector table failed to be created. {0}",
                     e.getMessage().trim());
         }
 
@@ -180,13 +179,13 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
             long dur = System.currentTimeMillis() - start;
             if (result == 1) {
-                getLogger().log(INFO, "[SQLStats] Successfully added user to table in {0} ms.", dur);
+                getLogger().log(INFO, "[SQLStats] Successfully added elector to table in {0} ms.", dur);
                 return true;
             }
-            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms.", dur);
+            getLogger().log(WARNING, "[SQLStats] Failed to add elector to table in {0} ms.", dur);
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms. {1}",
+            getLogger().log(WARNING, "[SQLStats] Failed to add elector to table in {0} ms. {1}",
                     new Object[]{dur, e.getMessage().trim()});
             throw e;
         }
@@ -210,13 +209,13 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
             long dur = System.currentTimeMillis() - start;
             if (result == 1) {
-                getLogger().log(INFO, "[SQLStats] Successfully updated user in {0} ms.", dur);
+                getLogger().log(INFO, "[SQLStats] Successfully updated elector in {0} ms.", dur);
                 return true;
             }
-            getLogger().log(WARNING, "[SQLStats] Failed to update user in {0} ms.", dur);
+            getLogger().log(WARNING, "[SQLStats] Failed to update elector in {0} ms.", dur);
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] Failed to update user in {0} ms. {1}",
+            getLogger().log(WARNING, "[SQLStats] Failed to update elector in {0} ms. {1}",
                     new Object[]{dur, e.getMessage().trim()});
             throw e;
         }
@@ -236,13 +235,13 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
 
             long dur = System.currentTimeMillis() - start;
             if (result == 1) {
-                getLogger().log(INFO, "[SQLStats] Successfully removed user from table in {0} ms", dur);
+                getLogger().log(INFO, "[SQLStats] Successfully removed elector from table in {0} ms", dur);
                 return true;
             }
-            getLogger().log(WARNING, "[SQLStats] Failed to remove user from table in {0} ms.", dur);
+            getLogger().log(WARNING, "[SQLStats] Failed to remove elector from table in {0} ms.", dur);
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(WARNING, "[SQLStats] Failed to remove user from table in {0} ms. {1}",
+            getLogger().log(WARNING, "[SQLStats] Failed to remove elector from table in {0} ms. {1}",
                     new Object[]{dur, e.getMessage().trim()});
             throw e;
         }
@@ -260,7 +259,7 @@ public class ElectorSQLiteDAO extends AbstractSQLiteDAO implements ElectorDAO {
                     ElectorSQLiteDAO::mapElector);
 
             long dur = System.currentTimeMillis() - start;
-            getLogger().log(INFO, "[SQLStats] ALL_USERS {0} row(s) in {1} ms.",
+            getLogger().log(INFO, "[SQLStats] ALL_ELECTORS {0} row(s) in {1} ms.",
                     new Object[]{result.size(), dur});
 
             return result;
