@@ -191,6 +191,7 @@ public class GevGUI {
                 }
             }
 
+            //Prints ballot
             PaperBallot paperBallot = new PaperBallot();
             try {
                 paperBallot.writeBallot(ballot, voterId, evType);

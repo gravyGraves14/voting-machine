@@ -43,7 +43,7 @@ public class QuestionGUI {
 
         choice = new RadioButton[numChoices];
         for (int i = 0; i < numChoices; i++) {
-            choice[i] = new RadioButton(choices.get(i).getOption());
+            choice[i] = new RadioButton(choices.get(i).getOption() + " (Party: " + choices.get(i).getAffiliation() + ")");
             guiUtils.createRadio(choice[i], 25, radios);
             chcs.getChildren().add(choice[i]);
         }

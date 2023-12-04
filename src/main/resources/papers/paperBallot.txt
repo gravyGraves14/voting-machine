@@ -12,16 +12,16 @@ Social Security Number:
 
 Question #1
 President of the United States of America
-[ ] George Lucas
-[ ] Wiley Coyote
+[ ] George Lucas (Party: Lucas Arts)
+[ ] Wiley Coyote (Party: Acme Corp)
 [ ] Other: 
 
 *****************************************************************
 
 Question #2
 What is your favorite fruit?
-[ ] Strawberry
-[ ] Pear
+[ ] Strawberry (Party: Ground)
+[ ] Pear (Party: Tree)
 [ ] Other: 
 
 *****************************************************************
