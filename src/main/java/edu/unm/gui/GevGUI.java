@@ -71,17 +71,14 @@ public class GevGUI {
             if (elector == null){
                 showPopup("Not Registered", "You have not registered to vote.");
                 return;
-            }
-
-            if (!elector.isQualifiedToVote()){
+            }else if (!elector.isQualifiedToVote()){
                 showPopup("Ineligible Voter", "You must be at least 18 years to vote.");
                 return;
-            }
-
-            if (elector.getVoted() == 1){
+            }else if (elector.getVoted() == 1){
                 showPopup("Already Voted", "You have already voted.");
+            }else {
+                scene.setRoot(createChoiceRoot());
             }
-            scene.setRoot(createChoiceRoot());
         });
     }
 
