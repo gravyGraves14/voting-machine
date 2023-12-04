@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
 
-//TODO: make md submit go to scan paper ballot
 //TODO: md -> scan gives invalid ballot
+//TODO: affiliation shown in ballot
 
 public class PaperBallot {
-    private Ballot ballot;
+    private final Ballot ballot;
     private final String stars = "*****************************************************************";
     private final String intro = """
 
@@ -49,7 +49,8 @@ public class PaperBallot {
                     ballot.getQuestionByIndex(i).getQuestion() + "\n");
 
             for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
-                writer.write("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption() + "\n");
+                writer.write("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption()  + " (Party: " +
+                        ballot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")" + "\n");
             }
 
             writer.write("[ ] Other: " + "\n");
@@ -89,7 +90,7 @@ public class PaperBallot {
         Elector elector = getElector(ssn, allElectorList);
 
         if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null
-        || !elector.isQualifiedToVote() || elector.getVoted() == 1) {
+        || !elector.isQualifiedToVote() || elector.getVoted() != 1) {
             return false;
         }
 
@@ -119,14 +120,16 @@ public class PaperBallot {
             //Check the main options of the question
             int choiceCount = 0;
             for (int j = 0; j < ballot.getQuestions().size(); j++) {
-                if (line.equals("[x] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
+                if (line.equals("[x] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption() + " (Party: " +
+                        ballot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")")) {
                     if (choiceCount > 0){
                         return false;
                     }
                     choiceCount++;
                     ballot.getQuestionByIndex(i).getOptions().get(j).setSelected(true);
                 }
-                else if (!line.equals("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
+                else if (!line.equals("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption()  + " (Party: " +
+                        ballot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")")) {
                     return false;
                 }
 
@@ -213,10 +216,12 @@ public class PaperBallot {
 
             for (int j = 0; j < paperBallot.getQuestionByIndex(i).getOptions().size(); j++) {
                 if (paperBallot.getQuestionByIndex(i).getOptions().get(j).isSelected()) {
-                    writer.write("[x] " + paperBallot.getQuestionByIndex(i).getOptions().get(j).getOption() + "\n");
+                    writer.write("[x] " + paperBallot.getQuestionByIndex(i).getOptions().get(j).getOption()  + " (Party: " +
+                            paperBallot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")" + "\n");
                 }
                 else {
-                    writer.write("[ ] " + paperBallot.getQuestionByIndex(i).getOptions().get(j).getOption() + "\n");
+                    writer.write("[ ] " + paperBallot.getQuestionByIndex(i).getOptions().get(j).getOption()  + " (Party: " +
+                            paperBallot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")" + "\n");
                 }
             }
 
