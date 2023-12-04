@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
 
+//TODO: make md submit go to scan paper ballot
+//TODO: md -> scan gives invalid ballot
+
 public class PaperBallot {
     private Ballot ballot;
     private final String stars = "*****************************************************************";
@@ -164,6 +167,7 @@ public class PaperBallot {
                 return false;
             }
         }
+        elector.setVoted();
 
         //last stars
         return line.equals(stars);
@@ -188,8 +192,17 @@ public class PaperBallot {
 
 
     //Used to write a ballot from md or ev to paper form
-    public void writeBallot(Ballot paperBallot, String ssNum) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
+    //evType = 1: md
+    // evType = 2: ev
+    public void writeBallot(Ballot paperBallot, String ssNum, int evType) throws IOException {
+        BufferedWriter writer;
+
+        if(evType == 1) {
+            writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
+        }
+        else {
+            writer = new BufferedWriter(new FileWriter("src/main/resources/papers/evBallot.txt"));
+        }
 
         String ssn = "\n\nSocial Security Number: \n\n";
         writer.write(stars + intro + stars + "\n\nSocial Security Number: " + ssNum + "\n\n" + stars + "\n\n");
