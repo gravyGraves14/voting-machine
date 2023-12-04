@@ -4,7 +4,6 @@ import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.service.ElectionSetupScanner;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.sql.SQLException;
@@ -116,14 +115,13 @@ public class PaperBallot {
 
             //Check the main options of the question
             int choiceCount = 0;
-            String choice = "none";
             for (int j = 0; j < ballot.getQuestions().size(); j++) {
                 if (line.equals("[x] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
                     if (choiceCount > 0){
                         return false;
                     }
                     choiceCount++;
-                    choice = ballot.getQuestionByIndex(i).getOptions().get(j).getOption();
+                    ballot.getQuestionByIndex(i).getOptions().get(j).setSelected(true);
                 }
                 else if (!line.equals("[ ] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
                     return false;
@@ -157,12 +155,14 @@ public class PaperBallot {
                     return false;
                 }
                 String[] parts = otherLine.split(": ");
-                choice = parts[1];
+
+                QuestionOption otherQ = new QuestionOption(parts[1], "none");
+                otherQ.setSelected(true);
+                ballot.getQuestionByIndex(i).getOptions().add(otherQ);
             }
             else if (!currentChunk.toString().equals(other)) {
                 return false;
             }
-            System.out.println(choice);
         }
 
         //last stars
