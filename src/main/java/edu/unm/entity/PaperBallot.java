@@ -2,7 +2,6 @@ package edu.unm.entity;
 
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
-import edu.unm.dao.ElectorSQLiteDAO;
 import edu.unm.service.ElectionSetupScanner;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,9 +11,8 @@ import java.util.List;
 import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
 
-//TODO: ev paper vote go into seperate txt file
-//TODO: Fix duplicate votes when marking
 //TODO: make md submit go to scan paper ballot
+//TODO: md -> scan gives invalid ballot
 
 public class PaperBallot {
     private Ballot ballot;
@@ -194,8 +192,17 @@ public class PaperBallot {
 
 
     //Used to write a ballot from md or ev to paper form
-    public void writeBallot(Ballot paperBallot, String ssNum) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
+    //evType = 1: md
+    // evType = 2: ev
+    public void writeBallot(Ballot paperBallot, String ssNum, int evType) throws IOException {
+        BufferedWriter writer;
+
+        if(evType == 1) {
+            writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
+        }
+        else {
+            writer = new BufferedWriter(new FileWriter("src/main/resources/papers/evBallot.txt"));
+        }
 
         String ssn = "\n\nSocial Security Number: \n\n";
         writer.write(stars + intro + stars + "\n\nSocial Security Number: " + ssNum + "\n\n" + stars + "\n\n");
