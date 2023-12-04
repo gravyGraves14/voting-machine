@@ -3,10 +3,12 @@
  */
 
 package edu.unm.gui;
+import edu.unm.dao.DAOUtils;
 import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
 import edu.unm.entity.Elector;
 import edu.unm.entity.PaperBallot;
+import edu.unm.service.UserService;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.paint.Color;
@@ -65,7 +68,16 @@ public class TabulationGUI {
             if(Configuration.isGevEnabled()){
                 startScanAnimation();
                 Elector elector = paperBallot.getVotedElector();
-
+                GUIUtils guiUtils = new GUIUtils();
+                if(elector.getVoted() == 1) {
+                    guiUtils.createPopUp("Voter has already voted.");
+                }else {
+                    try {
+                        UserService.setVoted(elector);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
             else{
                 // If voting is disabled, then we know voting has either ended or not begun
