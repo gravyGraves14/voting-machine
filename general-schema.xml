@@ -2,21 +2,6 @@
     <schemaName>general-schema</schemaName>
 
     <question type="candidate">
-        <summary>President</summary>
-        <question_text>President of the United States of America</question_text>
-        <options>
-            <option>
-                <option_text>George Lucas</option_text>
-                <affiliation>Lucas Arts</affiliation>
-            </option>
-            <option>
-                <option_text>Wiley Coyote</option_text>
-                <affiliation>Acme Corp</affiliation>
-            </option>
-        </options>
-    </question>
-
-    <question type="candidate">
         <summary>Governor</summary>
         <question_text>Vote for governor:</question_text>
         <options>
