@@ -1,5 +1,5 @@
 <ballotSchema>
-    <schemaName>test-schema</schemaName>
+    <schemaName>general-schema</schemaName>
 
     <question type="candidate">
         <summary>President</summary>
