@@ -169,7 +169,7 @@ public class GevGUI {
         submitBtn.setOnAction(event -> {
             //Popup
             try {
-                UserService.setVoted(elector);
+                if (evType == 2) UserService.setVoted(elector);
             } catch (SQLException e) {
                 return;
             }
@@ -208,7 +208,14 @@ public class GevGUI {
                 electionGremlinDAO.saveBallotVotes(ballot);
             }
 
-            scene.setRoot(root);
+            if(evType == 1) {
+                TabulationGUI tabulationGUI = new TabulationGUI(scene);
+                guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+                scene.setRoot(tabulationGUI.getRoot());
+            }
+            else {
+                scene.setRoot(root);
+            }
         });
 
         guiUtils.addBackBtn(submitRoot, root, 0, 0, scene, 0);

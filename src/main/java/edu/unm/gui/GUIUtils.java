@@ -55,7 +55,7 @@ public class GUIUtils {
     }
 
     public void createCheckBox(CheckBox checkBox, int fontSize) {
-        checkBox.setFont(Font.loadFont(mainFontPath, fontSize));
+       checkBox.setFont(Font.loadFont(mainFontPath, fontSize));
     }
 
     public void addBackBtn(GridPane oldRoot, GridPane newRoot, int row, int col, Scene scene, int direction){
