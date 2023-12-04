@@ -208,7 +208,14 @@ public class GevGUI {
                 electionGremlinDAO.saveBallotVotes(ballot);
             }
 
-            scene.setRoot(root);
+            if(evType == 1) {
+                TabulationGUI tabulationGUI = new TabulationGUI(scene);
+                guiUtils.addBackBtn(tabulationGUI.getRoot(), root, 0, 0, scene, 0);
+                scene.setRoot(tabulationGUI.getRoot());
+            }
+            else {
+                scene.setRoot(root);
+            }
         });
 
         guiUtils.addBackBtn(submitRoot, root, 0, 0, scene, 0);
