@@ -50,7 +50,6 @@ public class QuestionGUI {
 
         HBox otherBox = new HBox(60);
 
-
         guiUtils.createRadio(other, 25, radios);
         otherBox.getChildren().add(other);
 

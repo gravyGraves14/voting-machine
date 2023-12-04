@@ -3,24 +3,17 @@ package edu.unm.gui;
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.StaffDAO;
 import edu.unm.entity.Staff;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import org.apache.tinkerpop.gremlin.structure.T;
 
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.Random;
-import java.util.random.RandomGeneratorFactory;
 
-public class CreateUserGUI {
+public class StaffCreation {
     private final GridPane root;
 
     // TODO: 11/21/2023 add confirm password label & passwordfields to
-    public CreateUserGUI(int userType) {
+    public StaffCreation(int userType) {
         StaffDAO staffDAO = DAOFactory.create(StaffDAO.class);
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
@@ -54,7 +47,7 @@ public class CreateUserGUI {
             String first = firstNameField.getText();
             String last = lastNameField.getText();
             String password = passwordField.getText();
-            String id = createId(first, last);      //generateRandomString(9);
+            String id = createId(first, last); // full first + last name in lower case
             boolean isAdmin = adminCheckBox.isSelected();
 
             // check that staff does not already exist
@@ -71,7 +64,6 @@ public class CreateUserGUI {
                 alert.setContentText("You have already created an account");
                 alert.showAndWait();
             }
-
 
             try {
                 staffDAO.addStaff(staff);
@@ -94,16 +86,6 @@ public class CreateUserGUI {
         root.add(enterBtn,2,4);
 
 
-    }
-
-    public static String generateRandomString(int length) {
-        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            sb.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return sb.toString();
     }
 
     private void showSuccessPopUp(String title, String content) {

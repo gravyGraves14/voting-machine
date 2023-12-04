@@ -1,7 +1,6 @@
 package edu.unm.gui;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
@@ -19,20 +18,18 @@ public class StaffGUI {
         Button openBallot = new Button("Open Ballot");
         Button closeBallot = new Button("Close Ballot");
 
-
         guiUtils.createBtn(createStaff, 250, 100, 25);
         guiUtils.createBtn(openBallot, 250, 100, 25);
         guiUtils.createBtn(closeBallot, 250, 100, 25);
-
 
         root.add(createStaff, 1, 1);
         root.add(openBallot, 1, 2);
         root.add(closeBallot, 1, 3);
 
         createStaff.setOnAction(event -> {
-            CreateUserGUI createUserGUI = new CreateUserGUI(0);
-            guiUtils.addBackBtn(createUserGUI.getRoot(), root, 0 ,0, scene, 0);
-            scene.setRoot(createUserGUI.getRoot());
+            StaffCreation staffCreation = new StaffCreation(0);
+            guiUtils.addBackBtn(staffCreation.getRoot(), root, 0 ,0, scene, 0);
+            scene.setRoot(staffCreation.getRoot());
         });
 
         openBallot.setOnAction(event -> {

@@ -8,22 +8,17 @@ import edu.unm.service.UserService;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-
 import java.sql.SQLException;
-import java.util.List;
 
 public class LoginStaffGUI {
     private final GridPane root;
     private final Scene scene;
 
-    // 1 is for Tabulation
-    // 2 is for Opening Ballot
-    // 3 is for Closing Ballot
-    private final int Mode;
-
     public LoginStaffGUI(Scene scene, int mode) {
+        // "mode" 1 is for Tabulation
+        // "mode" 2 is for Opening Ballot
+        // "mode" 3 is for Closing Ballot
         this.scene = scene;
-        Mode = mode;
         GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(5, 3);
 
@@ -49,11 +44,11 @@ public class LoginStaffGUI {
 
             try {
                 if (staffID.isEmpty() || password.isEmpty()) {
-                    showErrorPopUp("","Either Staff ID or Password is missing!");
+                    showErrorPopUp("Either Staff ID or Password is missing!");
                 }
                 else if((UserService.verifyStaff(staffID,password) != null)){
                     if(mode == 1){
-                        ResultGUI resultGUI = new ResultGUI(this.scene);
+                        ResultGUI resultGUI = new ResultGUI();
                         guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
                         scene.setRoot(resultGUI.getRoot());
                     }else if(mode == 2){
@@ -74,7 +69,6 @@ public class LoginStaffGUI {
                         // CLOSING BALLOT
                         if(UserService.verifyStaffAdmin(staffID, password)){
                             Configuration.setGevEnabled(false);
-                            //Configuration.setTabEnabled(false);
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("FEATURE DISABLED");
                             alert.setContentText("Ballot is now closed, voting has ended.");
@@ -85,11 +79,10 @@ public class LoginStaffGUI {
                             alert.showAndWait();
                         }
                     }
-
                 }
-                else showErrorPopUp("", "Login Failed! Please try again!");
+                else showErrorPopUp("Login Failed! Please try again.");
             } catch (SQLException e) {
-                return;
+                throw new RuntimeException(e);
             }
         });
 
@@ -101,9 +94,8 @@ public class LoginStaffGUI {
         root.add(loginBtn, 2, 4);
     }
 
-    private void showErrorPopUp(String title, String content) {
+    private void showErrorPopUp(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
     }

@@ -3,13 +3,13 @@ package edu.unm.gui;
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.Elector;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.Optional;
 
 /**
@@ -20,9 +20,10 @@ import java.util.Optional;
  */
 public class VoterReg {
     private final GridPane root;
-    private final GUIUtils guiUtils = new GUIUtils();
-    public VoterReg(Scene scene) {
+
+    public VoterReg() {
         ElectorDAO electorDAO = DAOFactory.create(ElectorDAO.class);
+        GUIUtils guiUtils = new GUIUtils();
         root = guiUtils.createRoot(6, 3);
 
         Label firstName = new Label("First Name: ");
@@ -100,7 +101,7 @@ public class VoterReg {
                 electorDAO.addElector(elector);
                 showSuccessPopUp("Success", "You have successfully registered!");
             } catch (SQLException ex) {
-                return;
+                throw new RuntimeException(ex);
             }
 
         });

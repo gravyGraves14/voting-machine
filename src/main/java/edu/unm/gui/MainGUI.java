@@ -4,7 +4,6 @@ import edu.unm.entity.PaperBallot;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -85,7 +84,7 @@ public class MainGUI {
 
         votBtn.setOnAction(event -> {
             if(Configuration.isVoterRegEnabled()){
-                VoterReg voterReg = new VoterReg(scene);
+                VoterReg voterReg = new VoterReg();
                 guiUtils.addBackBtn(voterReg.getRoot(), root, 0, 0, scene, 0);
                 scene.setRoot(voterReg.getRoot());
             }

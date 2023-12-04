@@ -33,21 +33,15 @@ import java.util.List;
 
 public class ResultGUI {
     private int totalVotes = 0;
-    private Label voteCountLabel;
-    private Label timeLabel;
-    private GUIUtils guiUtils = new GUIUtils();
-    private GridPane root;
-    private Scene scene;
+    private final Label voteCountLabel;
+    private final Label timeLabel;
+    private final GUIUtils guiUtils = new GUIUtils();
+    private final GridPane root;
     private Stage dialog;
-    private Label scanningLabel;
-    private StackPane scanningPane;
-    private Circle scanningCircle;
     private Line scanningLine;
+    private final ElectionGremlinDAO dao = new ElectionGremlinDAO();
 
-    private ElectionGremlinDAO dao = new ElectionGremlinDAO();
-
-    public ResultGUI(Scene scene) {
-        this.scene = scene;
+    public ResultGUI() {
 
         // Set up the layout
         root = guiUtils.createRoot(4, 3);
@@ -172,10 +166,10 @@ public class ResultGUI {
         dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        scanningPane = new StackPane();
+        StackPane scanningPane = new StackPane();
         scanningPane.setPrefSize(200, 200);
 
-        scanningCircle = new Circle(90);
+        Circle scanningCircle = new Circle(90);
         scanningCircle.setStroke(Color.BLACK);
         scanningCircle.setFill(Color.LIGHTCYAN);
 
@@ -188,7 +182,7 @@ public class ResultGUI {
         scanningPane.getChildren().addAll(scanningCircle, scanningLine);
 
         // Label that stays at the center of the radar
-        scanningLabel = new Label("Tabulating...");
+        Label scanningLabel = new Label("Tabulating...");
         guiUtils.createLabel(scanningLabel, 150, 50, 25);
 
         scanningPane.getChildren().add(scanningLabel);

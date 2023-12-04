@@ -3,12 +3,9 @@
  */
 
 package edu.unm.gui;
-import edu.unm.dao.DAOUtils;
 import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
-import edu.unm.entity.Elector;
 import edu.unm.entity.PaperBallot;
-import edu.unm.service.UserService;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,11 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -28,22 +20,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class TabulationGUI {
     private int totalVotes = 0;
     private final Label voteCountLabel;
     private final Label timeLabel;
     private final GUIUtils guiUtils = new GUIUtils();
     private final GridPane root;
-    private final Scene scene;
     private Stage dialog;
-    private Label scanningLabel;
-    private StackPane scanningPane;
-    private Circle scanningCircle;
     private Line scanningLine;
-    private PaperBallot paperBallot;
 
     public TabulationGUI(Scene scene) {
-        this.scene = scene;
 
         // Set up the layout
         root = guiUtils.createRoot(4, 3);
@@ -129,10 +119,10 @@ public class TabulationGUI {
         dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        scanningPane = new StackPane();
+        StackPane scanningPane = new StackPane();
         scanningPane.setPrefSize(200, 200);
 
-        scanningCircle = new Circle(90);
+        Circle scanningCircle = new Circle(90);
         scanningCircle.setStroke(Color.BLACK);
         scanningCircle.setFill(Color.LIGHTCYAN);
 
@@ -145,7 +135,7 @@ public class TabulationGUI {
         scanningPane.getChildren().addAll(scanningCircle, scanningLine);
 
         // Label that stays at the center of the radar
-        scanningLabel = new Label("Scanning...");
+        Label scanningLabel = new Label("Scanning...");
         guiUtils.createLabel(scanningLabel, 150, 50, 25);
 
         scanningPane.getChildren().add(scanningLabel);
@@ -168,7 +158,7 @@ public class TabulationGUI {
 
         dialog.close();
 
-        paperBallot = new PaperBallot();
+        PaperBallot paperBallot = new PaperBallot();
         boolean isValid = false;
         try {
             isValid = paperBallot.processBallot();
