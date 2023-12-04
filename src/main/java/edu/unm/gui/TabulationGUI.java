@@ -84,7 +84,7 @@ public class TabulationGUI {
                 // so optical scanning should not be permitted
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("FEATURE DISABLED");
-                alert.setContentText("Voting has been over.");
+                alert.setContentText("Voting has ended.");
                 alert.showAndWait();
             }
         });
@@ -94,9 +94,16 @@ public class TabulationGUI {
         Button calculateResultButton = new Button("Tabulate Result");
         guiUtils.createBtn(calculateResultButton, 250, 100, 25);
         calculateResultButton.setOnAction(e -> {
-            LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 1);
-            guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
-            scene.setRoot(loginStaffGUI.getRoot());
+            if(Configuration.isGevEnabled()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("FEATURE DISABLED");
+                alert.setContentText("Can not tabulate while voting in progress.");
+                alert.showAndWait();
+            }else{
+                LoginStaffGUI loginStaffGUI = new LoginStaffGUI(scene, 1);
+                guiUtils.addBackBtn(loginStaffGUI.getRoot(), root, 0 ,0, scene, 0);
+                scene.setRoot(loginStaffGUI.getRoot());
+            }
         });
         root.add(calculateResultButton, 1, 2);
     }

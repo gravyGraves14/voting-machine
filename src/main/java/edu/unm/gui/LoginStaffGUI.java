@@ -17,7 +17,8 @@ public class LoginStaffGUI {
     private final Scene scene;
 
     // 1 is for Tabulation
-    // 2 is for Opening/Closing Ballot
+    // 2 is for Opening Ballot
+    // 3 is for Closing Ballot
     private final int Mode;
 
     public LoginStaffGUI(Scene scene, int mode) {
@@ -73,7 +74,7 @@ public class LoginStaffGUI {
                         // CLOSING BALLOT
                         if(UserService.verifyStaffAdmin(staffID, password)){
                             Configuration.setGevEnabled(false);
-                            Configuration.setTabEnabled(false);
+                            //Configuration.setTabEnabled(false);
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("FEATURE DISABLED");
                             alert.setContentText("Ballot is now closed, voting has ended.");
