@@ -6,13 +6,11 @@ import edu.unm.entity.Elector;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.Optional;
-
 
 /**
  * This class is just basic user input for when
@@ -58,7 +56,10 @@ public class VoterReg {
             // Handle register button click event
             String first = firstNameField.getText();
             String last = lastNameField.getText();
+            String id = socialField.getText();
             Date dob;
+
+            // VALIDATE D.O.B.
             try {
                 dob = new Date(inputFormat.parse(dobField.getText()).getTime());
                 String formattedDate = dateFormat.format(dob);
@@ -68,19 +69,13 @@ public class VoterReg {
                 return;
             }
 
-            String id = socialField.getText();
-
+            // VALIDATE SOCIAL SECURITY
             if (id.length() != 9) {
                 showPopup("Invalid Social Security Number", "Please enter a 9-digit social security number");
                 return;
             }
 
-            // Now you can use these values as needed (e.g., pass them to the backend)
-//            System.out.println("First Name: " + first);
-//            System.out.println("Last Name: " + last);
-//            System.out.println("DOB: " + dob);
-//            System.out.println("Social: " + id);
-
+            // Make sure the person registering is not already registered
             Elector elector = new Elector(first, last, id, dob);
             Optional<Elector> electors;
             try {
@@ -88,25 +83,19 @@ public class VoterReg {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-
             if (electors.isPresent()){
                 showPopup("Already Registered", "You have already registered.");
                 return;
             }
-//            try {
-//                if (electorDAO.isAlreadyRegistered(elector.getId())){
-//                    showPopup("Already Registered", "You have already registered.");
-//                    return;
-//                }
-//            } catch (SQLException ex) {
-//                return;
-//            }
 
+            // If registrant is < 17 years old, they are ineligible to register
             if (!elector.isQualifiedToRegister()){
                 showPopup("Ineligible Registration", "You must be at least 17 years old to register.");
                 return;
             }
 
+            // After validating age, social security & that registrant is not already registered, registration
+            // can finally be concluded and elector info stored in elector database
             try {
                 electorDAO.addElector(elector);
                 showSuccessPopUp("Success", "You have successfully registered!");

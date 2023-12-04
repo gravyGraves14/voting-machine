@@ -12,11 +12,12 @@ import javafx.scene.layout.RowConstraints;
 import org.apache.tinkerpop.gremlin.structure.T;
 
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.Random;
+import java.util.random.RandomGeneratorFactory;
 
 public class CreateUserGUI {
     private final GridPane root;
-
 
     // TODO: 11/21/2023 add confirm password label & passwordfields to
     public CreateUserGUI(int userType) {
@@ -56,11 +57,21 @@ public class CreateUserGUI {
             String id = createId(first, last);      //generateRandomString(9);
             boolean isAdmin = adminCheckBox.isSelected();
 
-            System.out.println(isAdmin);
-
-
-
+            // check that staff does not already exist
             Staff staff = new Staff(id, first, last, isAdmin, password);
+            Optional<Staff> staffList;
+            try {
+                staffList = staffDAO.getStaffById(staff.getId());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if(staffList.isPresent()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Staff already exists");
+                alert.setContentText("You have already created an account");
+                alert.showAndWait();
+            }
+
 
             try {
                 staffDAO.addStaff(staff);
@@ -106,13 +117,7 @@ public class CreateUserGUI {
         if (firstName.isEmpty() || lastName.isEmpty()) {
             return "Invalid ID";
         }
-        char firstLetterOfFirstName = firstName.charAt(0);
-
-        char firstLetterLowercase = Character.toLowerCase(firstLetterOfFirstName);
-
-        String id = firstLetterLowercase + lastName.toLowerCase();
-
-        return id;
+        return firstName.toLowerCase() + lastName.toLowerCase();
     }
 
     public GridPane getRoot() { return root; }
