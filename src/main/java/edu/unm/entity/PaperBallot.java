@@ -28,6 +28,7 @@ public class PaperBallot {
     private final StringBuilder currentChunk = new StringBuilder();
     private String line;
 
+    private Elector elector;
     public PaperBallot() {
         ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
 
@@ -87,7 +88,7 @@ public class PaperBallot {
             throw new RuntimeException(e);
         }
         String ssn = currentChunk.toString().replaceAll("\\D", "");
-        Elector elector = getElector(ssn, allElectorList);
+        elector = getElector(ssn, allElectorList);
 
         if (!currentChunk.toString().matches("\n\n+Social Security Number: +\\d{9}+\n\n") || elector == null
         || !elector.isQualifiedToVote() || elector.getVoted() != 1) {
@@ -230,5 +231,9 @@ public class PaperBallot {
             writer.write("\n" + stars + "\n\n");
         }
         writer.close();
+    }
+
+    public Elector getVotedElector(){
+        return elector;
     }
 }

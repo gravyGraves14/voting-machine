@@ -6,7 +6,7 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-Social Security Number: 
+Social Security Number: 098765432
 
 *****************************************************************
 
@@ -14,6 +14,7 @@ Question #1
 President of the United States of America
 [ ] George Lucas (Party: Lucas Arts)
 [ ] Wiley Coyote (Party: Acme Corp)
+[x] George Lucas (Party: Lucas Arts) (Party: none)
 [ ] Other: 
 
 *****************************************************************
@@ -22,6 +23,7 @@ Question #2
 What is your favorite fruit?
 [ ] Strawberry (Party: Ground)
 [ ] Pear (Party: Tree)
+[x] Strawberry (Party: Ground) (Party: none)
 [ ] Other: 
 
 *****************************************************************

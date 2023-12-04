@@ -5,6 +5,7 @@
 package edu.unm.gui;
 import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
+import edu.unm.entity.Elector;
 import edu.unm.entity.PaperBallot;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
@@ -36,6 +37,7 @@ public class TabulationGUI {
     private StackPane scanningPane;
     private Circle scanningCircle;
     private Line scanningLine;
+    private PaperBallot paperBallot;
 
     public TabulationGUI(Scene scene) {
         this.scene = scene;
@@ -62,6 +64,8 @@ public class TabulationGUI {
         scanBallotButton.setOnAction(e -> {
             if(Configuration.isGevEnabled()){
                 startScanAnimation();
+                Elector elector = paperBallot.getVotedElector();
+
             }
             else{
                 // If voting is disabled, then we know voting has either ended or not begun
@@ -145,7 +149,7 @@ public class TabulationGUI {
 
         dialog.close();
 
-        PaperBallot paperBallot = new PaperBallot();
+        paperBallot = new PaperBallot();
         boolean isValid = false;
         try {
             isValid = paperBallot.processBallot();
