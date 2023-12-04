@@ -12,8 +12,13 @@ Social Security Number:
 
 Question #1
 President of the United States of America
+<<<<<<< HEAD
 [ ] George Lucas
 [x] Wiley Coyote
+=======
+[x] George Lucas
+[ ] Wiley Coyote
+>>>>>>> acffa9e07ff6cdf7d308930809c76585a4413e2e
 [ ] Other: 
 
 *****************************************************************
