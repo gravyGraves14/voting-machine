@@ -2,6 +2,7 @@ package edu.unm.entity;
 
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
+import edu.unm.dao.ElectorSQLiteDAO;
 import edu.unm.service.ElectionSetupScanner;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,6 +11,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
+
+//TODO: ev paper vote go into seperate txt file
+//TODO: Fix duplicate votes when marking
+//TODO: make md submit go to scan paper ballot
 
 public class PaperBallot {
     private Ballot ballot;
@@ -164,6 +169,7 @@ public class PaperBallot {
                 return false;
             }
         }
+        elector.setVoted();
 
         //last stars
         return line.equals(stars);

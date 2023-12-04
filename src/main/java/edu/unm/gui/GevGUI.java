@@ -174,14 +174,17 @@ public class GevGUI {
                 return;
             }
 
+            boolean marked = false;
+
             for (int i = 0; i < ballot.getQuestions().size(); i++) {
                 for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
                     if(Objects.equals(questionGUIS[i].getSelected(), ballot.getQuestionByIndex(i).getOptions().get(j).getOption())) {
                         ballot.getQuestionByIndex(i).getOptions().get(j).setSelected(true);
+                        marked = true;
                     }
                 }
                 //If other option selected
-                if (!Objects.equals(questionGUIS[i].getSelected(), "")){
+                if (!Objects.equals(questionGUIS[i].getSelected(), "") && !marked){
                     QuestionOption other = new QuestionOption(questionGUIS[i].getSelected(), "none");
                     other.setSelected(true);
                     ballot.getQuestionByIndex(i).getOptions().add(other);

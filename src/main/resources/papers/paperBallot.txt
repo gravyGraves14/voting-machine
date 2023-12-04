@@ -1,0 +1,28 @@
+*****************************************************************
+
+BALLOT
+Please vote for at most one option in each category.
+Place an 'x' in the brackets next to the option you select.
+
+*****************************************************************
+
+Social Security Number: 
+
+*****************************************************************
+
+Question #1
+President of the United States of America
+[ ] George Lucas
+[ ] Wiley Coyote
+[ ] Other: 
+
+*****************************************************************
+
+Question #2
+What is your favorite fruit?
+[ ] Strawberry
+[ ] Pear
+[ ] Other: 
+
+*****************************************************************
+
