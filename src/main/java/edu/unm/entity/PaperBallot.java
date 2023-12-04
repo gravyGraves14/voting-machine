@@ -187,14 +187,12 @@ public class PaperBallot {
     }
 
 
-    //Used to write a ballot from md or ec to paper form
-    public void writeBallot(Ballot paperBallot) throws IOException {
-        //TODO: Do we want to put this into a different txt file?
+    //Used to write a ballot from md or ev to paper form
+    public void writeBallot(Ballot paperBallot, String ssNum) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/papers/paperBallot.txt"));
 
-        //TODO: ssn Does not fill in
         String ssn = "\n\nSocial Security Number: \n\n";
-        writer.write(stars + intro + stars + ssn + stars + "\n\n");
+        writer.write(stars + intro + stars + "\n\nSocial Security Number: " + ssNum + "\n\n" + stars + "\n\n");
 
         for (int i = 0; i < paperBallot.getQuestions().size(); i++) {
             writer.write("Question #" + (i + 1) + "\n" +
@@ -209,7 +207,6 @@ public class PaperBallot {
                 }
             }
 
-            //TODO: Other option does not get filled in
             writer.write("[ ] Other: " + "\n");
 
             writer.write("\n" + stars + "\n\n");

@@ -3,6 +3,7 @@
  */
 
 package edu.unm.gui;
+import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
 import edu.unm.entity.PaperBallot;
 import javafx.animation.RotateTransition;
@@ -152,10 +153,22 @@ public class TabulationGUI {
             e.printStackTrace();
         }
 
-        Ballot ballot = paperBallot.getBallot();
 
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {
+            //Clear the paper ballot
+            try {
+                paperBallot.createPaperBallot();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //put votes in database
+            Ballot ballot = paperBallot.getBallot();
+            ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
+            electionGremlinDAO.saveBallotVotes(ballot);
+
+            //alert
             alert.setContentText("Valid ballot. Vote has been counted.");
             totalVotes++;
         } else {

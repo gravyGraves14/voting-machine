@@ -193,7 +193,7 @@ public class GevGUI {
 
             PaperBallot paperBallot = new PaperBallot();
             try {
-                paperBallot.writeBallot(ballot);
+                paperBallot.writeBallot(ballot, voterId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
