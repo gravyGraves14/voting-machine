@@ -1,0 +1,99 @@
+<ballotSchema>
+    <schemaName>test-schema</schemaName>
+
+    <question type="candidate">
+        <summary>President</summary>
+        <question_text>President of the United States of America</question_text>
+        <options>
+            <option>
+                <option_text>George Lucas</option_text>
+                <affiliation>Lucas Arts</affiliation>
+            </option>
+            <option>
+                <option_text>Wiley Coyote</option_text>
+                <affiliation>Acme Corp</affiliation>
+            </option>
+        </options>
+    </question>
+
+    <question type="candidate">
+        <summary>Governor</summary>
+        <question_text>Vote for governor:</question_text>
+        <options>
+            <option>
+                <option_text>Richard Michael DeWine (R)</option_text>
+                <affiliation>Republican</affiliation>
+            </option>
+            <option>
+                <option_text>Nan Whaley (D)</option_text>
+                <affiliation>Democrat</affiliation>
+            </option>
+            <option>
+                <option_text>Marshall Usher (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+            <option>
+                <option_text>Tim Grady (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+            <option>
+                <option_text>Renea Turner (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+            <option>
+                <option_text>Craig Patton (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+        </options>
+    </question>
+
+    <question type="candidate">
+        <summary>Senate</summary>
+        <question_text>Vote for Senate:</question_text>
+        <options>
+            <option>
+                <option_text>J. D. Vance (R)</option_text>
+                <affiliation>Republican</affiliation>
+            </option>
+            <option>
+                <option_text>Tim Ryan (D)</option_text>
+                <affiliation>Democrat</affiliation>
+            </option>
+            <option>
+                <option_text>John Cheng (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+            <option>
+                <option_text>Shane Hoffman (Independent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+            <option>
+                <option_text>LaShondra Tinsley (Indpendent)</option_text>
+                <affiliation>Independent</affiliation>
+            </option>
+        </options>
+    </question>
+
+    <question type="candidate">
+        <summary>House</summary>
+        <question_text>Vote for House:</question_text>
+        <options>
+            <option>
+                <option_text>Greg Landsman (D)</option_text>
+                <affiliation>Democrat</affiliation>
+            </option>
+            <option>
+                <option_text>Steve Chabot (R)</option_text>
+                <affiliation>Republican</affiliation>
+            </option>
+            <option>
+                <option_text>Brad Wenstrup (R)</option_text>
+                <affiliation>Republican</affiliation>
+            </option>
+            <option>
+                <option_text>Joyce Beatty (D)</option_text>
+                <affiliation>Democrat</affiliation>
+            </option>
+        </options>
+    </question>
+</ballotSchema>
