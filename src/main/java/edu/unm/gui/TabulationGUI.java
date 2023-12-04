@@ -67,17 +67,17 @@ public class TabulationGUI {
         scanBallotButton.setOnAction(e -> {
             if(Configuration.isGevEnabled()){
                 startScanAnimation();
-                Elector elector = paperBallot.getVotedElector();
-                GUIUtils guiUtils = new GUIUtils();
-                if(elector.getVoted() == 1) {
-                    guiUtils.createPopUp("Voter has already voted.");
-                }else {
-                    try {
-                        UserService.setVoted(elector);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
+//                Elector elector = paperBallot.getVotedElector();
+//                GUIUtils guiUtils = new GUIUtils();
+//                if(elector.getVoted() == 1) {
+//                    guiUtils.createPopUp("Voter has already voted.");
+//                }else {
+//                    try {
+//                        UserService.setVoted(elector);
+//                    } catch (SQLException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+//                }
             }
             else{
                 // If voting is disabled, then we know voting has either ended or not begun
