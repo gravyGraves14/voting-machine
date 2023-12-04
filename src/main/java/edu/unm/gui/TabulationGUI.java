@@ -3,6 +3,7 @@
  */
 
 package edu.unm.gui;
+import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
 import edu.unm.entity.PaperBallot;
 import javafx.animation.RotateTransition;
@@ -157,6 +158,8 @@ public class TabulationGUI {
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {
             alert.setContentText("Valid ballot. Vote has been counted.");
+            ElectionGremlinDAO dao = new ElectionGremlinDAO();
+            dao.saveBallotVotes(ballot);
             totalVotes++;
         } else {
             alert.setContentText("Invalid ballot paper, please resubmit after making correction.");
