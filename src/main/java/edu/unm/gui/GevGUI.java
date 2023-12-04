@@ -169,7 +169,7 @@ public class GevGUI {
         submitBtn.setOnAction(event -> {
             //Popup
             try {
-                UserService.setVoted(elector);
+                if (evType == 2) UserService.setVoted(elector);
             } catch (SQLException e) {
                 return;
             }
