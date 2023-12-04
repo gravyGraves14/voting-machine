@@ -183,6 +183,12 @@ public class GevGUI {
                         ballot.getQuestionByIndex(i).getOptions().get(j).setSelected(true);
                     }
                 }
+                //If other option selected
+                if (!Objects.equals(questionGUIS[i].getSelected(), "")){
+                    QuestionOption other = new QuestionOption(questionGUIS[i].getSelected(), "none");
+                    other.setSelected(true);
+                    ballot.getQuestionByIndex(i).getOptions().add(other);
+                }
             }
 
             PaperBallot paperBallot = new PaperBallot();

@@ -12,7 +12,7 @@ Social Security Number:
 
 Question #1
 President of the United States of America
-[ ] George Lucas
+[x] George Lucas
 [ ] Wiley Coyote
 [ ] Other: 
 
@@ -21,7 +21,7 @@ President of the United States of America
 Question #2
 What is your favorite fruit?
 [ ] Strawberry
-[ ] Pear
+[x] Pear
 [ ] Other: 
 
 *****************************************************************
