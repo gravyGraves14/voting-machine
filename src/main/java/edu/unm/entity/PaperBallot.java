@@ -1,6 +1,7 @@
 package edu.unm.entity;
 
 import edu.unm.dao.DAOFactory;
+import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.service.BallotScanner;
 import edu.unm.service.ElectionSetupScanner;
@@ -30,7 +31,7 @@ public class PaperBallot {
 
     private Elector elector;
     public PaperBallot() {
-        ballot = BallotScanner.getBallot();
+        ballot = new ElectionGremlinDAO().getBallotFromSchema(BallotScanner.getBallot().getSchemaName());
     }
 
     public void createPaperBallot() throws IOException {
