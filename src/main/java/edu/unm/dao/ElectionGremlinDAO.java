@@ -161,6 +161,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
                 Map<Object, Object> oProps = new HashMap<>();
                 oProps.put("text", selected.getOption());
                 optionVertex = saveVertex("option", oProps);
+                saveEdge("has_option", qv, optionVertex, new HashMap<>());
             } else {
                 System.out.println("FOUND OPTION IN DATABASE: USING EXISTING OPTION - " + selected.getOption());
                 optionVertex = oVertex.get();
