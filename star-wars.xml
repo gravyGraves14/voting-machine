@@ -64,18 +64,4 @@
             </option>
         </options>
     </question>
-    <question type="candidate">
-        <summary>Lost starship</summary>
-        <question_text>Who is more likely to forget where they parked their starship?</question_text>
-        <options>
-            <option>
-                <option_text>Han Solo</option_text>
-                <affiliation>Rebellion</affiliation>
-            </option>
-            <option>
-                <option_text>Princess Leia</option_text>
-                <affiliation>Rebellion</affiliation>
-            </option>
-        </options>
-    </question>
 </ballotSchema>
