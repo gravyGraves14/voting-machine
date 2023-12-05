@@ -36,7 +36,7 @@ public class ElectionReport extends Report {
             throw new IllegalArgumentException("Unable to load election results, schema not present in DB.");
         }
         data.add("Election Report '" + schemaName + "'");
-        data.add("Total votes: " + totalVotes);
+        data.add("Total voters: " + totalVotes);
         for (BallotQuestion question : ballotData.getQuestions()) {
             data.add("Question: " + question.getQuestion());
             for (QuestionOption option : question.getOptions()) {
