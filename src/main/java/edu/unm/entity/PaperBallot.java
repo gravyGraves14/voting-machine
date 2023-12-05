@@ -156,9 +156,9 @@ public class PaperBallot {
                 if (choiceCount > 0){
                     return false;
                 }
-                String[] parts = otherLine.split(": ");
+                String[] parts = otherLine.substring(4).split(" \\(");
 
-                QuestionOption otherQ = new QuestionOption(parts[1], "none");
+                QuestionOption otherQ = new QuestionOption(parts[0], "none");
                 otherQ.setSelected(true);
                 ballot.getQuestionByIndex(i).getOptions().add(otherQ);
             }
