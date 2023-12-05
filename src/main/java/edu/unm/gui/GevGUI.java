@@ -126,7 +126,8 @@ public class GevGUI {
 //        } catch (IOException | SAXException | ParserConfigurationException e) {
 //            throw new RuntimeException(e);
 //        }
-        ballot = BallotScanner.getBallot();
+        ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
+        ballot = electionGremlinDAO.getBallotFromSchema(BallotScanner.getBallot().getSchemaName());
 
         //Create question roots
         QuestionGUI[] questionGUIS = new QuestionGUI[ballot.getQuestions().size()];

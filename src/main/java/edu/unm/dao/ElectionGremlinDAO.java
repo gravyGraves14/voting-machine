@@ -19,14 +19,14 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
 public class ElectionGremlinDAO implements ElectionDAO {
 
     public static void main(String[] args) {
-        ElectionSetupScanner scanner = new ElectionSetupScanner("test-schema.xml");
+        ElectionSetupScanner scanner = new ElectionSetupScanner("general-schema.xml");
         try {
             Ballot ballot = scanner.parseSchema();
             ElectionGremlinDAO dao = new ElectionGremlinDAO();
             dao.loadBallotSchema(ballot.getSchemaName(), ballot);
 
-            ballot.getQuestions().forEach(q -> q.getOptions().get(1).setSelected(true));
-            dao.saveBallotVotes(ballot);
+//            ballot.getQuestions().forEach(q -> q.getOptions().get(1).setSelected(true));
+//            dao.saveBallotVotes(ballot);
 
             Ballot results = dao.getTabulation(ballot.getSchemaName());
             System.out.println("Results for schema: " + ballot.getSchemaName());
@@ -37,7 +37,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
                 }
             }
 
-            ElectionReport eReport = new ElectionReport("test-schema");
+            ElectionReport eReport = new ElectionReport("general-schema");
             ReportPrinter.print(eReport);
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,10 +157,12 @@ public class ElectionGremlinDAO implements ElectionDAO {
 
             Vertex optionVertex;
             if (oVertex.isEmpty()) {
+                System.out.println("DID NOT FIND OPTION IN DATABASE: ADDING NEW OPTION - " + selected.getOption());
                 Map<Object, Object> oProps = new HashMap<>();
                 oProps.put("text", selected.getOption());
                 optionVertex = saveVertex("option", oProps);
             } else {
+                System.out.println("FOUND OPTION IN DATABASE: USING EXISTING OPTION - " + selected.getOption());
                 optionVertex = oVertex.get();
             }
 
@@ -188,12 +190,32 @@ public class ElectionGremlinDAO implements ElectionDAO {
                 questions.add(question);
 
                 GraphTraversal<Vertex, Vertex> oTraversal = source.V(q.id()).out("has_option");
+                System.out.println("Question: " + question.getQuestion());
                 while (oTraversal.hasNext()) {
                     Vertex o = oTraversal.next();
                     QuestionOption option = mapOption(o);
                     question.addOption(option);
 
                     long votes = source.V(o.id()).outE("voted_for").count().next();
+                    long testVotes = source.V(o.id()).inE("voted_for").count().next();
+                    long outEdges = source.V(o.id()).out("voted_for").count().next();
+                    long inEdges = source.V(o.id()).in("voted_for").count().next();
+                    Iterator<Edge> edges = source.V(o.id()).next().edges(Direction.BOTH);
+
+                    int count = 0;
+                    while (edges.hasNext()) {
+                        Edge e = edges.next();
+                        count++;
+                        String label = e.label();
+                        System.out.println(label);
+                    }
+                    System.out.println("\tOption: " + option.getOption());
+                    System.out.println("\t\tedgecount = " + count);
+                    System.out.println("\t\tvotes = " + votes);
+                    System.out.println("\t\ttestVotes = " + testVotes);
+                    System.out.println("\t\toutEdges = " + testVotes);
+                    System.out.println("\t\tinEdges = " + testVotes);
+
                     option.setTotalVotes(votes);
                 }
             }

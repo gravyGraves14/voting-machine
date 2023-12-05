@@ -7,7 +7,10 @@ package edu.unm.gui;
 import edu.unm.dao.ElectionGremlinDAO;
 
 import edu.unm.entity.Ballot;
+import edu.unm.entity.BallotQuestion;
+import edu.unm.entity.ElectionReport;
 import edu.unm.entity.PaperBallot;
+import edu.unm.entity.QuestionOption;
 import edu.unm.service.BallotScanner;
 import edu.unm.service.ElectionSetupScanner;
 import javafx.scene.Scene;

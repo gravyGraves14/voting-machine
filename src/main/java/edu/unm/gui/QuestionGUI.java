@@ -14,8 +14,10 @@ public class QuestionGUI {
     private final RadioButton[] choice;
     private final RadioButton other = new RadioButton("Other:");
     private final TextField otherTxt = new TextField();
+    private List<QuestionOption> choices;
 
     public QuestionGUI(int qstnNum, String qstn, int numChoices, List<QuestionOption> choices) {
+        this.choices = choices;
         this.numChoices = numChoices;
 
         //Set up root
@@ -69,7 +71,7 @@ public class QuestionGUI {
     public String getSelected() {
         for(int i = 0; i < numChoices; i++) {
             if (choice[i].isSelected()) {
-                return choice[i].getText();
+                return choices.get(i).getOption();
             }
         }
         if (other.isSelected()) {
