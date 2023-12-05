@@ -45,8 +45,12 @@ public class ElectionReport extends Report {
         }
 
     }
-    public int getTotalVotes() {
+    public int getTotalVoters() {
         return totalVotes;
+    }
+
+    public Ballot getTabulatedBallot() {
+        return ballotData;
     }
 
 }
