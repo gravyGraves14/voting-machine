@@ -1,11 +1,12 @@
 /**
- * Author: Raju Nayak
+ * Author: Raju Nayak, Emely Seheon, Ester Aguilera
  */
 
 package edu.unm.gui;
 import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.entity.Ballot;
 import edu.unm.entity.PaperBallot;
+import edu.unm.service.PaperVoteCounter;
 import javafx.animation.RotateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,13 +20,16 @@ import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The TabulationGUI class is responsible for providing a graphical user interface
+ * for the tabulation process of voting. This includes initiating the paper ballot scanning process,
+ * and tabulating results.
+ */
 public class TabulationGUI {
-    private int totalVotes = 0;
     private final Label voteCountLabel;
     private final Label timeLabel;
     private final GUIUtils guiUtils = new GUIUtils();
@@ -33,6 +37,12 @@ public class TabulationGUI {
     private Stage dialog;
     private Line scanningLine;
 
+    /**
+     * Constructor for TabulationGUI.
+     * Sets up the user interface, including labels and buttons for scanning and tabulating
+     * paper ballots, and initializes the scanning dialog window.
+     * @param scene the primary scene for this GUI component
+     */
     public TabulationGUI(Scene scene) {
 
         // Set up the layout
@@ -42,7 +52,7 @@ public class TabulationGUI {
         initializeScanningDialog();
 
         // Creating and styling the vote count label
-        voteCountLabel = new Label("Total Paper Votes: \n" + totalVotes);
+        voteCountLabel = new Label("Total Paper Votes: \n" + PaperVoteCounter.getCurrentVoteCount());
         guiUtils.createLabel(voteCountLabel, 250, 100, 25);
         root.add(voteCountLabel, 2, 0);
 
@@ -57,17 +67,6 @@ public class TabulationGUI {
         scanBallotButton.setOnAction(e -> {
             if(Configuration.isGevEnabled()){
                 startScanAnimation();
-//                Elector elector = paperBallot.getVotedElector();
-//                GUIUtils guiUtils = new GUIUtils();
-//                if(elector.getVoted() == 1) {
-//                    guiUtils.createPopUp("Voter has already voted.");
-//                }else {
-//                    try {
-//                        UserService.setVoted(elector);
-//                    } catch (SQLException ex) {
-//                        throw new RuntimeException(ex);
-//                    }
-//                }
             }
             else{
                 // If voting is disabled, then we know voting has either ended or not begun
@@ -101,20 +100,29 @@ public class TabulationGUI {
     public GridPane getRoot() {
         return root;
     }
-    private void calculateFinalResult() {
-        // TODO
-    }
 
+    /**
+     * Updates the GUI components, particularly the paper vote count and time labels,
+     * to reflect the current total paper votes and time.
+     */
     private void updateGUI() {
-        voteCountLabel.setText("Total Votes: " + totalVotes);
+        voteCountLabel.setText("Total Paper Votes: \n" + PaperVoteCounter.getCurrentVoteCount());
         timeLabel.setText("Time: " + getCurrentTime());
     }
 
+    /**
+     * Gets the current time formatted as HH:mm.
+     * @return String the current time
+     */
     private String getCurrentTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalTime.now().format(formatter);
     }
 
+    /**
+     * Initializes the scanning dialog, which is used during the paper ballot scanning
+     * process. This includes setting up the layout and the animation elements.
+     */
     private void initializeScanningDialog() {
         dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -143,6 +151,10 @@ public class TabulationGUI {
         dialog.setScene(new Scene(scanningPane));
     }
 
+    /**
+     * Starts the scanning animation when a paper ballot is being scanned.
+     * This method shows the scanning dialog with an animation for visual feedback.
+     */
     private void startScanAnimation() {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(3), scanningLine);
         rotateTransition.setByAngle(360);
@@ -154,6 +166,11 @@ public class TabulationGUI {
         rotateTransition.play();
     }
 
+    /**
+     * Validates the scanned paper ballot and save the result.
+     * It closes the scanning dialog, checks the validity of the ballot,
+     * and updates the GUI accordingly.
+     */
     private void validateBallot() {
 
         dialog.close();
@@ -165,7 +182,6 @@ public class TabulationGUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {
@@ -181,9 +197,11 @@ public class TabulationGUI {
             ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
             electionGremlinDAO.saveBallotVotes(ballot);
 
+            // Increment paper voter
+            PaperVoteCounter.incrementVoteCount();
+
             //alert
             alert.setContentText("Valid ballot. Vote has been counted.");
-            totalVotes++;
         } else {
             alert.setContentText("Invalid ballot paper, please resubmit after making correction.");
         }
