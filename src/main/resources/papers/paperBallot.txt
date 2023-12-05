@@ -11,24 +11,24 @@ Social Security Number:
 *****************************************************************
 
 Question #1
-Vote for governor:
-[ ] Richard Michael DeWine (Party: Republican)
-[ ] Nan Whaley (Party: Democrat)
-[ ] Marshall Usher (Party: Independent)
-[ ] Tim Grady (Party: Independent)
-[ ] Renea Turner (Party: Independent)
-[ ] Craig Patton (Party: Independent)
+Vote for Senate:
+[ ] Shane Hoffman (Party: Independent)
+[ ] J. D. Vance (Party: Republican)
+[ ] LaShondra Tinsley (Party: Independent)
+[ ] Tim Ryan (Party: Democrat)
+[ ] John Cheng (Party: Independent)
 [ ] Other: 
 
 *****************************************************************
 
 Question #2
-Vote for Senate:
-[ ] J. D. Vance (Party: Republican)
-[ ] Tim Ryan (Party: Democrat)
-[ ] John Cheng (Party: Independent)
-[ ] Shane Hoffman (Party: Independent)
-[ ] LaShondra Tinsley (Party: Independent)
+Vote for governor:
+[ ] Marshall Usher (Party: Independent)
+[ ] Tim Grady (Party: Independent)
+[ ] Richard Michael DeWine (Party: Republican)
+[ ] Renea Turner (Party: Independent)
+[ ] Nan Whaley (Party: Democrat)
+[ ] Craig Patton (Party: Independent)
 [ ] Other: 
 
 *****************************************************************
