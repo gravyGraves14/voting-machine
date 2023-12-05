@@ -7,10 +7,7 @@ package edu.unm.gui;
 import edu.unm.dao.ElectionGremlinDAO;
 
 import edu.unm.entity.Ballot;
-import edu.unm.entity.BallotQuestion;
-import edu.unm.entity.ElectionReport;
 import edu.unm.entity.PaperBallot;
-import edu.unm.entity.QuestionOption;
 import edu.unm.service.BallotScanner;
 import edu.unm.service.ElectionSetupScanner;
 import javafx.scene.Scene;
@@ -24,6 +21,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The LoadSchemaGUI class is responsible for providing a graphical user interface
+ * to load and set up an election schema. It handles file selection, schema parsing,
+ * and initial configuration of the voting environment.
+ * This class integrates with ElectionSetupScanner, BallotScanner, and ElectionGremlinDAO
+ * for handling the election schema.
+ */
 
 public class LoadSchemaGUI {
     private GUIUtils guiUtils = new GUIUtils();
@@ -31,6 +35,11 @@ public class LoadSchemaGUI {
     private Scene scene;
     private ElectionGremlinDAO dao;
 
+    /**
+     * Constructor to initialize the LoadSchemaGUI with a given scene.
+     * It sets up the layout and the 'Load Election Schema' button.
+     * @param scene the primary scene for this GUI component
+     */
     public LoadSchemaGUI(Scene scene) {
         this.scene = scene;
         this.dao = new ElectionGremlinDAO();
@@ -46,6 +55,12 @@ public class LoadSchemaGUI {
         root.add(loadSchemaButton, 1, 1);
     }
 
+    /**
+     * Handles the loading of the election schema.
+     * This method opens a file chooser to select the election schema file,
+     * parses the file, and sets up the election environment, including ballot
+     * configuration and DAO initialization.
+     */
     private void loadSchema() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Election Schema File");
@@ -80,10 +95,20 @@ public class LoadSchemaGUI {
         }
     }
 
+    /**
+     * Returns the root grid pane of this GUI.
+     * @return GridPane the root layout pane of this GUI component
+     */
     public GridPane getRoot() {
         return root;
     }
 
+    /**
+     * Displays a success pop-up with a custom title and content.
+     * Used to inform the user of successful operations.
+     * @param title   the title of the pop-up
+     * @param content the content message of the pop-up
+     */
     private void showSuccessPopUp(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -91,6 +116,12 @@ public class LoadSchemaGUI {
         alert.showAndWait();
     }
 
+    /**
+     * Displays an error pop-up with a custom title and content.
+     * Used to inform the user of errors or failed operations.
+     * @param title   the title of the pop-up
+     * @param content the content message of the pop-up
+     */
     private void showErrorPopUp(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

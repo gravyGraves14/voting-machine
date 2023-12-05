@@ -1,5 +1,5 @@
 /**
- * Author: Raju Nayak
+ * Authors: Raju Nayak, Emely Seheon, Ester Aguilera, Manjil Pradhan
  */
 
 package edu.unm.gui;
@@ -10,10 +10,24 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import java.sql.SQLException;
 
+/**
+ * The LoginStaffGUI class provides a graphical user interface for staff members to log in.
+ * This class supports different modes of operation depending on the context in which
+ * it is used, such as tabulating results, opening ballots, and closing ballots.
+ * It includes input fields for staff ID and password, and implements authentication logic
+ * to ensure only authorized staff can access specific functionalities.
+ */
 public class LoginStaffGUI {
     private final GridPane root;
     private final Scene scene;
 
+    /**
+     * Constructor for LoginStaffGUI.
+     * Sets up the user interface including labels, text fields, and a login button.
+     * The mode parameter determines the specific operation to be performed after login.
+     * @param scene the primary scene for this GUI component
+     * @param mode  determines the operation to be performed after successful login
+     */
     public LoginStaffGUI(Scene scene, int mode) {
         // "mode" 1 is for Tabulation
         // "mode" 2 is for Opening Ballot
