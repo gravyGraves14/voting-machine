@@ -1,0 +1,81 @@
+<ballotSchema>
+    <schemaName>star-wars</schemaName>
+    <question type="candidate">
+        <summary>Dance Contest</summary>
+        <question_text>Who would win a dance-off?</question_text>
+        <options>
+            <option>
+                <option_text>Yoda</option_text>
+                <affiliation>Jedi</affiliation>
+            </option>
+            <option>
+                <option_text>Darth Vader</option_text>
+                <affiliation>Republic</affiliation>
+            </option>
+        </options>
+    </question>
+    <question type="candidate">
+        <summary>Chewbacca Instrument</summary>
+        <question_text>If Chewbacca started a band, what instrument would he play?</question_text>
+        <options>
+            <option>
+                <option_text>Guitar</option_text>
+                <affiliation>Instrument</affiliation>
+            </option>
+            <option>
+                <option_text>Bass</option_text>
+                <affiliation>Instrument</affiliation>
+            </option>
+            <option>
+                <option_text>Drums</option_text>
+                <affiliation>Instrument</affiliation>
+            </option>
+        </options>
+    </question>
+    <question type="candidate">
+        <summary>Worst Character</summary>
+        <question_text>Who is the worst Star Wars character?</question_text>
+        <options>
+            <option>
+                <option_text>Jar Jar Binks</option_text>
+                <affiliation>Unknown</affiliation>
+            </option>
+            <option>
+                <option_text>Mr. Binks</option_text>
+                <affiliation>Unknown</affiliation>
+            </option>
+            <option>
+                <option_text>Definitely JJ Binks</option_text>
+                <affiliation>Unknown</affiliation>
+            </option>
+        </options>
+    </question>
+    <question type="candidate">
+        <summary>Lost starship</summary>
+        <question_text>Who is more likely to forget where they parked their starship?</question_text>
+        <options>
+            <option>
+                <option_text>Han Solo</option_text>
+                <affiliation>Rebellion</affiliation>
+            </option>
+            <option>
+                <option_text>Princess Leia</option_text>
+                <affiliation>Rebellion</affiliation>
+            </option>
+        </options>
+    </question>
+    <question type="candidate">
+        <summary>Lost starship</summary>
+        <question_text>Who is more likely to forget where they parked their starship?</question_text>
+        <options>
+            <option>
+                <option_text>Han Solo</option_text>
+                <affiliation>Rebellion</affiliation>
+            </option>
+            <option>
+                <option_text>Princess Leia</option_text>
+                <affiliation>Rebellion</affiliation>
+            </option>
+        </options>
+    </question>
+</ballotSchema>
