@@ -1,0 +1,45 @@
+*****************************************************************
+
+BALLOT
+Please vote for at most one option in each category.
+Place an 'x' in the brackets next to the option you select.
+
+*****************************************************************
+
+Social Security Number: 888888888
+
+*****************************************************************
+
+Question #1
+Vote for Senate:
+[ ] Shane Hoffman (Independent) (Party: Independent)
+[ ] J. D. Vance (R) (Party: Republican)
+[x] LaShondra Tinsley (Indpendent) (Party: Independent)
+[ ] Tim Ryan (D) (Party: Democrat)
+[ ] John Cheng (Independent) (Party: Independent)
+[ ] Other: 
+
+*****************************************************************
+
+Question #2
+Vote for governor:
+[ ] Marshall Usher (Independent) (Party: Independent)
+[x] Tim Grady (Independent) (Party: Independent)
+[ ] Richard Michael DeWine (R) (Party: Republican)
+[ ] Renea Turner (Independent) (Party: Independent)
+[ ] Nan Whaley (D) (Party: Democrat)
+[ ] Craig Patton (Independent) (Party: Independent)
+[ ] Other: 
+
+*****************************************************************
+
+Question #3
+Vote for House:
+[x] Greg Landsman (D) (Party: Democrat)
+[ ] Steve Chabot (R) (Party: Republican)
+[ ] Brad Wenstrup (R) (Party: Republican)
+[ ] Joyce Beatty (D) (Party: Democrat)
+[ ] Other: 
+
+*****************************************************************
+

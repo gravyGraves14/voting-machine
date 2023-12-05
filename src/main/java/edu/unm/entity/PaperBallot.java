@@ -121,7 +121,7 @@ public class PaperBallot {
 
             //Check the main options of the question
             int choiceCount = 0;
-            for (int j = 0; j < ballot.getQuestions().size(); j++) {
+            for (int j = 0; j < ballot.getQuestionByIndex(i).getOptions().size(); j++) {
                 if (line.equals("[x] " + ballot.getQuestionByIndex(i).getOptions().get(j).getOption() + " (Party: " +
                         ballot.getQuestionByIndex(i).getOptions().get(j).getAffiliation() + ")")) {
                     if (choiceCount > 0){

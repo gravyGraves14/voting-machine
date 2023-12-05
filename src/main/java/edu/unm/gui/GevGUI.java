@@ -132,7 +132,7 @@ public class GevGUI {
         //Create question roots
         QuestionGUI[] questionGUIS = new QuestionGUI[ballot.getQuestions().size()];
         for (int i = 0; i < ballot.getQuestions().size(); i++) {
-            questionGUIS[i] = new QuestionGUI(i + 1, ballot.getQuestionByIndex(i).getQuestion(), ballot.getQuestions().size(),
+            questionGUIS[i] = new QuestionGUI(i + 1, ballot.getQuestionByIndex(i).getQuestion(), ballot.getQuestionByIndex(i).getOptions().size(),
                     ballot.getQuestionByIndex(i).getOptions());
         }
 
