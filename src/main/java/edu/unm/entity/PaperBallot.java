@@ -2,6 +2,7 @@ package edu.unm.entity;
 
 import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectorDAO;
+import edu.unm.service.BallotScanner;
 import edu.unm.service.ElectionSetupScanner;
 import edu.unm.service.UserService;
 import org.xml.sax.SAXException;
@@ -12,8 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import static edu.unm.gui.GevGUI.getElector;
 
-//TODO: md -> scan gives invalid ballot
-//TODO: affiliation shown in ballot
 
 public class PaperBallot {
     private final Ballot ballot;
@@ -31,13 +30,7 @@ public class PaperBallot {
 
     private Elector elector;
     public PaperBallot() {
-        ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
-
-        try {
-            ballot = electionSetupScanner.parseSchema();
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
+        ballot = BallotScanner.getBallot();
     }
 
     public void createPaperBallot() throws IOException {

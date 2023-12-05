@@ -6,39 +6,39 @@ Place an 'x' in the brackets next to the option you select.
 
 *****************************************************************
 
-Social Security Number: 888888888
+Social Security Number: 
 
 *****************************************************************
 
 Question #1
-Vote for Senate:
-[ ] Shane Hoffman (Independent) (Party: Independent)
-[ ] J. D. Vance (R) (Party: Republican)
-[x] LaShondra Tinsley (Indpendent) (Party: Independent)
-[ ] Tim Ryan (D) (Party: Democrat)
-[ ] John Cheng (Independent) (Party: Independent)
+Vote for governor:
+[ ] Richard Michael DeWine (Party: Republican)
+[ ] Nan Whaley (Party: Democrat)
+[ ] Marshall Usher (Party: Independent)
+[ ] Tim Grady (Party: Independent)
+[ ] Renea Turner (Party: Independent)
+[ ] Craig Patton (Party: Independent)
 [ ] Other: 
 
 *****************************************************************
 
 Question #2
-Vote for governor:
-[ ] Marshall Usher (Independent) (Party: Independent)
-[x] Tim Grady (Independent) (Party: Independent)
-[ ] Richard Michael DeWine (R) (Party: Republican)
-[ ] Renea Turner (Independent) (Party: Independent)
-[ ] Nan Whaley (D) (Party: Democrat)
-[ ] Craig Patton (Independent) (Party: Independent)
+Vote for Senate:
+[ ] J. D. Vance (Party: Republican)
+[ ] Tim Ryan (Party: Democrat)
+[ ] John Cheng (Party: Independent)
+[ ] Shane Hoffman (Party: Independent)
+[ ] LaShondra Tinsley (Party: Independent)
 [ ] Other: 
 
 *****************************************************************
 
 Question #3
 Vote for House:
-[x] Greg Landsman (D) (Party: Democrat)
-[ ] Steve Chabot (R) (Party: Republican)
-[ ] Brad Wenstrup (R) (Party: Republican)
-[ ] Joyce Beatty (D) (Party: Democrat)
+[ ] Greg Landsman (Party: Democrat)
+[ ] Steve Chabot (Party: Republican)
+[ ] Brad Wenstrup (Party: Republican)
+[ ] Joyce Beatty (Party: Democrat)
 [ ] Other: 
 
 *****************************************************************
