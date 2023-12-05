@@ -12,6 +12,10 @@
                 <option_text>Wiley Coyote</option_text>
                 <affiliation>Acme Corp</affiliation>
             </option>
+            <option>
+                <option_text>Wiley</option_text>
+                <affiliation>Acme Corp</affiliation>
+            </option>
         </options>
     </question>
     <question type="candidate">
