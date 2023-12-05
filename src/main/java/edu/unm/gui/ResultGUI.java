@@ -104,7 +104,7 @@ public class ResultGUI {
 
             // Print the report to a file using ReportPrinter
             ReportPrinter.print(electionReport);
-            totalVotes = electionReport.getTotalVotes();
+            totalVotes = electionReport.getTotalVoters();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
