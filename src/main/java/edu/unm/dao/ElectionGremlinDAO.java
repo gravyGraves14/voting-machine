@@ -160,6 +160,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
                 System.out.println("DID NOT FIND OPTION IN DATABASE: ADDING NEW OPTION - " + selected.getOption());
                 Map<Object, Object> oProps = new HashMap<>();
                 oProps.put("text", selected.getOption());
+                oProps.put("write-in", true);
                 optionVertex = saveVertex("option", oProps);
                 saveEdge("has_option", qv, optionVertex, new HashMap<>());
             } else {
@@ -245,7 +246,7 @@ public class ElectionGremlinDAO implements ElectionDAO {
                 BallotQuestion question = mapQuestion(q);
                 questions.add(question);
 
-                GraphTraversal<Vertex, Vertex> oTraversal = source.V(q.id()).out("has_option");
+                GraphTraversal<Vertex, Vertex> oTraversal = source.V(q.id()).out("has_option").hasNot("write-in");
                 while (oTraversal.hasNext()) {
                     Vertex o = oTraversal.next();
                     QuestionOption option = mapOption(o);
