@@ -48,18 +48,15 @@ public class LoginStaffGUI {
                 }
                 else if((UserService.verifyStaff(staffID,password) != null)){
                     if(mode == 1){
-                        ResultGUI resultGUI = new ResultGUI();
+                        ResultGUI resultGUI = new ResultGUI(this.scene);
                         guiUtils.addBackBtn(resultGUI.getRoot(), root, 0 ,0, scene, 0);
                         scene.setRoot(resultGUI.getRoot());
                     }else if(mode == 2){
                         // OPENING BALLOT
                         if(UserService.verifyStaffAdmin(staffID, password)){
-                            Configuration.setGevEnabled(true);
-                            Configuration.setTabEnabled(true);
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("FEATURE ENABLED");
-                            alert.setContentText("Ballot is now open, voting can begin.");
-                            alert.showAndWait();
+                            LoadSchemaGUI loadSchemaGUI = new LoadSchemaGUI(this.scene);
+                            guiUtils.addBackBtn(loadSchemaGUI.getRoot(), root, 0, 0, scene, 0);
+                            scene.setRoot(loadSchemaGUI.getRoot());
                         }else{
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setContentText("Staff must be ADMIN to open ballot");

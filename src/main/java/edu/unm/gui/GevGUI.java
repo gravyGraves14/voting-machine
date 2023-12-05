@@ -4,6 +4,7 @@ import edu.unm.dao.DAOFactory;
 import edu.unm.dao.ElectionGremlinDAO;
 import edu.unm.dao.ElectorDAO;
 import edu.unm.entity.*;
+import edu.unm.service.BallotScanner;
 import edu.unm.service.ElectionSetupScanner;
 import edu.unm.service.UserService;
 import javafx.scene.Scene;
@@ -118,13 +119,14 @@ public class GevGUI {
 
     private void createQstnGUIs() {
       //  Questions questions = new Questions();
-        BallotQuestion myQuestions = new BallotQuestion(questionShort, question, type);
-        ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
-        try {
-            ballot = electionSetupScanner.parseSchema();
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
+//        BallotQuestion myQuestions = new BallotQuestion(questionShort, question, type);
+//        ElectionSetupScanner electionSetupScanner = new ElectionSetupScanner("test-schema.xml");
+//        try {
+//            ballot = electionSetupScanner.parseSchema();
+//        } catch (IOException | SAXException | ParserConfigurationException e) {
+//            throw new RuntimeException(e);
+//        }
+        ballot = BallotScanner.getBallot();
 
         //Create question roots
         QuestionGUI[] questionGUIS = new QuestionGUI[ballot.getQuestions().size()];

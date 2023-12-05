@@ -18,14 +18,6 @@ public class MainGUI {
         this.scene = scene;
         GUIUtils guiUtils = new GUIUtils();
 
-        //Paper Ballot setup
-        PaperBallot paperBallot = new PaperBallot();
-        try {
-            paperBallot.createPaperBallot();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         //Set up the Layout
         root = guiUtils.createRoot(6, 3);
 
@@ -96,6 +88,7 @@ public class MainGUI {
             }
         });
     }
+    public GridPane getRoot() { return root; }
 
     public void runStage() {
         primaryStage.setScene(scene);
