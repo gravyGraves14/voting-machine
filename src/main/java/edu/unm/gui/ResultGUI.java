@@ -26,8 +26,15 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The ResultGUI class is responsible for providing a graphical user interface
+ * to tabulate the final results of an election. This class includes
+ * functionality for initiating the result tabulation process, displaying the
+ * total voter count, and showing the current time. It leverages the ElectionGremlinDAO
+ * for data access.
+ */
 public class ResultGUI {
-    private int totalVotes = 0;
+    private int totalVoter = 0;
     private Label voteCountLabel;
     private Label timeLabel;
     private GUIUtils guiUtils = new GUIUtils();
@@ -38,9 +45,13 @@ public class ResultGUI {
     private StackPane scanningPane;
     private Circle scanningCircle;
     private Line scanningLine;
-
     private ElectionGremlinDAO dao;
 
+    /**
+     * Constructor for ResultGUI.
+     * Sets up the user interface including labels and buttons for final result tabulation.
+     * @param scene the primary scene for this GUI component
+     */
     public ResultGUI(Scene scene) {
         this.scene = scene;
 
@@ -51,7 +62,7 @@ public class ResultGUI {
         // Initialize scanning dialog
         initializeScanningDialog();
 
-        voteCountLabel = new Label("Total Votes: \n" + totalVotes);
+        voteCountLabel = new Label("Total Voter: \n" + totalVoter);
         guiUtils.createLabel(voteCountLabel, 250, 100, 25);
         root.add(voteCountLabel, 2, 0);
 
@@ -65,30 +76,28 @@ public class ResultGUI {
         finalResultButton.setOnAction(e -> startScanAnimation());
         root.add(finalResultButton, 1, 1);
 
-        // Calculate Overall Result Button
-        Button printResultButton = new Button("Print Result");
-        guiUtils.createBtn(printResultButton, 300, 100, 25);
-        printResultButton.setOnAction(e -> {
-            printAndTabulateResult();
-        });
-        root.add(printResultButton, 1, 2);
     }
 
     public GridPane getRoot() {
         return root;
     }
 
+    /**
+     * Validates the ballot count and initiates the result tabulation and printing process.
+     * It closes the scanning dialog, checks the validity of the vote count,
+     * and updates the GUI accordingly.
+     */
     private void validateBallot() {
 
         dialog.close();
         boolean isValid = false;
         printAndTabulateResult();
-        if (totalVotes > 0) {
+        if (totalVoter > 0) {
             isValid = true;
         }
         Alert alert = new Alert(isValid ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         if (isValid) {
-            alert.setContentText("All Vote has been counted.");
+            alert.setContentText("All Vote has been counted and report has been printed");
         } else {
             alert.setContentText("Tabulation Failed as vote is Empty");
         }
@@ -97,28 +106,47 @@ public class ResultGUI {
         alert.show();
     }
 
+    /**
+     * Prints and tabulates the final election results.
+     * This method retrieves the current ballot, generates an election report,
+     * and prints it using ReportPrinter. It also updates the total voter count.
+     */
     private void printAndTabulateResult() {
         try {
-            Ballot ballot = BallotScanner.getBallot();
+            ElectionGremlinDAO electionGremlinDAO = new ElectionGremlinDAO();
+            Ballot ballot = electionGremlinDAO.getBallotFromSchema(BallotScanner.getBallot().getSchemaName());
             ElectionReport electionReport = new ElectionReport(ballot.getSchemaName());
 
             // Print the report to a file using ReportPrinter
             ReportPrinter.print(electionReport);
-            totalVotes = electionReport.getTotalVoters();
+            totalVoter = electionReport.getTotalVoters();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Updates the GUI components, particularly the total voter count and time labels,
+     * to reflect total voter and current time.
+     */
     private void updateGUI() {
-        voteCountLabel.setText("Total Votes: " + totalVotes);
+        voteCountLabel.setText("Total Voter: \n" + totalVoter);
         timeLabel.setText("Time: " + getCurrentTime());
     }
 
+    /**
+     * Gets the current time formatted as HH:mm.
+     * @return String the current time
+     */
     private String getCurrentTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalTime.now().format(formatter);
     }
 
+    /**
+     * Initializes the scanning dialog, which is used during the paper ballot scanning
+     * process. This includes setting up the layout and the animation elements.
+     */
     private void initializeScanningDialog() {
         dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -147,6 +175,10 @@ public class ResultGUI {
         dialog.setScene(new Scene(scanningPane));
     }
 
+    /**
+     * Starts the scanning animation when a paper ballot is being scanned.
+     * This method shows the scanning dialog with an animation for visual feedback.
+     */
     private void startScanAnimation() {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(3), scanningLine);
         rotateTransition.setByAngle(360);
@@ -156,20 +188,6 @@ public class ResultGUI {
         // Start the animation
         dialog.show();
         rotateTransition.play();
-    }
-
-    private void showSuccessPopUp(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-    private void showErrorPopUp(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
 }
